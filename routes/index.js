@@ -3,8 +3,8 @@ const express = require("express");
 //Create an Index Router
 const router = express.Router();
 
-//Require Home Router File
-const homeRouterFile = require("./home");
+//Require the Home Router
+const homeRouter = require("./home");
 
 //Use the Home Router
 router.use("/", homeRouter);
