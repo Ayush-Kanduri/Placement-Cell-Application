@@ -1,0 +1,34 @@
+-------
+FOLDERS
+-------
+assets  -   css
+        -   js
+        -   images
+        -   scss
+config
+controllers  -  api  -  v1
+                     -  v2
+mailers
+models
+production_logs
+public
+routes  -  api  -  v1
+                -  v2
+server_storage  -  images
+                -  videos
+uploads
+views
+workers
+
+-----
+FILES
+-----
+.env
+.gitignore
+ENV_FORMAT.json
+Folder_Structure.txt
+gulpfile.js
+index.js
+package-lock.json
+package.json
+README.md
