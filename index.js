@@ -16,6 +16,8 @@ const cors = require("cors");
 const expressLayouts = require("express-ejs-layouts");
 //Requires the EJS Module
 const ejs = require("ejs");
+//Requires the Node SASS Middleware Module
+const sassMiddleware = require("node-sass-middleware");
 //Require the Morgan Module for Logging
 const logger = require("morgan");
 //Require the View Helpers
@@ -27,6 +29,23 @@ const route = require("./routes/index");
 
 //Middleware - CORS
 app.use(cors());
+//Middleware - SASS Middleware
+if (env.name == "development") {
+	app.use(
+		sassMiddleware({
+			//Where to look for the SASS files
+			src: path.join(__dirname, env.asset_path, "scss"),
+			//Where to put the compiled CSS files
+			dest: path.join(__dirname, env.asset_path, "css"),
+			//Reports error.
+			debug: false,
+			//The code should be in a single line - "compressed" or multiple lines - "expanded"
+			outputStyle: "extended",
+			//Prefix for the CSS files - where to look out for the css files in the assets folder
+			prefix: "/css",
+		})
+	);
+}
 //Middleware - URL Encoder
 app.use(express.urlencoded({ extended: true }));
 //Middleware - JSON Encoder

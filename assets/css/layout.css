@@ -1,0 +1,52 @@
+@import url("https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;600;700;800;900&family=Red+Hat+Display:wght@300;400;500&display=swap");
+* {
+  -webkit-user-select: none;
+  -webkit-user-drag: none;
+  -moz-user-select: none;
+  -ms-user-select: none;
+  -o-user-select: none;
+  -webkit-box-sizing: border-box;
+  -moz-box-sizing: border-box;
+  user-select: none;
+  padding: 0;
+  margin: 0;
+  box-sizing: border-box;
+  font-family: "Poppins", sans-serif; }
+
+:root {
+  --background-color: #ffe9ae;
+  --header-color: #ffdba4;
+  --logo-color: #000000;
+  --button-color: #ffda53;
+  font-family: "Poppins", sans-serif; }
+
+body {
+  overflow-x: hidden; }
+  body::-webkit-scrollbar {
+    display: none;
+    overflow: hidden; }
+
+h1,
+h2,
+h3,
+h4,
+h5,
+h6 {
+  font-weight: 600;
+  color: var(--secondary-text-color); }
+
+h3 {
+  color: var(--primary-text-color);
+  font-size: 1.4rem;
+  word-break: break-all; }
+
+main {
+  background-color: var(--background-color);
+  width: 100vw;
+  min-height: 100vh;
+  display: flex;
+  overflow: scroll;
+  position: relative; }
+  main::-webkit-scrollbar {
+    display: none;
+    overflow: hidden; }
