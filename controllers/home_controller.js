@@ -1,3 +1,5 @@
 module.exports.homepage = (req, res) => {
-	return res.send("<h1>Homepage</h1>");
+	return res.render("home", {
+		title: "Home",
+	});
 };

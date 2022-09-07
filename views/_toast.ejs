@@ -1,0 +1,31 @@
+<div class="toast-container bottom-0 end-0 p-3">
+	<!-- Notification Toast -->
+	<div
+		class="toast"
+		role="alert"
+		aria-live="assertive"
+		aria-atomic="true"
+		data-bs-delay="6000"
+		style="display: none"
+	>
+		<div class="toast-header">
+			<img
+				src="<%= assetPath('images/favicon.png') %>"
+				class="rounded me-2"
+				alt="Logo"
+				height="18"
+				width="18"
+			/>
+			<strong class="me-auto">Notification</strong>
+			<small class="text-muted">Just Now 🕓</small>
+			<button
+				type="button"
+				class="btn-close toast-close"
+				data-bs-dismiss="toast"
+				aria-label="Close"
+				onclick="(e)=>{e.style.boxShadow='none';}"
+			></button>
+		</div>
+		<div class="toast-body"><strong></strong></div>
+	</div>
+</div>
