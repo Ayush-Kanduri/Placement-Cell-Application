@@ -1,5 +1,21 @@
 //Require the Dotenv Library
 const dotenv = require("dotenv").config();
+//Require Path Module for the Directory
+const path = require("path");
+//Require File System Module for the Directory
+const fs = require("fs");
+//Require the Rotating File Stream Module for Logging
+const rfs = require("rotating-file-stream");
+
+//Log Directory
+const logDirectory = path.join(__dirname, "../production_logs");
+//Ensure Log Directory exists, if not, Create it
+fs.existsSync(logDirectory) || fs.mkdirSync(logDirectory);
+//User is accessing our Website, so, Access Log Stream
+const accessLogStream = rfs.createStream("access.log", {
+	interval: "1d",
+	path: logDirectory,
+});
 
 //Development Environment
 const development = {
@@ -34,7 +50,7 @@ const production = {
 	google_client_secret: process.env.GOOGLE_CLIENT_SECRET,
 	google_callback_url: process.env.GOOGLE_CALLBACK_URL,
 	morgan: {
-		mode: "dev",
+		mode: "combined",
 		options: {
 			stream: accessLogStream,
 		},
