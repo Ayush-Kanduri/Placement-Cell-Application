@@ -8,6 +8,8 @@ const homeController = require("../controllers/home_controller");
 
 //Access the Home Controller's homepage() Function @ '/' route.
 router.get("/", homeController.homepage);
+//Access the Home Controller's signup() Function @ '/signup' route.
+router.get("/signup", homeController.signup);
 
 //Export the Router
 module.exports = router;

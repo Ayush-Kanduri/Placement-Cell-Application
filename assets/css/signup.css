@@ -69,7 +69,7 @@
             box-shadow: none;
             outline: none;
             border-bottom: 1px solid var(--logo-color); }
-      .login_container #login form .login-btn {
+      .login_container #login form .signup-btn {
         margin: auto;
         margin-top: 1rem;
         width: 100%;
@@ -84,7 +84,7 @@
         box-shadow: none;
         outline: none;
         border: none; }
-        .login_container #login form .login-btn:focus {
+        .login_container #login form .signup-btn:focus {
           box-shadow: none;
           outline: none;
           border: none; }
@@ -124,5 +124,5 @@
         .login_container #login form .social-login .google-btn {
           min-width: 220px; }
         @media screen and (max-width: 850px) {
-          .login_container #login form .social-login .signup-btn {
+          .login_container #login form .social-login .login-btn {
             min-width: 220px; } }

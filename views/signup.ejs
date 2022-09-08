@@ -1,0 +1,68 @@
+<link rel="stylesheet" href="<%= assetPath('css/signup.css') %>" />
+<script defer src="<%= assetPath('js/signup.js') %>"></script>
+
+<!-- Header -->
+<%- include('_header.ejs'); %>
+<!-- Login Container -->
+<div class="login_container">
+	<div id="login">
+		<!-- Login Form -->
+		<form action="/login" method="post">
+			<h2>Admin</h2>
+			<div class="form-group">
+				<label for="name">Name</label>
+				<input
+					type="text"
+					class="form-control"
+					id="name"
+					aria-describedby="nameHelp"
+					placeholder="Enter your Name"
+					name="name"
+				/>
+			</div>
+			<div class="form-group">
+				<label for="email">Email Address</label>
+				<input
+					type="email"
+					class="form-control"
+					id="email"
+					aria-describedby="emailHelp"
+					placeholder="Enter your Email"
+					name="email"
+				/>
+			</div>
+			<div class="form-group">
+				<label for="password">Password</label>
+				<input
+					type="password"
+					class="form-control"
+					id="password"
+					placeholder="Password"
+					name="password"
+				/>
+			</div>
+			<div class="form-group">
+				<label for="confirm_password">Confirm Password</label>
+				<input
+					type="password"
+					class="form-control"
+					id="confirm_password"
+					placeholder="Confirm Password"
+					name="confirm_password"
+				/>
+			</div>
+			<button type="submit" class="btn signup-btn">Sign Up</button>
+			<!-- Social Login & Login -->
+			<div class="social-login">
+				<button type="submit" class="btn login-btn">Login</button>
+				<button type="submit" class="btn google-btn">
+					Login with Google&emsp;
+					<img
+						src="<%= assetPath('images/google-logo.png') %>"
+						alt="Google Logo"
+					/>
+				</button>
+			</div>
+		</form>
+	</div>
+</div>

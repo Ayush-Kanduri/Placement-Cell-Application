@@ -15,6 +15,7 @@
 	margin: 0;
 	box-sizing: border-box;
 	font-family: "Poppins", sans-serif;
+	scroll-behavior: smooth;
 }
 
 //---------Root Styling :: CSS Variables---------
@@ -37,11 +38,14 @@ body {
 	background-blend-mode: multiply;
 	width: 100vw;
 	min-height: 100vh;
-	height: 100vh;
+	// height: 100vh;
+	scroll-behavior: smooth;
+	overflow: hidden;
 	overflow-y: scroll;
 	&::-webkit-scrollbar {
 		display: none;
 		overflow: hidden;
+		scroll-behavior: smooth;
 	}
 }
 
@@ -68,14 +72,8 @@ main {
 	position: relative;
 	-webkit-backdrop-filter: blur(6px);
 	backdrop-filter: blur(6px);
-	overflow-y: scroll;
-	&::-webkit-scrollbar {
-		display: none;
-		overflow: hidden;
-	}
+	overflow: hidden;
 	@media screen and (max-height: 555px) {
 		height: auto;
 	}
 }
-
-//---------Media Query---------

@@ -11,7 +11,8 @@
   padding: 0;
   margin: 0;
   box-sizing: border-box;
-  font-family: "Poppins", sans-serif; }
+  font-family: "Poppins", sans-serif;
+  scroll-behavior: smooth; }
 
 :root {
   --background-color: #ffe9ae;
@@ -30,11 +31,13 @@ body {
   background-blend-mode: multiply;
   width: 100vw;
   min-height: 100vh;
-  height: 100vh;
+  scroll-behavior: smooth;
+  overflow: hidden;
   overflow-y: scroll; }
   body::-webkit-scrollbar {
     display: none;
-    overflow: hidden; }
+    overflow: hidden;
+    scroll-behavior: smooth; }
 
 h1,
 h2,
@@ -56,10 +59,7 @@ main {
   position: relative;
   -webkit-backdrop-filter: blur(6px);
   backdrop-filter: blur(6px);
-  overflow-y: scroll; }
-  main::-webkit-scrollbar {
-    display: none;
-    overflow: hidden; }
+  overflow: hidden; }
   @media screen and (max-height: 555px) {
     main {
       height: auto; } }

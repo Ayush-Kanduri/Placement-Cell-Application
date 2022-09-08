@@ -1,6 +1,10 @@
 <link rel="stylesheet" href="<%= assetPath('css/_header.css') %>" />
 
+<!-- If User is not logged in -->
 <% if (!locals.user) { %>
+<!-- User Flag -->
+<input type="hidden" id="User" value="false" />
+<!-- Header -->
 <header style="justify-content: center">
 	<img src="<%= assetPath('images/logo.png') %>" alt="Logo" id="logo" />
 	<h1>Employee Login</h1>

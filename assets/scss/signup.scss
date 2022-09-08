@@ -79,8 +79,8 @@
 					}
 				}
 			}
-			//---------Login Button---------
-			.login-btn {
+			//---------Sign Up Button---------
+			.signup-btn {
 				margin: auto;
 				margin-top: 1rem;
 				width: 100%;
@@ -141,8 +141,8 @@
 				.google-btn {
 					min-width: 220px;
 				}
-				//---------Sign Up Button---------
-				.signup-btn {
+				//---------Login Button---------
+				.login-btn {
 					@media screen and (max-width: 850px) {
 						min-width: 220px;
 					}

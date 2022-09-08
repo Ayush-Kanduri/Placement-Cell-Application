@@ -1,3 +1,4 @@
+//---------Header---------
 header {
 	background-color: var(--background-color);
 	width: 100%;
@@ -11,6 +12,7 @@ header {
 	z-index: 100;
 	box-shadow: 0 0 10px 5px rgba(0, 0, 0, 0.2);
 	opacity: 0.7;
+	//---------Logo---------
 	#logo {
 		width: 200px;
 		height: 200px;
@@ -24,6 +26,7 @@ header {
 			height: 130px;
 		}
 	}
+	//---------Title---------
 	h1 {
 		@media screen and (max-width: 360px) {
 			font-size: 1.3rem !important;

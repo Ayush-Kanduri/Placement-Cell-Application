@@ -1,8 +1,12 @@
 <link rel="stylesheet" href="<%= assetPath('css/home.css') %>" />
+<script defer src="<%= assetPath('js/login.js') %>"></script>
 
+<!-- Header -->
 <%- include('_header.ejs'); %>
+<!-- Login Container -->
 <div class="login_container">
 	<div id="login">
+		<!-- Login Form -->
 		<form action="/login" method="post">
 			<h2>Admin</h2>
 			<div class="form-group">
@@ -25,6 +29,7 @@
 				/>
 			</div>
 			<button type="submit" class="btn login-btn">Login</button>
+			<!-- Social Login & Sign Up -->
 			<div class="social-login">
 				<button type="submit" class="btn signup-btn">Sign Up</button>
 				<button type="submit" class="btn google-btn">
