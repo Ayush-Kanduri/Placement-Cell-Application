@@ -17,11 +17,21 @@
   --background-color: #ffe9ae;
   --header-color: #ffdba4;
   --logo-color: #000000;
-  --button-color: #ffda53;
+  --accent-color: #ffffff;
   font-family: "Poppins", sans-serif; }
 
 body {
-  overflow-x: hidden; }
+  background-color: var(--background-color);
+  background-image: var(--BG);
+  background-position: center;
+  background-repeat: no-repeat;
+  background-size: cover;
+  background-attachment: fixed;
+  background-blend-mode: multiply;
+  width: 100vw;
+  min-height: 100vh;
+  height: 100vh;
+  overflow-y: scroll; }
   body::-webkit-scrollbar {
     display: none;
     overflow: hidden; }
@@ -41,12 +51,15 @@ h3 {
   word-break: break-all; }
 
 main {
-  background-color: var(--background-color);
-  width: 100vw;
-  min-height: 100vh;
-  display: flex;
-  overflow: scroll;
-  position: relative; }
+  width: 100%;
+  height: 100%;
+  position: relative;
+  -webkit-backdrop-filter: blur(6px);
+  backdrop-filter: blur(6px);
+  overflow-y: scroll; }
   main::-webkit-scrollbar {
     display: none;
     overflow: hidden; }
+  @media screen and (max-height: 555px) {
+    main {
+      height: auto; } }

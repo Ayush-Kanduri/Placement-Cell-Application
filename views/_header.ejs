@@ -1,0 +1,8 @@
+<link rel="stylesheet" href="<%= assetPath('css/_header.css') %>" />
+
+<% if (!locals.user) { %>
+<header style="justify-content: center">
+	<img src="<%= assetPath('images/logo.png') %>" alt="Logo" id="logo" />
+	<h1>Employee Login</h1>
+</header>
+<% } %>
