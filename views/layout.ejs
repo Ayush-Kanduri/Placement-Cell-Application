@@ -36,9 +36,11 @@
 		<script defer src="<%= assetPath('js/layout.js') %>"></script>
 		<%- script %>
 	</head>
-	<body style="--BG: url(<%=assetPath('images/background.jpg')%>)">
-		<!-- Body -->
-		<main><%- body %></main>
+	<body>
+		<main style="--BG: url(<%=assetPath('images/background.jpg')%>)">
+			<!-- Body -->
+			<%- body %>
+		</main>
 		<!-- Toast -->
 		<%- include('_toast.ejs'); %>
 	</body>
