@@ -26,6 +26,8 @@ const viewHelpers = require("./config/view-helpers")(app);
 const env = require("./config/environment");
 //Requires the index.js - Route File, from the Routes Folder.
 const route = require("./routes/index");
+//Requires the Custom Middleware
+const customMiddleware = require("./config/middleware");
 
 //Middleware - CORS
 app.use(cors());
@@ -66,6 +68,8 @@ app.set("view engine", "ejs");
 //Set Up - Template Engine Views Folder Path (..../views)
 app.set("views", path.join(__dirname, "views"));
 
+//Middleware - Creates Folders if they don't exist
+app.use(customMiddleware.createFolders);
 //Middleware - App calls index.js - Route File, whenever '/' route is called in the request.
 app.use("/", route);
 
