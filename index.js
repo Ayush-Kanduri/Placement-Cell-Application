@@ -24,6 +24,8 @@ const logger = require("morgan");
 const viewHelpers = require("./config/view-helpers")(app);
 //Require the Environment File for getting the Environment Variables
 const env = require("./config/environment");
+//Requires MongoDB
+const db = require("./config/mongoose");
 //Requires the index.js - Route File, from the Routes Folder.
 const route = require("./routes/index");
 //Requires the Custom Middleware
