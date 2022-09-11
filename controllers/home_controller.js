@@ -85,3 +85,18 @@ module.exports.createUser = async (req, res) => {
 		return res.redirect("back");
 	}
 };
+
+//Creates a New Session or Logs the User In
+module.exports.createSession = async (req, res) => {
+	req.flash("success", "Logged In Successfully 🔥");
+	return res.redirect("/");
+};
+
+//Destroys the Session or Logs the User Out
+module.exports.destroySession = (req, res) => {
+	req.logout((err) => {
+		if (err) return next(err);
+		req.flash("success", "Logged Out Successfully 🚀");
+		return res.redirect("/");
+	});
+};

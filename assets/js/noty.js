@@ -39,6 +39,7 @@
 				}).show();
 			}
 		};
+
 		Notification();
 	} catch (error) {
 		console.log(error);

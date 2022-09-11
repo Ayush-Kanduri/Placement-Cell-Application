@@ -3,6 +3,9 @@
 
 <!-- Header -->
 <%- include('_header.ejs'); %>
+
+<!-- If User is not logged in -->
+<% if (!locals.user) { %>
 <!-- Login Container -->
 <div class="login_container">
 	<div id="login">
@@ -47,3 +50,11 @@
 		</form>
 	</div>
 </div>
+<% } %>
+
+<!-- If User is logged in -->
+<% if (locals.user) { %>
+<div class="homepage">
+	<h1>Welcome to the Home Page <%= locals.user.name %> 🚀</h1>
+</div>
+<% } %>

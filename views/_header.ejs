@@ -10,3 +10,13 @@
 	<h1>Employee Login</h1>
 </header>
 <% } %>
+
+<!-- If User is logged in -->
+<% if (locals.user) { %>
+<!-- User Flag -->
+<input type="hidden" id="User" value="true" />
+<!-- Header -->
+<header style="justify-content: space-between">
+	<img src="<%= assetPath('images/logo.png') %>" alt="Logo" id="logo" />
+</header>
+<% } %>

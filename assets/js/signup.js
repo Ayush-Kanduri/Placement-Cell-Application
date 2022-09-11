@@ -35,7 +35,10 @@
 				const email = document.getElementById("email").value.trim();
 				const pass = document.getElementById("password").value;
 				const CPass = document.getElementById("confirm_password").value;
-				const regex = /^w+([.-]?w+)*@w+([.-]?w+)*(.w{2,3})+$/;
+				const regex1 = /\S+@\S+\.\S+/;
+				const regex2 = /^\w+([\.-]?\w+)*@\w+([\.-]?\w+)*(\.\w{2,3})+$/;
+				const at = email.indexOf("@");
+				const dot = email.indexOf(".");
 
 				if (name === "") return notify("error", "Name is Required ❌");
 				if (email === "") return notify("error", "Email is Required ❌");
@@ -50,11 +53,6 @@
 					notify("error", message);
 					return;
 				}
-				if (!email.match(regex)) {
-					let message = "Invalid Email Address ❌";
-					notify("error", message);
-					return;
-				}
 				if (pass.length < 6) {
 					let message = "Password must be at least 6 Characters Long ❌";
 					notify("error", message);
@@ -62,6 +60,27 @@
 				}
 				if (CPass !== pass) {
 					let message = "Password does not match ❌";
+					notify("error", message);
+					return;
+				}
+				//For @ and . in email
+				if (!email.match(regex1)) {
+					console.log(1);
+					let message = "Invalid Email Address ❌";
+					notify("error", message);
+					return;
+				}
+				//For characters, digits, special characters, @ and . in email
+				if (!email.match(regex2)) {
+					console.log(2);
+					let message = "Invalid Email Address ❌";
+					notify("error", message);
+					return;
+				}
+				//For @ and . indexes in email
+				if (at < 1 || dot < at + 2 || dot + 2 >= email.length) {
+					console.log(3);
+					let message = "Invalid Email Address ❌";
 					notify("error", message);
 					return;
 				}

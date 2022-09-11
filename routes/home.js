@@ -2,6 +2,10 @@
 const express = require("express");
 //Create a Local Router
 const router = express.Router();
+//Require the Passport Module
+const passport = require("passport");
+//Requires the Passport Local Strategy Module
+const passportLocal = require("../config/passport-local-strategy");
 //Requires the BEValidation Middleware Module
 const { BEValidation } = require("../config/middleware");
 
@@ -18,6 +22,17 @@ router.post(
 	BEValidation("createUser"),
 	homeController.createUser
 );
+//Access the Home Controller's createSession() Function @ '/create-session' route.
+router.post(
+	"/create-session",
+	passport.authenticate(
+		"local", //Strategy to be used for authentication
+		{ failureRedirect: "/" } //Failure Redirect URL
+	),
+	homeController.createSession
+);
+//Access the Home Controller's destroySession() Function @ '/destroy-session' route.
+router.get("/destroy-session", homeController.destroySession);
 
 //Export the Router
 module.exports = router;
