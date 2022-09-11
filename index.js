@@ -28,6 +28,8 @@ const session = require("express-session");
 const MongoStore = require("connect-mongo");
 //Requires the PassportJS Module for the Authentication
 const passport = require("passport");
+//Requires the Connect Flash Module
+const flash = require("connect-flash");
 //Require the View Helpers
 const viewHelpers = require("./config/view-helpers")(app);
 //Require the Environment File for getting the Environment Variables
@@ -127,6 +129,10 @@ app.use(passport.initialize());
 app.use(passport.session());
 //Middleware - Sets the Authenticated User in the Response
 app.use(passport.setAuthenticatedUser);
+//Middleware - Uses the Flash Message just after the Session Cookie is set
+app.use(flash());
+//Middleware - Uses the Custom Middleware to set the Flash Message in the Response
+app.use(customMiddleware.setFlash);
 //Middleware - Creates Folders if they don't exist
 app.use(customMiddleware.createFolders);
 //Middleware - App calls index.js - Route File, whenever '/' route is called in the request.

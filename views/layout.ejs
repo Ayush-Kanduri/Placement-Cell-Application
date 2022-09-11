@@ -43,5 +43,28 @@
 		</main>
 		<!-- Toast -->
 		<%- include('_toast.ejs'); %>
+
+		<!-- Script -->
+		<script defer>
+			<% if(flash.success && flash.success.length > 0){ %>
+				new Noty({
+					theme: 'relax',
+					text: '<%= flash.success %>',
+					type:'success',
+					layout:'topRight',
+					timeout:3000
+				}).show();
+			<% } %>
+			<% if(flash.error && flash.error.length > 0){ %>
+				new Noty({
+					theme: 'metroui',
+					text: '<%= flash.error %>',
+					type:'error',
+					layout:'topRight',
+					timeout:3000
+				}).show();
+			<% } %>
+		</script>
+		<!-- Script -->
 	</body>
 </html>
