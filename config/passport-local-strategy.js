@@ -18,8 +18,12 @@ passport.use(
 		async (req, email, password, done) => {
 			try {
 				const employee = await Employee.findOne({ email: email });
+				if (!employee) {
+					req.flash("error", "Invalid Username/Password ❌");
+					return done(null, false);
+				}
 				const isMatch = await bcrypt.compare(password, employee.password);
-				if (!employee || !isMatch) {
+				if (!isMatch) {
 					req.flash("error", "Invalid Username/Password ❌");
 					return done(null, false);
 				}
