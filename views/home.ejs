@@ -1,5 +1,6 @@
 <link rel="stylesheet" href="<%= assetPath('css/home.css') %>" />
 <script defer src="<%= assetPath('js/login.js') %>"></script>
+<script defer src="<%= assetPath('js/frontend-validation.js') %>"></script>
 
 <!-- Header -->
 <%- include('_header.ejs'); %>
@@ -7,7 +8,7 @@
 <div class="login_container">
 	<div id="login">
 		<!-- Login Form -->
-		<form action="/login" method="post">
+		<form action="/create-session" method="post">
 			<h2>Admin</h2>
 			<div class="form-group">
 				<label for="exampleInputEmail1">Email Address</label>
@@ -17,6 +18,8 @@
 					id="exampleInputEmail1"
 					aria-describedby="emailHelp"
 					placeholder="Enter email"
+					name="email"
+					required
 				/>
 			</div>
 			<div class="form-group">
@@ -26,13 +29,15 @@
 					class="form-control"
 					id="exampleInputPassword1"
 					placeholder="Password"
+					name="password"
+					required
 				/>
 			</div>
 			<button type="submit" class="btn login-btn">Login</button>
 			<!-- Social Login & Sign Up -->
 			<div class="social-login">
-				<button type="submit" class="btn signup-btn">Sign Up</button>
-				<button type="submit" class="btn google-btn">
+				<button class="btn signup-btn">Sign Up</button>
+				<button class="btn google-btn">
 					Login with Google&emsp;
 					<img
 						src="<%= assetPath('images/google-logo.png') %>"

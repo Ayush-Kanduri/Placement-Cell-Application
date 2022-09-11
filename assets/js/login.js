@@ -8,6 +8,13 @@
 				window.location.href = "/signup";
 			});
 		});
+		//---------Redirect to Google Login---------
+		document.querySelectorAll(".google-btn").forEach((btn) => {
+			btn.addEventListener("click", (e) => {
+				e.preventDefault();
+				e.stopPropagation();
+			});
+		});
 	} catch (e) {
 		console.log(e);
 	}

@@ -1,5 +1,6 @@
 <link rel="stylesheet" href="<%= assetPath('css/signup.css') %>" />
 <script defer src="<%= assetPath('js/signup.js') %>"></script>
+<script defer src="<%= assetPath('js/frontend-validation.js') %>"></script>
 
 <!-- Header -->
 <%- include('_header.ejs'); %>
@@ -7,7 +8,7 @@
 <div class="login_container">
 	<div id="login">
 		<!-- Login Form -->
-		<form action="/login" method="post">
+		<form action="/create-user" method="post">
 			<h2>Admin</h2>
 			<div class="form-group">
 				<label for="name">Name</label>
@@ -18,6 +19,7 @@
 					aria-describedby="nameHelp"
 					placeholder="Enter your Name"
 					name="name"
+					required
 				/>
 			</div>
 			<div class="form-group">
@@ -29,6 +31,7 @@
 					aria-describedby="emailHelp"
 					placeholder="Enter your Email"
 					name="email"
+					required
 				/>
 			</div>
 			<div class="form-group">
@@ -39,6 +42,7 @@
 					id="password"
 					placeholder="Password"
 					name="password"
+					required
 				/>
 			</div>
 			<div class="form-group">
@@ -49,13 +53,14 @@
 					id="confirm_password"
 					placeholder="Confirm Password"
 					name="confirm_password"
+					required
 				/>
 			</div>
 			<button type="submit" class="btn signup-btn">Sign Up</button>
 			<!-- Social Login & Login -->
 			<div class="social-login">
-				<button type="submit" class="btn login-btn">Login</button>
-				<button type="submit" class="btn google-btn">
+				<button class="btn login-btn">Login</button>
+				<button class="btn google-btn">
 					Login with Google&emsp;
 					<img
 						src="<%= assetPath('images/google-logo.png') %>"

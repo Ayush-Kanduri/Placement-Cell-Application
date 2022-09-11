@@ -89,7 +89,7 @@ employeeSchema.statics.uploadedFile = multer({
 }).single("employee_avatar");
 
 //Static Variable :: AVATAR_PATH should be available globally in the EMPLOYEE Model
-fileSchema.statics.filePath = AVATAR_PATH;
+employeeSchema.statics.filePath = AVATAR_PATH;
 
 //Create a Model/Collection to populate the data with the same name for the schema in the DB
 const Employee = mongoose.model("Employee", employeeSchema);

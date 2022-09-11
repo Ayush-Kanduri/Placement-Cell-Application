@@ -2,7 +2,7 @@
 const passport = require("passport");
 //Require the Passport Local Strategy
 const LocalStrategy = require("passport-local").Strategy;
-//Require the User Model
+//Require the Employee Model
 const Employee = require("../models/employee");
 //Require the Bcrypt Library
 const bcrypt = require("bcryptjs");
@@ -69,6 +69,3 @@ passport.setAuthenticatedUser = function (req, res, next) {
 
 //Export the Passport Module
 module.exports = passport;
-
-// const salt = await bcrypt.genSalt(10);
-// const hashedPassword = await bcrypt.hash(password, salt);

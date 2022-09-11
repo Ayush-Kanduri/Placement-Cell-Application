@@ -1,0 +1,8 @@
+<script defer src="<%= assetPath('js/noty.js') %>"></script>
+
+<!-- Notification -->
+<% if(flash.success && flash.success.length > 0){ %>
+<input type="hidden" id="Noty" value="<%= flash.success %>" data="success" />
+<% }else if (flash.error && flash.error.length > 0){ %>
+<input type="hidden" id="Noty" value="<%= flash.error %>" data="error" />
+<% } %>

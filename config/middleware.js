@@ -2,6 +2,10 @@
 const path = require("path");
 //Require File System Module
 const fs = require("fs");
+//Require Body Module from Express Validator
+const { body } = require("express-validator");
+//Require the Environment File for getting the Environment Variables
+const env = require("./environment");
 
 //Create Folders if they don't exist
 module.exports.createFolders = async (req, res, next) => {
@@ -57,13 +61,8 @@ module.exports.DBValidation = (req, res, err) => {
 		message: error,
 		code: code,
 	};
-	console.log(obj);
 
-	//Return Format
-	// const { DBValidation } = require("./config/middleware");
-	// return DBValidation(req, res, err);
-
-	return res.json(obj);
+	return obj; //return res.json(obj);
 };
 
 //Sets the Flash Message into the Locals of the Response Body
@@ -73,4 +72,34 @@ module.exports.setFlash = (req, res, next) => {
 		error: req.flash("error"),
 	};
 	next();
+};
+
+//BACKEND VALIDATION :: Validates the Sign Up Form Data at the router level before sending it to DB
+module.exports.BEValidation = (method) => {
+	switch (method) {
+		case "createUser": {
+			return [
+				body("email", "Email is Invalid ❌").exists().isEmail(),
+				body("password", "Password must be at least 6 Characters Long ❌")
+					.exists()
+					.isLength({ min: 6 }),
+				body("name", "Name must be at least 3 Characters Long ❌")
+					.exists()
+					.isLength({ min: 3 }),
+			];
+		}
+	}
+};
+
+//Path Finder Function :: Finds the Path of the Static File
+module.exports.pathFinder = (link) => {
+	if (env.name === "development") return "/" + link;
+	return (
+		"/" +
+		JSON.parse(
+			fs.readFileSync(
+				path.join(__dirname, "../public/assets/rev-manifest.json")
+			)
+		)[link]
+	);
 };

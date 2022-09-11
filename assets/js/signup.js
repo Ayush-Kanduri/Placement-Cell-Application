@@ -15,6 +15,13 @@
 				window.location.href = "/";
 			});
 		});
+		//---------Redirect to Google Login---------
+		document.querySelectorAll(".google-btn").forEach((btn) => {
+			btn.addEventListener("click", (e) => {
+				e.preventDefault();
+				e.stopPropagation();
+			});
+		});
 	} catch (error) {
 		console.log(error);
 	}
