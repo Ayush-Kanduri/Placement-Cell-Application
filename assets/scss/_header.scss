@@ -9,27 +9,108 @@ header {
 	position: absolute;
 	top: 0;
 	left: 0;
-	box-shadow: 0 0 10px 5px rgba(0, 0, 0, 0.2);
+	box-shadow: 0 5px 10px 2px rgba(0, 0, 0, 0.3);
 	opacity: 0.7;
 	z-index: 1;
+	overflow: hidden;
+	//---------Media Query---------
+	&.signed {
+		ul.normal {
+			display: flex;
+		}
+		ul.responsive {
+			display: none;
+		}
+		@media screen and (max-width: 960px) {
+			ul.normal {
+				display: none;
+			}
+			ul.responsive {
+				display: flex;
+				gap: 20px;
+			}
+		}
+		@media screen and (max-width: 730px) {
+			ul.normal {
+				display: none;
+			}
+			ul.responsive {
+				display: none;
+			}
+		}
+	}
 	//---------Logo---------
-	#logo {
-		width: 200px;
-		height: 200px;
+	.logo {
 		display: flex;
-		justify-content: center;
+		justify-content: flex-start;
 		align-items: center;
-		object-fit: cover;
-		object-position: center;
-		@media screen and (max-width: 360px) {
-			width: 130px;
-			height: 130px;
+		min-width: 15%;
+		height: 100%;
+		img {
+			min-width: 170px;
+			height: 100%;
+			object-fit: cover;
+			object-position: center;
+			@media screen and (max-width: 600px) {
+				min-width: 130px;
+			}
 		}
 	}
 	//---------Title---------
 	h1 {
-		@media screen and (max-width: 360px) {
-			font-size: 1.3rem !important;
+		@media screen and (max-width: 600px) {
+			font-size: 1.5rem !important;
+			text-align: center;
+		}
+	}
+	//---------Navbar---------
+	nav {
+		display: flex;
+		justify-content: center;
+		align-items: center;
+		width: 85%;
+		height: 100%;
+		position: relative;
+		//---------Nav Links---------
+		ul {
+			justify-content: flex-end;
+			align-items: center;
+			width: 100%;
+			height: 100%;
+			padding-left: 0%;
+			flex-wrap: wrap;
+			gap: 40px;
+			li {
+				list-style: none;
+				a {
+					text-decoration: none;
+					font-size: 1rem;
+					color: rgb(70, 70, 70);
+					font-weight: 500;
+					transition: all 0.15s ease;
+					&:hover {
+						color: var(--logo-color);
+					}
+					&.active {
+						color: var(--logo-color);
+						border-bottom: 2px solid var(--logo-color);
+					}
+				}
+				&.nav-btns {
+					a {
+						color: var(--logo-color);
+						border: 1px solid var(--logo-color);
+						padding: 5px 10px;
+						border-radius: 5px;
+						font-weight: 500;
+						transition: all 0.2s ease;
+						&:hover {
+							color: var(--accent-color);
+							background-color: rgb(92, 92, 92);
+						}
+					}
+				}
+			}
 		}
 	}
 }

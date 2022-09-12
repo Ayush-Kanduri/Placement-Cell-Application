@@ -1,12 +1,22 @@
 <link rel="stylesheet" href="<%= assetPath('css/_header.css') %>" />
+<link rel="stylesheet" href="<%= assetPath('css/hamburger-menu.css') %>" />
+<script defer src="<%= assetPath('js/_header.js') %>"></script>
 
 <!-- If User is not logged in -->
 <% if (!locals.user) { %>
 <!-- User Flag -->
 <input type="hidden" id="User" value="false" />
 <!-- Header -->
-<header style="justify-content: center">
-	<img src="<%= assetPath('images/logo.png') %>" alt="Logo" id="logo" />
+<header style="justify-content: center" class="unsigned">
+	<!-- Logo -->
+	<div
+		class="logo"
+		onclick="window.location.href='/';"
+		style="cursor: pointer"
+	>
+		<img src="<%= assetPath('images/logo.png') %>" alt="Logo" />
+	</div>
+	<!-- Title -->
 	<h1>Employee Login</h1>
 </header>
 <% } %>
@@ -16,7 +26,111 @@
 <!-- User Flag -->
 <input type="hidden" id="User" value="true" />
 <!-- Header -->
-<header style="justify-content: space-between">
-	<img src="<%= assetPath('images/logo.png') %>" alt="Logo" id="logo" />
+<header style="justify-content: space-between" class="signed">
+	<!-- Logo -->
+	<div
+		class="logo"
+		onclick="window.location.href='/';"
+		style="cursor: pointer"
+	>
+		<img src="<%= assetPath('images/logo.png') %>" alt="Logo" />
+	</div>
+	<!-- Navbar -->
+	<nav class="navbar">
+		<!-- Normal Nav Links -->
+		<ul class="normal">
+			<li class="nav-links">
+				<a href="/" class="active home"
+					>Dashboard&ensp;<i class="fa-solid fa-house"></i
+				></a>
+			</li>
+			<li class="nav-links">
+				<a href="/jobs" class="jobs"
+					>Job Portal&ensp;<i class="fa-solid fa-briefcase"></i
+				></a>
+			</li>
+			<li class="nav-links">
+				<a href="/profile" class="profile"
+					>Profile&ensp;<i class="fa-solid fa-user"></i
+				></a>
+			</li>
+			<li class="nav-btns">
+				<a href="/report"
+					>Download Report&ensp;<i class="fa-solid fa-cloud-arrow-down"></i
+				></a>
+			</li>
+			<li class="nav-btns">
+				<a href="/destroy-session"
+					>Logout&ensp;<i class="fa-solid fa-right-from-bracket"></i
+				></a>
+			</li>
+		</ul>
+		<!-- Responsive Nav Links -->
+		<ul class="responsive">
+			<li class="nav-links">
+				<a href="/" class="active home"
+					>Dashboard&ensp;<i class="fa-solid fa-house"></i
+				></a>
+			</li>
+			<li class="nav-links">
+				<a href="/jobs" class="jobs"
+					>Job Portal&ensp;<i class="fa-solid fa-briefcase"></i
+				></a>
+			</li>
+			<li class="nav-links">
+				<a href="/profile" class="profile"
+					>Profile&ensp;<i class="fa-solid fa-user"></i
+				></a>
+			</li>
+			<li class="nav-btns">
+				<a href="/report">Data</a>
+			</li>
+			<li class="nav-btns">
+				<a href="/destroy-session">Logout</a>
+			</li>
+		</ul>
+		<!-- Hamburger Menu -->
+		<div class="menu-wrap">
+			<input type="checkbox" class="toggler" />
+			<div class="hamburger"><div></div></div>
+			<div class="menu">
+				<div>
+					<div>
+						<ul>
+							<li>
+								<a href="/" class="active home"
+									>Dashboard&ensp;<i class="fa-solid fa-house"></i
+								></a>
+							</li>
+							<li class="nav-links">
+								<a href="/jobs" class="jobs"
+									>Job Portal&ensp;<i class="fa-solid fa-briefcase"></i
+								></a>
+							</li>
+							<li class="nav-links">
+								<a href="/profile" class="profile"
+									>Profile&ensp;<i class="fa-solid fa-user"></i
+								></a>
+							</li>
+							<li class="nav-links">
+								<a href="/report"
+									>Download Report&ensp;<i
+										class="fa-solid fa-cloud-arrow-down"
+									></i
+								></a>
+							</li>
+							<li class="nav-links">
+								<a href="/destroy-session"
+									>Logout&ensp;<i
+										class="fa-solid fa-right-from-bracket"
+									></i
+								></a>
+							</li>
+						</ul>
+					</div>
+				</div>
+			</div>
+		</div>
+	</nav>
 </header>
 <% } %>

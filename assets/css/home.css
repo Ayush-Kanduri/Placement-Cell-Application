@@ -135,8 +135,16 @@
   align-items: center;
   padding: 10px;
   margin: auto; }
-  .homepage h1 {
-    margin-top: 10rem;
-    background-color: #ffa734;
+  .homepage .banner {
+    margin-top: 7rem;
+    background-color: rgba(255, 167, 52, 0.8);
     border-radius: 10px;
-    padding: 7px; }
+    padding: 7px;
+    word-spacing: 0.2rem; }
+    .homepage .banner h2 {
+      font-size: 2rem;
+      font-weight: 700;
+      color: var(--logo-color);
+      margin: 5px 0;
+      opacity: 0.8;
+      text-align: center; }
