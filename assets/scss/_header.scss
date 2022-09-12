@@ -51,9 +51,6 @@ header {
 			height: 100%;
 			object-fit: cover;
 			object-position: center;
-			@media screen and (max-width: 600px) {
-				min-width: 130px;
-			}
 		}
 	}
 	//---------Title---------

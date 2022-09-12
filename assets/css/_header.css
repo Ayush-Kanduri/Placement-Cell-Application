@@ -38,9 +38,6 @@ header {
       height: 100%;
       object-fit: cover;
       object-position: center; }
-      @media screen and (max-width: 600px) {
-        header .logo img {
-          min-width: 130px; } }
   @media screen and (max-width: 600px) {
     header h1 {
       font-size: 1.5rem !important;

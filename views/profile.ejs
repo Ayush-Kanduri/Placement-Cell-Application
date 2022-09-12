@@ -5,6 +5,11 @@
 
 <!-- If User is logged in -->
 <% if (locals.user) { %>
+<input
+	type="hidden"
+	id="employeeProfile"
+	value="<%= locals.profile_user.id %>"
+/>
 <div class="profilePage">
 	<!-- Banner -->
 	<div class="banner">
