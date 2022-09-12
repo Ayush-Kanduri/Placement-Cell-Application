@@ -1,0 +1,14 @@
+<link rel="stylesheet" href="<%= assetPath('css/profile.css') %>" />
+
+<!-- Header -->
+<%- include('_header.ejs'); %>
+
+<!-- If User is logged in -->
+<% if (locals.user) { %>
+<div class="profilePage">
+	<!-- Banner -->
+	<div class="banner">
+		<h2>Team Career Camp 🚀</h2>
+	</div>
+</div>
+<% } %>

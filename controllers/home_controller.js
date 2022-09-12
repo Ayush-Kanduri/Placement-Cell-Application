@@ -101,3 +101,19 @@ module.exports.destroySession = (req, res) => {
 		return res.redirect("/");
 	});
 };
+
+//Displays the Profile Page
+module.exports.profile = async (req, res) => {
+	try {
+		const employee = await Employee.findById(req.params.id);
+		return res.render("profile", {
+			title: "Profile 👨",
+			profile_user: employee,
+		});
+	} catch (error) {
+		console.log(error);
+		const obj = DBValidation(req, res, error);
+		req.flash("error", obj.message);
+		return res.redirect("back");
+	}
+};
