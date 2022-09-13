@@ -19,7 +19,7 @@ header {
     position: relative; }
     header nav .menu-wrap {
       display: none;
-      position: fixed;
+      position: absolute;
       top: 3%;
       left: 85%;
       z-index: 2; }

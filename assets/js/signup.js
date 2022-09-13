@@ -65,21 +65,18 @@
 				}
 				//For @ and . in email
 				if (!email.match(regex1)) {
-					console.log(1);
 					let message = "Invalid Email Address ❌";
 					notify("error", message);
 					return;
 				}
 				//For characters, digits, special characters, @ and . in email
 				if (!email.match(regex2)) {
-					console.log(2);
 					let message = "Invalid Email Address ❌";
 					notify("error", message);
 					return;
 				}
 				//For @ and . indexes in email
 				if (at < 1 || dot < at + 2 || dot + 2 >= email.length) {
-					console.log(3);
 					let message = "Invalid Email Address ❌";
 					notify("error", message);
 					return;

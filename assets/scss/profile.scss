@@ -73,12 +73,31 @@
 					min-width: 250px;
 					min-height: 250px;
 					border-radius: 10px;
-					overflow: hidden;
-					background-position: center;
-					background-repeat: no-repeat;
-					background-size: cover;
-					border: 1px solid var(--logo-color);
 					box-shadow: 1px 5px 5px 2px rgba(0, 0, 0, 0.5);
+					z-index: 1;
+					img {
+						width: 100%;
+						height: 100%;
+						margin: 0%;
+						padding: 0%;
+						-o-object-fit: cover;
+						-o-object-position: center;
+						-mz-object-fit: cover;
+						-mz-object-position: center;
+						-webkit-object-fit: cover;
+						-webkit-object-position: center;
+						object-fit: cover;
+						object-position: center;
+						aspect-ratio: 1/1;
+						position: absolute;
+						top: 0;
+						left: 0;
+						z-index: -1;
+					}
+					&:hover {
+						transition: 200ms filter linear;
+						filter: grayscale(1);
+					}
 					@media screen and (max-width: 500px) {
 						min-width: 170px;
 						min-height: 170px;
@@ -95,6 +114,7 @@
 					left: 0;
 					top: 0;
 					opacity: 0;
+					z-index: 2;
 				}
 				.info {
 					width: 60%;

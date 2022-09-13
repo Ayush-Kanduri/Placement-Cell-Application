@@ -1,4 +1,5 @@
 <link rel="stylesheet" href="<%= assetPath('css/profile.css') %>" />
+<script defer src="<%= assetPath('js/update-profile.js') %>"></script>
 
 <!-- Header -->
 <%- include('_header.ejs'); %>
@@ -16,22 +17,21 @@
 		<% if(locals.user.id == profile_user.id){ %>
 		<!-- Update Profile Form -->
 		<form
-			action="/profile/update/<%= profile_user.id %>"
+			action="/update/<%= profile_user.id %>"
 			method="post"
 			enctype="multipart/form-data"
 		>
 			<h2>Update Profile</h2>
 			<div class="form-container">
-				<div
-					class="upload-wrapper"
-					style="background-image: url('<%= profile_user.avatarPath %>')"
-				>
+				<div class="upload-wrapper">
+					<img src="<%= profile_user.avatarPath %>" alt="Employee Image" />
 					<button class="btn btn-grad"></button>
 					<input
 						type="file"
 						name="avatar"
 						class="image"
 						placeholder="Profile Picture"
+						accept="image/png, image/gif, image/jpeg, image/jpg, image/svg"
 					/>
 				</div>
 				<div class="info">
@@ -53,7 +53,7 @@
 						<input
 							type="email"
 							class="form-control"
-							id="exampleInputEmail1"
+							id="email"
 							aria-describedby="emailHelp"
 							placeholder="Enter Email"
 							name="email"
@@ -66,7 +66,7 @@
 						<input
 							type="password"
 							class="form-control"
-							id="exampleInputPassword1"
+							id="password"
 							placeholder="Password"
 							name="password"
 							value="<%= profile_user.password %>"

@@ -61,9 +61,11 @@ module.exports.createUser = async (req, res) => {
 			//New User Creation
 			employee = await Employee.create(req.body);
 			try {
+				//Hashes the Password
 				const salt = await bcrypt.genSalt(10);
 				const hashedPassword = await bcrypt.hash(req.body.password, salt);
 				employee.password = hashedPassword;
+				//Saves the Employee Avatar Path with Blank Avatar
 				employee.avatarPath = pathFinder("images/empty-avatar.png");
 				await employee.save();
 				req.flash("success", "User Created Successfully 🎊 🥳");
@@ -105,11 +107,72 @@ module.exports.destroySession = (req, res) => {
 //Displays the Profile Page
 module.exports.profile = async (req, res) => {
 	try {
+		//Find the Employee to show the Profile
 		const employee = await Employee.findById(req.params.id);
 		return res.render("profile", {
 			title: "Profile 👨",
 			profile_user: employee,
 		});
+	} catch (error) {
+		console.log(error);
+		const obj = DBValidation(req, res, error);
+		req.flash("error", obj.message);
+		return res.redirect("back");
+	}
+};
+
+//Updates the Profile Page
+module.exports.update = async (req, res) => {
+	try {
+		//If the Logged In User is the same as the Employee's Profile then Update the Profile
+		if (req.params.id == req.user.id) {
+			//Find the User by the ID
+			let employee = await Employee.findById(req.params.id);
+			//Call Employee's static method to upload the Profile Picture
+			Employee.uploadedFile(req, res, async (err) => {
+				if (err) {
+					console.log("Error in MULTER: ", err);
+					return res.redirect("back");
+				}
+
+				//Set Name & Email
+				employee.name = req.body.name;
+				employee.email = req.body.email;
+				const salt = await bcrypt.genSalt(10);
+				const hashedPassword = await bcrypt.hash(req.body.password, salt);
+				employee.password = hashedPassword;
+
+				//If Incoming File Exists
+				if (req.file) {
+					//If Employee Avatar already exists in the Database
+					if (employee.avatarPath) {
+						//If Employee Avatar already exists in the "/uploads/employees/avatars" Directory
+						if (
+							fs.existsSync(
+								path.join(__dirname, "..", employee.avatarPath)
+							)
+						) {
+							//Delete that Old Avatar
+							fs.unlinkSync(
+								path.join(__dirname, "..", employee.avatarPath)
+							);
+						}
+					}
+					//Save the New Avatar
+					//Saving the path of the uploaded file into the avatarPath field of the employee
+					employee.avatarPath =
+						Employee.filePath + "/" + req.file.filename;
+				}
+				//Save the Employee
+				await employee.save();
+
+				req.flash("success", "Profile Updated Successfully 🎊 🥳");
+				return res.redirect("back");
+			});
+		} else {
+			req.flash("error", "Unauthorized ❌");
+			return res.status(401).send("Unauthorized");
+		}
 	} catch (error) {
 		console.log(error);
 		const obj = DBValidation(req, res, error);

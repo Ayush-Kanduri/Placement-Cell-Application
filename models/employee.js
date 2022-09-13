@@ -86,7 +86,7 @@ const storage = multer.diskStorage({
 employeeSchema.statics.uploadedFile = multer({
 	storage: storage,
 	fileFilter: fileTypeFilter,
-}).single("employee_avatar");
+}).single("avatar");
 
 //Static Variable :: AVATAR_PATH should be available globally in the EMPLOYEE Model
 employeeSchema.statics.filePath = AVATAR_PATH;
