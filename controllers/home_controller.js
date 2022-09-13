@@ -104,7 +104,6 @@ module.exports.createUser = async (req, res) => {
 //Creates a New Session or Logs the User In
 module.exports.createSession = (req, res) => {
 	if (req.isAuthenticated()) return res.redirect("/");
-
 	req.flash("success", "Logged In Successfully 🔥");
 	return res.redirect("/");
 };
@@ -152,9 +151,14 @@ module.exports.update = async (req, res) => {
 				//Set Name & Email
 				employee.name = req.body.name;
 				employee.email = req.body.email;
-				const salt = await bcrypt.genSalt(10);
-				const hashedPassword = await bcrypt.hash(req.body.password, salt);
-				employee.password = hashedPassword;
+				if (req.body.password !== employee.password) {
+					const salt = await bcrypt.genSalt(10);
+					const hashedPassword = await bcrypt.hash(
+						req.body.password,
+						salt
+					);
+					employee.password = hashedPassword;
+				}
 
 				//If Incoming File Exists
 				if (req.file) {
