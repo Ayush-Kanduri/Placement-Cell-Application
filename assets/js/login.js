@@ -61,6 +61,7 @@ try {
 		btn.addEventListener("click", (e) => {
 			e.preventDefault();
 			e.stopPropagation();
+			window.location.href = "/auth/google";
 		});
 	});
 } catch (error) {

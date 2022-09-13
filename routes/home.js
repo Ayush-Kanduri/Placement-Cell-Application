@@ -41,6 +41,17 @@ router.get(
 );
 //Access the Home Controller's update() Function @ '/update/:id' route.
 router.post("/update/:id", passport.checkAuthentication, homeController.update);
+//Access the Google's OAuth-2.0 Strategy's authenticate() Function @ '/auth/google' route.
+router.get(
+	"/auth/google",
+	passport.authenticate("google", { scope: ["profile", "email"] })
+);
+//Access the Google's OAuth-2.0 Strategy's authenticate() Function @ '/auth/google/callback' route.
+router.get(
+	"/auth/google/callback",
+	passport.authenticate("google", { failureRedirect: "/" }),
+	homeController.createSession
+);
 
 //Export the Router
 module.exports = router;

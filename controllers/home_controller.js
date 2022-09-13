@@ -14,11 +14,25 @@ const path = require("path");
 const bcrypt = require("bcryptjs");
 
 //Displays the Home Page or the Login Page
-module.exports.homepage = (req, res) => {
+module.exports.homepage = async (req, res) => {
 	if (req.isAuthenticated()) {
 		return res.render("home", {
 			title: "Home 🏠",
 		});
+	}
+	//If there are no Employees in the Database then delete all the uploaded files
+	try {
+		let employee = await Employee.find({});
+		if (employee.length === 0) {
+			const files = await fs.promises.readdir(
+				path.join(__dirname, "..", Employee.filePath)
+			);
+			for (let file of files) {
+				fs.unlinkSync(path.join(__dirname, "..", Employee.filePath, file));
+			}
+		}
+	} catch (error) {
+		console.log(error);
 	}
 	return res.render("home", {
 		title: "Login 👋",
@@ -88,7 +102,7 @@ module.exports.createUser = async (req, res) => {
 };
 
 //Creates a New Session or Logs the User In
-module.exports.createSession = async (req, res) => {
+module.exports.createSession = (req, res) => {
 	if (req.isAuthenticated()) return res.redirect("/");
 
 	req.flash("success", "Logged In Successfully 🔥");
