@@ -10,10 +10,74 @@
 	id="employeeProfile"
 	value="<%= locals.profile_user.id %>"
 />
+<!-- If the Logged In User matches with the Employee's Profile then show the update form -->
 <div class="profilePage">
-	<!-- Banner -->
-	<div class="banner">
-		<h2>Team Career Camp 🚀</h2>
+	<div id="updateProfile">
+		<% if(locals.user.id == profile_user.id){ %>
+		<!-- Update Profile Form -->
+		<form
+			action="/profile/update/<%= profile_user.id %>"
+			method="post"
+			enctype="multipart/form-data"
+		>
+			<h2>Update Profile</h2>
+			<div class="form-container">
+				<div
+					class="upload-wrapper"
+					style="background-image: url('<%= profile_user.avatarPath %>')"
+				>
+					<button class="btn btn-grad"></button>
+					<input
+						type="file"
+						name="avatar"
+						class="image"
+						placeholder="Profile Picture"
+					/>
+				</div>
+				<div class="info">
+					<div class="form-group">
+						<label for="name">Name</label>
+						<input
+							type="text"
+							class="form-control"
+							id="name"
+							aria-describedby="nameHelp"
+							placeholder="Enter your Name"
+							name="name"
+							value="<%= profile_user.name %>"
+							required
+						/>
+					</div>
+					<div class="form-group">
+						<label for="exampleInputEmail1">Email Address</label>
+						<input
+							type="email"
+							class="form-control"
+							id="exampleInputEmail1"
+							aria-describedby="emailHelp"
+							placeholder="Enter Email"
+							name="email"
+							value="<%= profile_user.email %>"
+							required
+						/>
+					</div>
+					<div class="form-group">
+						<label for="exampleInputPassword1">Password</label>
+						<input
+							type="password"
+							class="form-control"
+							id="exampleInputPassword1"
+							placeholder="Password"
+							name="password"
+							value="<%= profile_user.password %>"
+							required
+						/>
+					</div>
+					<button type="submit" class="btn submit-btn">Submit</button>
+				</div>
+			</div>
+		</form>
+		<% } %>
 	</div>
 </div>
 <% } %>

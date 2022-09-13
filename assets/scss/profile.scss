@@ -7,19 +7,156 @@
 	align-items: center;
 	padding: 10px;
 	margin: auto;
-	.banner {
-		margin-top: 7rem;
-		background-color: rgba(255, 167, 52, 0.8);
+	//---------Update Profile---------
+	#updateProfile {
+		border: 2px solid var(--logo-color);
+		padding: 10px;
+		margin-top: 10rem;
+		margin-bottom: 3.5rem;
+		width: 80%;
+		min-width: 270px !important;
+		min-height: 420px;
+		display: flex;
+		justify-content: center;
+		align-items: center;
+		box-shadow: 1px 5px 5px 2px rgba(0, 0, 0, 0.5);
+		background: rgba(255, 233, 174, 0.8);
+		backdrop-filter: blur(5px);
+		-webkit-backdrop-filter: blur(5px);
 		border-radius: 10px;
-		padding: 7px;
-		word-spacing: 0.2rem;
-		h2 {
-			font-size: 2rem;
-			font-weight: 700;
-			color: var(--logo-color);
-			margin: 5px 0;
-			opacity: 0.8;
-			text-align: center;
+		border: 1px solid rgba(255, 255, 255, 0.5);
+		@media screen and (max-width: 850px) {
+			margin-top: 10rem;
+			margin-bottom: 3.5rem;
+		}
+		@media screen and (max-height: 555px) {
+			margin-top: 150px;
+			margin-bottom: 50px;
+		}
+		//---------Form---------
+		form {
+			width: 100%;
+			height: 100%;
+			min-height: 400px;
+			padding: 10px;
+			display: flex;
+			flex-direction: column;
+			justify-content: center;
+			align-items: center;
+			h2 {
+				font-size: 2rem;
+				font-weight: 600;
+				color: var(--logo-color);
+				margin: 10px 0;
+				opacity: 0.7;
+				text-align: center;
+				margin-bottom: 30px;
+				@media screen and (max-width: 850px) {
+					margin-bottom: 1.5rem;
+				}
+			}
+			.form-container {
+				display: flex;
+				justify-content: center;
+				align-items: center;
+				width: 100%;
+				gap: 2.5rem;
+				@media screen and (max-width: 800px) {
+					flex-direction: column;
+					gap: 3rem;
+					margin-top: 1rem;
+				}
+				.upload-wrapper {
+					position: relative;
+					overflow: hidden;
+					display: inline-block;
+					min-width: 250px;
+					min-height: 250px;
+					border-radius: 10px;
+					overflow: hidden;
+					background-position: center;
+					background-repeat: no-repeat;
+					background-size: cover;
+					border: 1px solid var(--logo-color);
+					box-shadow: 1px 5px 5px 2px rgba(0, 0, 0, 0.5);
+					@media screen and (max-width: 500px) {
+						min-width: 170px;
+						min-height: 170px;
+					}
+				}
+				input[type="file"],
+				input[type="file"]::-webkit-file-upload-button {
+					cursor: pointer;
+				}
+				.upload-wrapper input[type="file"] {
+					cursor: pointer;
+					font-size: 300px;
+					position: absolute;
+					left: 0;
+					top: 0;
+					opacity: 0;
+				}
+				.info {
+					width: 60%;
+					height: 60%;
+					@media screen and (max-width: 800px) {
+						width: 100%;
+					}
+					//---------Inputs---------
+					.form-group {
+						margin-bottom: 1rem;
+						label {
+							display: block;
+							margin-bottom: 0.5rem;
+							font-size: 1rem;
+							font-weight: 600;
+							color: var(--logo-color);
+						}
+						input {
+							box-shadow: none;
+							outline: none;
+							border: none;
+							border-radius: 0%;
+							border-bottom: 1px solid var(--logo-color);
+							background: transparent;
+							color: var(--logo-color);
+							font-weight: 400;
+							letter-spacing: 0.02rem;
+							&::placeholder {
+								color: var(--logo-color);
+								opacity: 0.7;
+							}
+							&:focus {
+								box-shadow: none;
+								outline: none;
+								border-bottom: 1px solid var(--logo-color);
+							}
+						}
+					}
+					//---------Submit Button---------
+					.submit-btn {
+						margin: auto;
+						margin-top: 1rem;
+						width: 100%;
+						padding: 0.5rem 1rem;
+						font-size: 1rem;
+						font-weight: 600;
+						color: var(--accent-color);
+						background-color: var(--logo-color);
+						border: 1px solid var(--accent-color);
+						border-radius: 10px;
+						cursor: pointer;
+						box-shadow: none;
+						outline: none;
+						border: none;
+						&:focus {
+							box-shadow: none;
+							outline: none;
+							border: none;
+						}
+					}
+				}
+			}
 		}
 	}
 }
