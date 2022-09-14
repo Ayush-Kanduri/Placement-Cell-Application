@@ -1,4 +1,5 @@
 <link rel="stylesheet" href="<%= assetPath('css/jobs.css') %>" />
+<script defer src="<%= assetPath('js/jobs.js') %>"></script>
 
 <!-- Header -->
 <%- include('_header.ejs'); %>
@@ -6,9 +7,18 @@
 <!-- If User is logged in -->
 <% if (locals.user) { %>
 <div class="jobPortal">
-	<!-- Banner -->
-	<div class="banner">
-		<h2>Team Career Camp 🚀</h2>
+	<div class="jobPage">
+		<div class="card w-25" style="display: none" data-jobs="<%= jobs %>">
+			<h5 class="card-header">Company Name</h5>
+			<div class="card-body">
+				<h5 class="card-title">Job Title</h5>
+				<p class="card-text"><span>Interview Date</span></p>
+				<p class="card-text"><span>Job Location</span></p>
+				<p style="text-align: center;">
+					<a href="Job URL" target="_blank" class="btn">Apply Now</a>
+				</p>
+			</div>
+		</div>
 	</div>
 </div>
 <% } %>

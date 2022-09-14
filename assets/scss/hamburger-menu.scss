@@ -27,12 +27,15 @@ header {
 		//---------Hamburger Menu Styling---------//
 		.menu-wrap {
 			@media screen and (max-width: 450px) {
-				left: 78%;
+				right: 25%;
+			}
+			@media screen and (max-width: 350px) {
+				right: 30%;
 			}
 			display: none;
 			position: absolute;
 			top: 3%;
-			left: 85%;
+			right: 15%;
 			z-index: 2;
 			.toggler {
 				position: absolute;

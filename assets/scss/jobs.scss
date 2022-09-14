@@ -7,19 +7,60 @@
 	align-items: center;
 	padding: 10px;
 	margin: auto;
-	.banner {
+	.jobPage {
 		margin-top: 7rem;
-		background-color: rgba(255, 167, 52, 0.8);
-		border-radius: 10px;
 		padding: 7px;
-		word-spacing: 0.2rem;
-		h2 {
-			font-size: 2rem;
-			font-weight: 700;
-			color: var(--logo-color);
-			margin: 5px 0;
-			opacity: 0.8;
-			text-align: center;
+		width: 100%;
+		display: flex;
+		justify-content: center;
+		align-items: center;
+		flex-wrap: wrap;
+		gap: 1rem;
+		.card {
+			border-radius: 10px;
+			background-color: rgba(255, 233, 174, 0.9);
+			min-width: 320px;
+			min-height: 320px;
+			transition: all 0.25s ease-in-out;
+			&:hover {
+				background-color: rgba(255, 233, 174, 0.85);
+			}
+			@media screen and (max-width: 400px) {
+				min-width: 280px;
+			}
+			.card-header {
+				text-align: center;
+			}
+			.card-body {
+				width: 100%;
+				.card-title {
+					margin-bottom: 1.8rem;
+					text-align: center;
+				}
+				.card-text {
+					font-size: 1rem;
+					text-align: center;
+					span {
+						font-weight: 500;
+					}
+					span:first-child {
+						font-weight: 600;
+					}
+				}
+				a {
+					margin-top: 1rem;
+					text-decoration: none;
+					color: var(--logo-color);
+					border-radius: 7px;
+					padding: 0.5rem;
+					border: 1px solid var(--logo-color);
+					transition: all 0.15s ease-in-out;
+					&:hover {
+						background-color: var(--logo-color);
+						color: var(--accent-color);
+					}
+				}
+			}
 		}
 	}
 }
