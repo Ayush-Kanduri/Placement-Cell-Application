@@ -19,6 +19,7 @@
   --header-color: #ffdba4;
   --logo-color: #000000;
   --accent-color: #ffffff;
+  --font-family: "Poppins", sans-serif;
   font-family: "Poppins", sans-serif; }
 
 body {
@@ -44,7 +45,7 @@ h3 {
 
 main {
   --bg-image: var(--BG);
-  --bg-opacity: 0.8;
+  --bg-opacity: 0.7;
   width: 100vw;
   height: 100%;
   min-height: 100vh;
@@ -65,3 +66,15 @@ main {
     inset: 0;
     z-index: -1;
     opacity: var(--bg-opacity); }
+
+.hide {
+  display: none !important; }
+
+.show-init {
+  display: initial !important; }
+
+.show-block {
+  display: block !important; }
+
+.show-flex {
+  display: flex !important; }

@@ -1,9 +1,6 @@
 <link rel="stylesheet" href="<%= assetPath('css/profile.css') %>" />
 <script defer src="<%= assetPath('js/update-profile.js') %>"></script>
 
-<!-- Header -->
-<%- include('_header.ejs'); %>
-
 <!-- If User is logged in -->
 <% if (locals.user) { %>
 <input

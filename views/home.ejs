@@ -1,8 +1,6 @@
 <link rel="stylesheet" href="<%= assetPath('css/home.css') %>" />
 <script defer src="<%= assetPath('js/login.js') %>"></script>
-
-<!-- Header -->
-<%- include('_header.ejs'); %>
+<script defer src="<%= assetPath('js/home.js') %>"></script>
 
 <!-- If User is not logged in -->
 <% if (!locals.user) { %>
@@ -57,7 +55,188 @@
 <div class="homepage">
 	<!-- Banner -->
 	<div class="banner">
-		<h2>Team Career Camp 🚀</h2>
+		<h2>Team Career Camp 🔥</h2>
+	</div>
+	<!-- Dashboard -->
+	<div class="dashboard">
+		<!-- Students Section -->
+		<div class="students">
+			<h3>Students</h3>
+			<!-- Accordion -->
+			<div class="accordion" id="students">
+				<!-- Accordion Item -->
+				<%- include('_student-accordion.ejs'); %>
+			</div>
+			<!-- Add New Student -->
+			<form action="/students/add" method="post" class="student-form">
+				<h4>ADD NEW STUDENT</h4>
+				<div class="form-group">
+					<label for="name">Name</label>
+					<input
+						type="text"
+						class="form-control"
+						id="name"
+						placeholder="Enter Name"
+						name="name"
+						minlength="3"
+						required
+					/>
+				</div>
+				<div class="form-group">
+					<label for="age">Age</label>
+					<input
+						type="number"
+						class="form-control"
+						id="age"
+						placeholder="Enter Age"
+						name="age"
+						min="1"
+						max="100"
+						required
+					/>
+				</div>
+				<div class="form-group">
+					<label for="gender">Gender</label>
+					<select
+						class="form-select form-control"
+						id="gender"
+						name="gender"
+						required
+					>
+						<option selected>Select Gender</option>
+						<option value="male">Male</option>
+						<option value="female">Female</option>
+						<option value="other">Other</option>
+					</select>
+				</div>
+				<div class="form-group">
+					<label for="college">College</label>
+					<input
+						type="text"
+						class="form-control"
+						id="college"
+						placeholder="Enter College"
+						name="college"
+						minlength="1"
+						required
+					/>
+				</div>
+				<div class="form-group">
+					<label for="batch">Batch</label>
+					<select
+						class="form-select form-control"
+						id="batch"
+						name="batch"
+						required
+					>
+						<option selected>Select One Batch</option>
+						<option value="A1">A1</option>
+						<option value="A2">A2</option>
+						<option value="A3">A3</option>
+						<option value="B1">B1</option>
+						<option value="B2">B2</option>
+						<option value="B3">B3</option>
+						<option value="C1">C1</option>
+						<option value="C2">C2</option>
+						<option value="C3">C3</option>
+					</select>
+				</div>
+				<div class="form-group">
+					<label for="status">Status</label>
+					<select
+						class="form-select form-control"
+						id="status"
+						name="status"
+						required
+					>
+						<option selected>Select Status</option>
+						<option value="placed">Placed</option>
+						<option value="not placed">Not Placed</option>
+					</select>
+				</div>
+				<div class="form-group">
+					<label for="dsa_score">DSA Score</label>
+					<input
+						type="number"
+						class="form-control"
+						id="dsa_score"
+						placeholder="Marks Out of 30"
+						name="dsa_score"
+						min="0"
+						max="30"
+						required
+					/>
+				</div>
+				<div class="form-group">
+					<label for="react_score">React Score</label>
+					<input
+						type="number"
+						class="form-control"
+						id="react_score"
+						placeholder="Marks Out of 30"
+						name="react_score"
+						min="0"
+						max="30"
+						required
+					/>
+				</div>
+				<div class="form-group">
+					<label for="web_score">WebD Score</label>
+					<input
+						type="number"
+						class="form-control"
+						id="web_score"
+						placeholder="Marks Out of 30"
+						name="web_score"
+						min="0"
+						max="30"
+						required
+					/>
+				</div>
+				<button type="submit" class="btn">
+					Add Student&ensp;<i class="fa-solid fa-circle-plus"></i>
+				</button>
+			</form>
+		</div>
+		<!-- Interviews Section -->
+		<div class="interviews">
+			<h3>Interviews</h3>
+			<!-- Accordion -->
+			<div class="accordion" id="interviews">
+				<!-- Accordion Item -->
+				<%- include('_interview-accordion.ejs'); %>
+			</div>
+			<!-- Create New Interview -->
+			<form action="/interviews/add" method="post" class="interview-form">
+				<h4>CREATE NEW INTERVIEW</h4>
+				<div class="form-group">
+					<label for="name">Company</label>
+					<input
+						type="text"
+						class="form-control"
+						id="company"
+						placeholder="Enter Company Name"
+						name="company"
+						minlength="1"
+						required
+					/>
+				</div>
+				<div class="form-group">
+					<label for="date">Date</label>
+					<input
+						type="date"
+						class="form-control"
+						id="date"
+						name="date"
+						placeholder="Enter Interview Date"
+						required
+					/>
+				</div>
+				<button type="submit" class="btn">
+					Add Interview&ensp;<i class="fa-solid fa-circle-plus"></i>
+				</button>
+			</form>
+		</div>
 	</div>
 </div>
 <% } %>
