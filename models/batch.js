@@ -9,14 +9,16 @@ const batchSchema = new mongoose.Schema(
 			required: true,
 			trim: true,
 		},
-		course: {
-			type: mongoose.Schema.Types.ObjectId,
-			ref: "Course",
-		},
-		enrolments: [
+		students: [
 			{
 				type: mongoose.Schema.Types.ObjectId,
-				ref: "Enrolment",
+				ref: "Student",
+			},
+		],
+		courses: [
+			{
+				type: mongoose.Schema.Types.ObjectId,
+				ref: "Course",
 			},
 		],
 	},

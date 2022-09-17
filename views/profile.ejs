@@ -21,7 +21,11 @@
 			<h2>Update Profile</h2>
 			<div class="form-container">
 				<div class="upload-wrapper">
-					<img src="<%= profile_user.avatarPath %>" alt="Employee Image" />
+					<img
+						src="<%= profile_user.avatarPath %>"
+						alt="Employee Image"
+						this.
+					/>
 					<button class="btn btn-grad"></button>
 					<input
 						type="file"
@@ -29,6 +33,7 @@
 						class="image"
 						placeholder="Profile Picture"
 						accept="image/png, image/gif, image/jpeg, image/jpg, image/svg"
+						onerror="this.onerror=null; this.src=`<%= assetPath('images/empty-avatar.png') %>`"
 					/>
 				</div>
 				<div class="info">
