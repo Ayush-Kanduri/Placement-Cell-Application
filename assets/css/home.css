@@ -450,7 +450,8 @@
                 font-weight: 500;
                 display: flex;
                 justify-content: space-between;
-                align-items: center; }
+                align-items: center;
+                text-transform: capitalize; }
                 @media screen and (max-width: 370px) {
                   .homepage .dashboard .students .accordion .accordion-item .accordion-body .student-data p,
                   .homepage .dashboard .interviews .accordion .accordion-item .accordion-body .student-data p {

@@ -66,8 +66,11 @@
 			<h3>Students</h3>
 			<!-- Accordion -->
 			<div class="accordion" id="students">
+				<% for(let student of students){ %>
 				<!-- Accordion Item -->
-				<%- include('_student-accordion.ejs'); %>
+				<%- include('_student-accordion.ejs', {student: student}); %>
+				<!-- Accordion Item -->
+				<% } %>
 			</div>
 			<!-- Add New Student -->
 			<form action="/students/add" method="post" class="student-form">

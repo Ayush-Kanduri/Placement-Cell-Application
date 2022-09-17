@@ -6,6 +6,8 @@ const { DBValidation } = require("../config/middleware");
 const { pathFinder } = require("../config/middleware");
 //Require the Employee Model
 const Employee = require("../models/employee");
+//Require the Student Model
+const Student = require("../models/student");
 //Require File System Module for the Directory
 const fs = require("fs");
 //Require Path Module for the Directory
@@ -16,9 +18,60 @@ const bcrypt = require("bcryptjs");
 //Displays the Home Page or the Login Page
 module.exports.homepage = async (req, res) => {
 	if (req.isAuthenticated()) {
-		return res.render("home", {
-			title: "Home 🏠",
-		});
+		try {
+			let query1 = [
+				{
+					path: "company",
+				},
+				{
+					path: "result",
+				},
+				{
+					path: "student",
+				},
+			];
+			let query2 = [
+				{
+					path: "student",
+				},
+				{
+					path: "course",
+				},
+			];
+			let query3 = [
+				{
+					path: "student",
+				},
+				{
+					path: "interview",
+				},
+				{
+					path: "company",
+				},
+			];
+			let students = await Student.find({})
+				.populate("batch")
+				.populate({
+					path: "interviews",
+					populate: query1,
+				})
+				.populate({
+					path: "scores",
+					populate: query2,
+				})
+				.populate({
+					path: "results",
+					populate: query3,
+				});
+			return res.render("home", {
+				title: "Home 🏠",
+				students: students,
+			});
+		} catch (err) {
+			console.log(err);
+			req.flash("error", err);
+			return res.redirect("back");
+		}
 	}
 	//If there are no Employees in the Database then delete all the uploaded files
 	try {

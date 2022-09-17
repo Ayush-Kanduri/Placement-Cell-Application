@@ -11,10 +11,12 @@ const courseSchema = new mongoose.Schema(
 			lowercase: true,
 			enum: ["data structures & algorithms", "web development", "react"],
 		},
-		batch: {
-			type: mongoose.Schema.Types.ObjectId,
-			ref: "Batch",
-		},
+		enrolments: [
+			{
+				type: mongoose.Schema.Types.ObjectId,
+				ref: "Enrolment",
+			},
+		],
 		scores: [
 			{
 				type: mongoose.Schema.Types.ObjectId,

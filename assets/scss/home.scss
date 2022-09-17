@@ -465,6 +465,7 @@
 								display: flex;
 								justify-content: space-between;
 								align-items: center;
+								text-transform: capitalize;
 								@media screen and (max-width: 370px) {
 									font-size: 0.9rem;
 								}

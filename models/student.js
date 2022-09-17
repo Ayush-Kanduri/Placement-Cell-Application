@@ -57,6 +57,9 @@ const studentSchema = new mongoose.Schema(
 				ref: "Result",
 			},
 		],
+		avatar: {
+			type: String,
+		},
 	},
 	{
 		timestamps: true,
