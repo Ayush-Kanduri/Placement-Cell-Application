@@ -313,6 +313,9 @@
                 box-shadow: none;
                 outline: none;
                 border: none; }
+              .homepage .dashboard .students .accordion .accordion-item h2 button::after,
+              .homepage .dashboard .interviews .accordion .accordion-item h2 button::after {
+                content: none; }
           .homepage .dashboard .students .accordion .accordion-item .accordion-body,
           .homepage .dashboard .interviews .accordion .accordion-item .accordion-body {
             width: 100% !important; }

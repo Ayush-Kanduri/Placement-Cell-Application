@@ -1,19 +1,31 @@
+//Require the Student Model
 const Student = require("../models/student");
+//Require the Course Model
 const Course = require("../models/course");
+//Require the Batch Model
 const Batch = require("../models/batch");
+//Require the Enrolment Model
 const Enrolment = require("../models/enrolment");
+//Require the Interview Model
 const Interview = require("../models/interview");
+//Require the Score Model
 const Score = require("../models/score");
+//Require the Result Model
 const Result = require("../models/result");
+//Require the Company Model
+const Company = require("../models/company");
 //Require the Database Validation Middleware
 const { DBValidation } = require("../config/middleware");
 //Require the Path Finder Middleware
 const { pathFinder } = require("../config/middleware");
 
+//Adds a new Student to the Database
 module.exports.add = async (req, res) => {
 	let DSA;
 	let REACT;
 	let WEB;
+
+	//If there are no courses in the DB then create them
 	try {
 		let course = await Course.find({});
 		if (course.length === 0) {
@@ -38,6 +50,7 @@ module.exports.add = async (req, res) => {
 			web_score,
 		} = req.body;
 
+		//Create a new Student
 		let student = await Student.create({
 			name,
 			age: Number(age),
@@ -48,133 +61,207 @@ module.exports.add = async (req, res) => {
 				gender === "male"
 					? pathFinder("images/male-avatar.png")
 					: pathFinder("images/female-avatar.png"),
+			interviews: [],
+			scores: [],
+			results: [],
 		});
 
-		let BATCH = await Batch.create({ name: batch });
+		//Find the batch, if it doesn't exist, then create it
+		let BATCH = await Batch.findOne({ name: batch });
+		if (!BATCH) BATCH = await Batch.create({ name: batch });
+		//Add the student to the batch
 		BATCH.students.push(student);
 		await BATCH.save();
 
-		if (DSA && WEB && REACT) {
-			let score = await Score.create({
-				score: Number(dsa_score),
-				student: student._id,
-				course: DSA._id,
-			});
-			DSA.scores.push(score);
-			await DSA.save();
-			student.scores.push(score);
-			await student.save();
-			let enrolment = await Enrolment.create({
-				batch: Batch._id,
-				course: DSA._id,
-			});
-			BATCH.enrolments.push(enrolment);
-			await BATCH.save();
-			DSA.enrolments.push(enrolment);
-			await DSA.save();
+		let obj = {};
 
-			score = await Score.create({
-				score: Number(web_score),
-				student: student._id,
-				course: WEB._id,
-			});
-			WEB.scores.push(score);
-			await WEB.save();
-			student.scores.push(score);
-			await student.save();
-			enrolment = await Enrolment.create({
-				batch: BATCH._id,
-				course: WEB._id,
-			});
-			BATCH.enrolments.push(enrolment);
-			await BATCH.save();
-			WEB.enrolments.push(enrolment);
-			await WEB.save();
-
-			score = await Score.create({
-				score: Number(react_score),
-				student: student._id,
-				course: REACT._id,
-			});
-			REACT.scores.push(score);
-			await REACT.save();
-			student.scores.push(score);
-			await student.save();
-			enrolment = await Enrolment.create({
-				batch: BATCH._id,
-				course: REACT._id,
-			});
-			BATCH.enrolments.push(enrolment);
-			await BATCH.save();
-			REACT.enrolments.push(enrolment);
-			await REACT.save();
+		if (!!(DSA && WEB && REACT)) {
+			let COURSES = [DSA, WEB, REACT];
+			for (let COURSE of COURSES) {
+				//Create student's score for the course
+				let score = await Score.create({
+					score: Number(dsa_score),
+					student: student._id,
+					course: COURSE._id,
+				});
+				//Add the score to the course
+				COURSE.scores.push(score);
+				await COURSE.save();
+				//Add the score to the student
+				student.scores.push(score);
+				await student.save();
+				obj.dsa = score.score;
+				//Find the enrolment for the batch and course, if it doesn't exist, then create it
+				let enrolment = await Enrolment.findOne({
+					batch: BATCH._id,
+					course: COURSE._id,
+				});
+				if (!enrolment) {
+					//Create the enrolment for the batch and course
+					enrolment = await Enrolment.create({
+						batch: BATCH._id,
+						course: COURSE._id,
+					});
+					//Add the enrolment to the batch
+					BATCH.enrolments.push(enrolment);
+					await BATCH.save();
+					//Add the enrolment to the course
+					COURSE.enrolments.push(enrolment);
+					await COURSE.save();
+					//Update the enrolment with the batch and course
+					enrolment.batch.students = BATCH.students;
+					enrolment.course.scores = COURSE.scores;
+					await enrolment.save();
+				} else {
+					//Update the enrolment with the batch and course
+					enrolment.batch.students = BATCH.students;
+					enrolment.course.scores = COURSE.scores;
+					await enrolment.save();
+					//Update the Batch with the enrolment
+					await Batch.findOneAndUpdate(
+						{ "enrolments._id": enrolment._id },
+						{
+							$set: {
+								"enrolments.$.batch": enrolment.batch,
+								"enrolments.$.course": enrolment.course,
+							},
+						}
+					);
+					//Update the Course with the enrolment
+					await Course.findOneAndUpdate(
+						{ "enrolments._id": enrolment._id },
+						{
+							$set: {
+								"enrolments.$.batch": enrolment.batch,
+								"enrolments.$.course": enrolment.course,
+							},
+						}
+					);
+				}
+			}
 		} else {
 			let courses = await Course.find({});
 			for (let course of courses) {
 				let SCORE = 0;
+				//Create student's score for the courses
 				if (course.name === "data structures & algorithms") {
 					SCORE = Number(dsa_score);
+					obj.dsa = SCORE;
 				} else if (course.name === "web development") {
 					SCORE = Number(web_score);
+					obj.webd = SCORE;
 				} else if (course.name === "react") {
 					SCORE = Number(react_score);
+					obj.react = SCORE;
 				}
+				//Create student's score
 				let score = await Score.create({
 					score: SCORE,
 					student: student._id,
 					course: course._id,
 				});
+				//Add the score to the course
 				course.scores.push(score);
 				await course.save();
+				//Add the score to the student
 				student.scores.push(score);
 				await student.save();
-				let enrolment = await Enrolment.create({
+				//Find the enrolment for the batch and course, if it doesn't exist, then create it
+				let enrolment = await Enrolment.findOne({
 					batch: BATCH._id,
 					course: course._id,
 				});
-				BATCH.enrolments.push(enrolment);
-				await BATCH.save();
-				course.enrolments.push(enrolment);
-				await course.save();
+				if (!enrolment) {
+					//Create the enrolment for the batch and course
+					enrolment = await Enrolment.create({
+						batch: BATCH._id,
+						course: course._id,
+					});
+					//Add the enrolment to the batch
+					BATCH.enrolments.push(enrolment);
+					await BATCH.save();
+					//Add the enrolment to the course
+					course.enrolments.push(enrolment);
+					await course.save();
+					//Update the enrolment with the batch and course
+					enrolment.batch.students = BATCH.students;
+					enrolment.course.scores = course.scores;
+					await enrolment.save();
+				} else {
+					//Update the enrolment with the batch and course
+					enrolment.batch.students = BATCH.students;
+					enrolment.course.scores = course.scores;
+					await enrolment.save();
+					//Update the Batch with the enrolment
+					await Batch.findOneAndUpdate(
+						{ "enrolments._id": enrolment._id },
+						{
+							$set: {
+								"enrolments.$.batch": enrolment.batch,
+								"enrolments.$.course": enrolment.course,
+							},
+						}
+					);
+					//Update the Course with the enrolment
+					await Course.findOneAndUpdate(
+						{ "enrolments._id": enrolment._id },
+						{
+							$set: {
+								"enrolments.$.batch": enrolment.batch,
+								"enrolments.$.course": enrolment.course,
+							},
+						}
+					);
+				}
 			}
 		}
 
+		//Add the batch to the student's batch
 		student.batch = BATCH;
 		await student.save();
 
-		let interview = await Interview.findOne({ student: student });
-		if (interview) {
-			student.interviews.push(interview);
-			await student.save();
-		}
-		let result = await Result.findOne({ student: student._id });
-		if (result) {
-			student.results.push(result);
-			await student.save();
+		//Find the interview for the student
+		let interviews = await Interview.find({ student: student._id });
+		if (interviews.length !== 0) {
+			for (let interview of interviews) {
+				//Add the interview to the student's interviews
+				student.interviews.push(interview);
+				await student.save();
+			}
 		}
 
-		let stud = {
-			id: student.id,
-			name,
-			age,
-			gender,
-			college,
-			batch,
-			status,
-			dsa: dsa_score,
-			react: react_score,
-			webd: web_score,
-		};
+		//Find the result for the student
+		let results = await Result.find({ student: student._id });
+		if (results.length !== 0) {
+			for (let result of results) {
+				//Add the result to the student's results
+				student.results.push(result);
+				await student.save();
+			}
+		}
 
+		//Create the student response object
+		obj.id = student.id;
+		obj.name = student.name;
+		obj.age = student.age;
+		obj.gender = student.gender;
+		obj.college = student.college;
+		obj.batch = student.batch.name;
+		obj.status = student.status;
+		obj.avatar = student.avatar;
+
+		//Send the response
 		return res.status(200).json({
 			status: "success",
 			message: "Student Created Successfully 🎊 🥳",
-			student: stud,
+			student: obj,
 		});
 	} catch (error) {
 		console.log(error);
 		const obj = DBValidation(req, res, error);
 		req.flash("error", obj.message);
+
+		//Send the response
 		return res.status(500).json({
 			status: "error",
 			message: obj.message,
@@ -184,14 +271,10 @@ module.exports.add = async (req, res) => {
 	}
 };
 
+//Deletes the student from the database
 module.exports.delete = async (req, res) => {
 	try {
-		//1. Update Students List in Batch
-		//2. Update Scores List in Course
-		//3. Delete Scores having Student ID
-		//4. Update Enrolments List for the updated Batch and Course
-		//5. Update those Courses & Batches which have the above Enrolments List
-
+		//Find the student
 		let student = await Student.findById(req.params.id);
 		if (!student) {
 			return res.status(404).json({
@@ -201,68 +284,101 @@ module.exports.delete = async (req, res) => {
 			});
 		}
 
-		if (student === req.user) {
-			//Updating the Batch's Students List
-			let batch = await Batch.findById(student.batch);
-			if (batch) {
-				batch.students.pull(student);
-				await batch.save();
+		//Updating the Batch's Students List
+		let batch = await Batch.findById(student.batch._id);
+		if (batch) {
+			batch.students.pull(student);
+			await batch.save();
+		}
+
+		//Updating Course's Scores & Deleting the Score
+		let scores = await Score.find({ student: student._id });
+		for (let score of scores) {
+			let course = await Course.findById(score.course._id);
+			//Updating Course's Scores
+			if (course) {
+				course.scores.pull(score);
+				await course.save();
 			}
-
-			let enrolments = [];
-
-			//Deleting Student's Scores & Updating Courses Scores
-			let scores = await Score.find({ student: student._id });
-			for (let score of scores) {
-				let course = await Course.findById(score.course);
-				if (course) {
-					course.scores.pull(score);
-					await course.save();
-				}
-				await score.remove();
-				let enrolment = await Enrolment.findOneAndUpdate(
+			//Delete Score
+			await score.remove();
+			//Updating Enrolments List for the above updated Batch and Course
+			let enrolment = await Enrolment.findOne({
+				batch: batch._id,
+				course: course._id,
+			});
+			//If enrolment exists
+			if (enrolment) {
+				//Update the enrolment with the batch students and course scores
+				enrolment.batch.students = batch.students;
+				enrolment.course.scores = course.scores;
+				await enrolment.save();
+				//Updating the Batch with the enrolment's batch & course
+				await Batch.findOneAndUpdate(
+					{ "enrolments._id": enrolment._id },
 					{
-						batch: batch._id,
-						course: course._id,
-					},
-					{
-						$set: { batch: batch, course: course },
+						$set: {
+							"enrolments.$.batch": enrolment.batch,
+							"enrolments.$.course": enrolment.course,
+						},
 					}
 				);
-				enrolments.push(enrolment);
-			}
-
-			for (let enrolment of enrolments) {
-				for (let item of batch.enrolments) {
-					if (item._id.equals(enrolment._id)) {
-						item = enrolment;
-						await batch.save();
+				//Updating the Course with the enrolment's batch & course
+				await Course.findOneAndUpdate(
+					{ "enrolments._id": enrolment._id },
+					{
+						$set: {
+							"enrolments.$.batch": enrolment.batch,
+							"enrolments.$.course": enrolment.course,
+						},
 					}
-				}
-				for (let item of course.enrolments) {
-					if (item._id.equals(enrolment._id)) {
-						item = enrolment;
-						await course.save();
-					}
-				}
+				);
 			}
-
-			await student.remove();
-			return res.status(200).json({
-				status: "success",
-				message: "Student Deleted Successfully 🎊 🥳",
-			});
-		} else {
-			return res.status(401).json({
-				status: "error",
-				message: "You are Not Authorized to Delete this Student 🤷‍♂️",
-				error: "Unauthorized",
-			});
 		}
+
+		//Delete Batch if it has no Students
+		if (batch.students.length === 0) {
+			let enrolments = await Enrolment.find({ batch: batch._id });
+			for (let enrolment of enrolments) {
+				//Updating the Course by deleting the enrolment
+				let course = await Course.findById(enrolment.course._id);
+				course.enrolments.pull(enrolment);
+				await course.save();
+				//Delete Enrolment
+				await enrolment.remove();
+			}
+			//Delete Batch
+			await batch.remove();
+		}
+
+		//Delete the Interviews
+		await Interview.deleteMany({ student: student._id });
+
+		let results = await Result.find({ student: student._id });
+		//Updating those Companies which have the above Results List
+		await Company.updateMany(
+			{ results: { $in: results } },
+			{ $pull: { results: { $in: results } } }
+		);
+		//Delete the Results
+		for (let result of results) {
+			await result.remove();
+		}
+
+		//Deleting the Student
+		await student.remove();
+
+		//Send the response
+		return res.status(200).json({
+			status: "success",
+			message: "Student Deleted Successfully 🎊 🥳",
+		});
 	} catch (error) {
 		console.log(error);
 		const obj = DBValidation(req, res, error);
 		req.flash("error", obj.message);
+
+		//Send the response
 		return res.status(500).json({
 			status: "error",
 			message: obj.message,
@@ -271,3 +387,17 @@ module.exports.delete = async (req, res) => {
 		});
 	}
 };
+
+// Student Deletion Algorithm //
+//1. Update Students List in Batch
+//2. Update Scores List in Course
+//3. Delete Scores having Student ID
+//4. Update Enrolments List for the updated Batch and Course
+//5. Update those Courses & Batches which have the above Enrolments List
+//6. Delete Batch if it has no Students
+//-	Updating those Courses which have the above Enrolments List
+//-	Delete Enrolment
+//7. Delete the Interviews
+//8. Updating those Companies which have the above Results List
+//9. Delete the Results
+// Student Deletion Algorithm //

@@ -329,6 +329,9 @@
 								outline: none;
 								border: none;
 							}
+							&::after {
+								content: none;
+							}
 						}
 					}
 					.accordion-body {

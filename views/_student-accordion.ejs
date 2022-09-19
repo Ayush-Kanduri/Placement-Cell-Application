@@ -49,12 +49,26 @@
 					<strong class="stud">Status:&ensp;</strong
 					><span><%= student.status %></span>
 				</p>
-				<p><strong class="stud">DSA Score:&ensp;</strong><span></span></p>
-				<p><strong class="stud">React Score:&ensp;</strong><span></span></p>
+				<% for(let score of student.scores){ %>
+				<!-- Scores -->
+				<% if(score.course.name==="data structures & algorithms"){ %>
+				<p>
+					<strong class="stud">DSA Score:&ensp;</strong
+					><span><%= score.score %></span>
+				</p>
+				<% }else if(score.course.name==="react"){ %>
+				<p>
+					<strong class="stud">React Score:&ensp;</strong
+					><span><%= score.score %></span>
+				</p>
+				<% }else if(score.course.name==="web development"){ %>
 				<p>
 					<strong class="stud">Web Development Score:&ensp;</strong
-					><span></span>
+					><span><%= score.score %></span>
 				</p>
+				<% } %>
+				<!-- Scores -->
+				<% } %>
 			</div>
 			<div class="student-interviews table-responsive">
 				<table class="table table-warning table-hover caption-top">
@@ -69,17 +83,48 @@
 						</tr>
 					</thead>
 					<tbody class="table-group-divider">
-						<tr></tr>
-						<tr></tr>
-						<tr></tr>
-						<tr></tr>
-						<tr></tr>
+						<!-- <tr>
+							<th scope="row"></th>
+							<td></td>
+							<td></td>
+						</tr>
+						<tr>
+							<th scope="row"></th>
+							<td></td>
+							<td></td>
+						</tr>
+						<tr>
+							<th scope="row"></th>
+							<td></td>
+							<td></td>
+						</tr>
+						<tr>
+							<th scope="row"></th>
+							<td></td>
+							<td></td>
+						</tr>
+						<tr>
+							<th scope="row"></th>
+							<td></td>
+							<td></td>
+						</tr> -->
 					</tbody>
 				</table>
 			</div>
-			<button class="delete-student-button" data-id="<%= student._id %>">
+			<button class="delete-student-button" data-id="<%= student.id %>">
 				Delete&ensp;<i class="fa-solid fa-trash"></i>
 			</button>
 		</div>
 	</div>
 </div>
+
+<!-- -------------- -->
+<!-- Variable Items -->
+<!-- -------------- -->
+<!-- id="student-heading-1" -->
+<!-- data-bs-target="#student-1" -->
+<!-- aria-controls="student-1" -->
+<!-- id="student-1" -->
+<!-- aria-labelledby="student-heading-1" -->
+<!-- data-bs-parent="#students" -->
+<!-- -------------- -->
