@@ -1,7 +1,9 @@
+<!-- Student Accordion -->
 <div
 	class="student-accordion-item accordion-item accordion-item-<%= student._id %>"
 >
 	<h2 class="accordion-header" id="student-heading-<%= student._id %>">
+		<!-- Accordion Button -->
 		<button
 			class="accordion-button student-button d-block text-center"
 			type="button"
@@ -10,6 +12,7 @@
 			aria-expanded="false"
 			aria-controls="student-<%= student._id %>"
 		>
+			<!-- Student Name -->
 			<%= student.name %> <%= student.gender === "male" ? "👦" : "👧" %>
 		</button>
 	</h2>
@@ -18,37 +21,46 @@
 		class="accordion-collapse collapse"
 		aria-labelledby="student-heading-<%= student._id %>"
 	>
+		<!-- Accordion Body -->
 		<div class="accordion-body">
 			<img src="<%= student.avatar %>" alt="<%= student.name %>" />
 			<div class="student-data">
+				<!-- Student ID -->
 				<p>
 					<strong class="stud">ID:&ensp;</strong
 					><span><%= student._id %></span>
 				</p>
+				<!-- Student Name -->
 				<p>
 					<strong class="stud">Name:&ensp;</strong
 					><span><%= student.name %></span>
 				</p>
+				<!-- Student Age -->
 				<p>
 					<strong class="stud">Age:&ensp;</strong
 					><span><%= student.age %></span>
 				</p>
+				<!-- Student Gender -->
 				<p>
 					<strong class="stud">Gender:&ensp;</strong
 					><span><%= student.gender %></span>
 				</p>
+				<!-- Student College -->
 				<p>
 					<strong class="stud">College:&ensp;</strong
 					><span><%= student.college %></span>
 				</p>
+				<!-- Student Batch -->
 				<p>
 					<strong class="stud">Batch:&ensp;</strong
 					><span><%= student.batch.name %></span>
 				</p>
+				<!-- Student Status -->
 				<p>
 					<strong class="stud">Status:&ensp;</strong
 					><span><%= student.status %></span>
 				</p>
+				<!-- Student Scores -->
 				<% for(let score of student.scores){ %>
 				<!-- Scores -->
 				<% if(score.course.name==="data structures & algorithms"){ %>
@@ -69,8 +81,10 @@
 				<% } %>
 				<!-- Scores -->
 				<% } %>
+				<!-- Student Scores -->
 			</div>
 			<div class="student-interviews table-responsive">
+				<!-- Student Interviews -->
 				<table class="table table-warning table-hover caption-top">
 					<caption>
 						Interviews
@@ -83,34 +97,17 @@
 						</tr>
 					</thead>
 					<tbody class="table-group-divider">
-						<!-- <tr>
-							<th scope="row"></th>
-							<td></td>
-							<td></td>
-						</tr>
+						<% for(let interview of student.interviews){ %>
 						<tr>
-							<th scope="row"></th>
-							<td></td>
-							<td></td>
+							<th scope="row"><%= interview.company.name %></th>
+							<td><%= interview.date %></td>
+							<td><%= interview.result.result %></td>
 						</tr>
-						<tr>
-							<th scope="row"></th>
-							<td></td>
-							<td></td>
-						</tr>
-						<tr>
-							<th scope="row"></th>
-							<td></td>
-							<td></td>
-						</tr>
-						<tr>
-							<th scope="row"></th>
-							<td></td>
-							<td></td>
-						</tr> -->
+						<% } %>
 					</tbody>
 				</table>
 			</div>
+			<!-- Delete Student -->
 			<button class="delete-student-button" data-id="<%= student.id %>">
 				Delete&ensp;<i class="fa-solid fa-trash"></i>
 			</button>

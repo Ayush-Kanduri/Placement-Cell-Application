@@ -2,6 +2,7 @@
 <script defer src="<%= assetPath('js/login.js') %>"></script>
 <script defer src="<%= assetPath('js/home.js') %>"></script>
 <script defer src="<%= assetPath('js/student.js') %>"></script>
+<script defer src="<%= assetPath('js/students-list.js') %>"></script>
 <script defer src="<%= assetPath('js/interview.js') %>"></script>
 
 <!-- If User is not logged in -->
@@ -208,8 +209,11 @@
 			<h3>Interviews</h3>
 			<!-- Accordion -->
 			<div class="accordion" id="interviews">
+				<% for(let company of companies){ %>
 				<!-- Accordion Item -->
-				<%- include('_interview-accordion.ejs'); %>
+				<%- include('_interview-accordion.ejs', {company: company}); %>
+				<!-- Accordion Item -->
+				<% } %>
 			</div>
 			<!-- Create New Interview -->
 			<form action="/interviews/add" method="post" class="interview-form">

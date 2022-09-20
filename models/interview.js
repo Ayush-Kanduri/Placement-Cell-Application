@@ -4,10 +4,6 @@ const mongoose = require("mongoose");
 //Create the DB Schema
 const interviewSchema = new mongoose.Schema(
 	{
-		date: {
-			type: Date,
-			required: true,
-		},
 		company: {
 			type: mongoose.Schema.Types.ObjectId,
 			ref: "Company",

@@ -335,6 +335,7 @@
             .homepage .dashboard .students .accordion .accordion-item .accordion-body .interview-data,
             .homepage .dashboard .interviews .accordion .accordion-item .accordion-body .interview-data {
               width: 100% !important;
+              position: relative;
               border-bottom: 1px solid var(--logo-color); }
               .homepage .dashboard .students .accordion .accordion-item .accordion-body .interview-data p,
               .homepage .dashboard .interviews .accordion .accordion-item .accordion-body .interview-data p {
@@ -346,6 +347,26 @@
                 display: flex;
                 justify-content: center;
                 align-items: center; }
+                @media screen and (max-width: 330px) {
+                  .homepage .dashboard .students .accordion .accordion-item .accordion-body .interview-data p,
+                  .homepage .dashboard .interviews .accordion .accordion-item .accordion-body .interview-data p {
+                    justify-content: flex-start; } }
+              .homepage .dashboard .students .accordion .accordion-item .accordion-body .interview-data .fa-trash,
+              .homepage .dashboard .interviews .accordion .accordion-item .accordion-body .interview-data .fa-trash {
+                position: absolute;
+                top: 5%;
+                right: 1%;
+                font-size: 1.25rem;
+                cursor: pointer;
+                transition: all 0.15s ease-in-out; }
+                @media screen and (max-width: 330px) {
+                  .homepage .dashboard .students .accordion .accordion-item .accordion-body .interview-data .fa-trash,
+                  .homepage .dashboard .interviews .accordion .accordion-item .accordion-body .interview-data .fa-trash {
+                    font-size: 1.1rem;
+                    top: 15%; } }
+                .homepage .dashboard .students .accordion .accordion-item .accordion-body .interview-data .fa-trash:hover,
+                .homepage .dashboard .interviews .accordion .accordion-item .accordion-body .interview-data .fa-trash:hover {
+                  color: #21b416; }
             .homepage .dashboard .students .accordion .accordion-item .accordion-body .students-list,
             .homepage .dashboard .interviews .accordion .accordion-item .accordion-body .students-list {
               display: flex;

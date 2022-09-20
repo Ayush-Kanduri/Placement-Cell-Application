@@ -351,6 +351,7 @@
 						}
 						.interview-data {
 							width: 100% !important;
+							position: relative;
 							p {
 								padding: 0 1rem;
 								color: var(--logo-color);
@@ -360,8 +361,26 @@
 								display: flex;
 								justify-content: center;
 								align-items: center;
+								@media screen and (max-width: 330px) {
+									justify-content: flex-start;
+								}
 							}
 							border-bottom: 1px solid var(--logo-color);
+							.fa-trash {
+								@media screen and (max-width: 330px) {
+									font-size: 1.1rem;
+									top: 15%;
+								}
+								position: absolute;
+								top: 5%;
+								right: 1%;
+								font-size: 1.25rem;
+								cursor: pointer;
+								transition: all 0.15s ease-in-out;
+								&:hover {
+									color: rgb(33, 180, 22);
+								}
+							}
 						}
 						.students-list {
 							display: flex;

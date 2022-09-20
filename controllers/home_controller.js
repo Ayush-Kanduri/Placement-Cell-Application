@@ -8,6 +8,12 @@ const { pathFinder } = require("../config/middleware");
 const Employee = require("../models/employee");
 //Require the Student Model
 const Student = require("../models/student");
+//Require the Interview Model
+const Interview = require("../models/interview");
+//Require the Result Model
+const Result = require("../models/result");
+//Require the Company Model
+const Company = require("../models/company");
 //Require File System Module for the Directory
 const fs = require("fs");
 //Require Path Module for the Directory
@@ -63,9 +69,19 @@ module.exports.homepage = async (req, res) => {
 					path: "results",
 					populate: query3,
 				});
+			let companies = await Company.find({})
+				.populate({
+					path: "results",
+					populate: query3,
+				})
+				.populate({
+					path: "interviews",
+					populate: query1,
+				});
 			return res.render("home", {
 				title: "Home 🏠",
 				students: students,
+				companies: companies,
 			});
 		} catch (err) {
 			console.log(err);

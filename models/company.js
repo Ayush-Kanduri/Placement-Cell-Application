@@ -4,9 +4,14 @@ const mongoose = require("mongoose");
 //Create the DB Schema
 const companySchema = new mongoose.Schema(
 	{
+		date: {
+			type: Date,
+			required: true,
+		},
 		name: {
 			type: String,
 			trim: true,
+			required: true,
 		},
 		results: [
 			{

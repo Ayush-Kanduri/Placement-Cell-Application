@@ -16,6 +16,21 @@ class Students {
 			e.stopPropagation();
 			const formData = new FormData(form);
 			const Data = Object.fromEntries(formData.entries());
+
+			if (
+				Data.name === "" ||
+				Data.age === "" ||
+				Data.gender === "" ||
+				Data.status === "" ||
+				Data.college === "" ||
+				Data.batch === "" ||
+				Data.dsa === "" ||
+				Data.react === "" ||
+				Data.webd === ""
+			) {
+				return self.notify("Please enter all the details 🤷‍♂️", "error");
+			}
+
 			//Send AJAX Request
 			const response = await fetch("/students/add", {
 				method: "POST",
@@ -158,7 +173,7 @@ class Students {
 {
 	try {
 		const studentForm = document.getElementsByClassName("student-form");
-		//Instantiate the Class
+		//Instantiate the Students Class
 		Array.from(studentForm).forEach((item) => {
 			let self = item;
 			new Students(self);

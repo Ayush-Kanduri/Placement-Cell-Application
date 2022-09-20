@@ -1,1 +1,58 @@
-
+<!-- Interview Accordion -->
+<div
+	class="interview-accordion-item accordion-item accordion-item-<%= company._id %>"
+	id="accordion-item-<%= company._id %>"
+>
+	<h2 class="accordion-header" id="interview-heading-<%= company._id %>">
+		<!-- Accordion Button -->
+		<button
+			class="accordion-button interview-button d-block text-center"
+			type="button"
+			data-bs-toggle="collapse"
+			data-bs-target="#interview-<%= company._id %>"
+			aria-expanded="false"
+			aria-controls="interview-<%= company._id %>"
+		>
+			<%= company.name %> 🚀
+		</button>
+	</h2>
+	<div
+		id="interview-<%= company._id %>"
+		class="accordion-collapse collapse"
+		aria-labelledby="interview-heading-<%= company._id %>"
+	>
+		<!-- Accordion Body -->
+		<div class="accordion-body">
+			<div class="interview-data">
+				<!-- Interview Date -->
+				<p>
+					<strong
+						><i class="fa-regular fa-calendar"></i
+						>&ensp;Date:&ensp;</strong
+					><%= new Date(company.date).toLocaleDateString(); %>
+				</p>
+				<!-- Delete Interview -->
+				<i
+					class="fa-solid fa-trash delete-interview-button"
+					data-id="<%= company._id %>"
+				></i>
+			</div>
+			<div class="students-list">
+				<h5>Students List</h5>
+				<form action="/interviews/students/add" method="post">
+					<!-- List of Interviews in the Company -->
+					<% for(let interview of company.interviews){ %>
+					<!-- Students List  -->
+					<%- include('_student-list.ejs', {interview: interview, company:
+					company}); %>
+					<!-- Students List  -->
+					<% } %>
+				</form>
+			</div>
+			<p>
+				<!-- Add Student -->
+				<i class="fa-solid fa-circle-plus"></i>
+			</p>
+		</div>
+	</div>
+</div>
