@@ -4,16 +4,7 @@ class Students {
 	constructor(element) {
 		this.studentForm = element;
 		let self = this;
-		let accordion = document.querySelectorAll(".student-accordion-item");
-		//On Page Load
-		accordion.forEach((item) => {
-			//Toggle Accordion on click
-			self.toggleAccordion(item);
-			let deleteBtn = item.querySelector(".delete-student-button");
-			//Delete Student on Click
-			self.deleteStudent(deleteBtn);
-		});
-		self.addStudent(self.studentForm);
+		self.convertToAJAX();
 	}
 
 	//Creates a new Student using AJAX
@@ -145,6 +136,22 @@ class Students {
 				conditions: ["docHidden", "docVisible"],
 			},
 		}).show();
+	}
+
+	//Converts all existing Students to AJAX on Page Load
+	convertToAJAX() {
+		let self = this;
+		let accordion = document.querySelectorAll(".student-accordion-item");
+		//For all existing Accordions
+		accordion.forEach((item) => {
+			let deleteBtn = item.querySelector(".delete-student-button");
+			//Toggle Accordion on click
+			self.toggleAccordion(item);
+			//Delete Student on Click
+			self.deleteStudent(deleteBtn);
+		});
+		//Add New Student
+		self.addStudent(self.studentForm);
 	}
 }
 
