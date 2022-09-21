@@ -10,6 +10,12 @@ const interviewsController = require("../controllers/interviews_controllers");
 
 //Access the Interviews Controller's add() Function @ '/interviews/add' route.
 router.post("/add", passport.checkAuthentication, interviewsController.add);
+//Access the Interviews Controller's createInterview() Function @ '/interviews/createInterview' route.
+router.post(
+	"/create-interview",
+	passport.checkAuthentication,
+	interviewsController.createInterview
+);
 //Access the Interviews Controller's delete() Function @ '/interviews/delete/:company' route.
 router.delete(
 	"/delete/:company",

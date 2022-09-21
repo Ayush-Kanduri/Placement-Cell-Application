@@ -433,10 +433,14 @@
                       font-size: 1.2rem;
                       color: var(--logo-color);
                       text-align: center;
-                      margin: 0; }
+                      margin: 0;
+                      text-transform: capitalize; }
                       .homepage .dashboard .students .accordion .accordion-item .accordion-body .students-list form .student .fixed p:not(strong),
                       .homepage .dashboard .interviews .accordion .accordion-item .accordion-body .students-list form .student .fixed p:not(strong) {
                         font-weight: 500; }
+                      .homepage .dashboard .students .accordion .accordion-item .accordion-body .students-list form .student .fixed p span,
+                      .homepage .dashboard .interviews .accordion .accordion-item .accordion-body .students-list form .student .fixed p span {
+                        text-transform: capitalize; }
                   .homepage .dashboard .students .accordion .accordion-item .accordion-body .students-list form .student .form-group,
                   .homepage .dashboard .interviews .accordion .accordion-item .accordion-body .students-list form .student .form-group {
                     width: 100%; }
@@ -498,6 +502,11 @@
                   word-spacing: 0.2rem;
                   border-top: 3px solid var(--logo-color);
                   border-bottom: 3px solid var(--logo-color); }
+                .homepage .dashboard .students .accordion .accordion-item .accordion-body .student-interviews table tr,
+                .homepage .dashboard .students .accordion .accordion-item .accordion-body .student-interviews table th,
+                .homepage .dashboard .interviews .accordion .accordion-item .accordion-body .student-interviews table tr,
+                .homepage .dashboard .interviews .accordion .accordion-item .accordion-body .student-interviews table th {
+                  text-transform: capitalize; }
             .homepage .dashboard .students .accordion .accordion-item .accordion-body button,
             .homepage .dashboard .interviews .accordion .accordion-item .accordion-body button {
               width: 100%;

@@ -77,11 +77,14 @@ class Interviews {
 		body.id = `interview-${company.id}`;
 		body.setAttribute("aria-labelledby", `interview-heading-${company.id}`);
 		company.date = new Date(company.date).toLocaleDateString();
+		let form = body.querySelector("form");
+		form.setAttribute("id", `company-${company.id}-students-form`);
 		let p = body.querySelector(".interview-data p");
 		p.appendChild(document.createTextNode(company.date));
 		body
 			.querySelector(".delete-interview-button")
 			.setAttribute("data-id", company.id);
+		body.querySelector(".fa-circle-plus").id = `add-student-${company.id}`;
 
 		document.getElementById("interviews").appendChild(accordion);
 		return accordion;
@@ -106,6 +109,26 @@ class Interviews {
 		});
 	}
 
+	//Delete Interview Information from the Student's Table Section in the DOM
+	deleteTableRow(data) {
+		let { students, id } = data;
+		for (let student of students) {
+			let item = document.querySelector(
+				`.student-accordion-item.accordion-item-${student._id}`
+			);
+			item.querySelectorAll(".student-data > p > span")[6].textContent =
+				student.status;
+			let table = item.querySelector("table");
+			let tbody = table.querySelector("tbody");
+			let tr = tbody.querySelectorAll("tr");
+			if (tr.length !== 0) {
+				tr.forEach((item) => {
+					if (item.id === `${id}`) item.remove();
+				});
+			}
+		}
+	}
+
 	//Delete the Interview
 	deleteInterview(btn) {
 		let self = this;
@@ -113,18 +136,18 @@ class Interviews {
 			e.preventDefault();
 			e.stopPropagation();
 			const id = e.target.getAttribute("data-id");
-
 			//Send AJAX Request
 			const response = await fetch(`/interviews/delete/${id}`, {
 				method: "DELETE",
 			});
 			//Get Response Data
 			const data = await response.json();
-
 			//If Error
 			if (data.status === "error") return self.notify(data.message, "error");
 			//Success Message
 			self.notify(data.message, "success");
+			//Delete Interview Information from the Student's Section in DOM
+			self.deleteTableRow(data);
 			//Delete Interview from DOM
 			e.target.closest(".interview-accordion-item").remove();
 		});

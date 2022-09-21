@@ -67,9 +67,10 @@
 			<h3>Students</h3>
 			<!-- Accordion -->
 			<div class="accordion" id="students">
-				<% for(let student of students){ %>
+				<!-- Don't use let with this loop here -->
+				<% for(student of students){ %>
 				<!-- Accordion Item -->
-				<%- include('_student-accordion.ejs', {student: student}); %>
+				<%- include('_student-accordion.ejs'); %>
 				<!-- Accordion Item -->
 				<% } %>
 			</div>
@@ -209,9 +210,10 @@
 			<h3>Interviews</h3>
 			<!-- Accordion -->
 			<div class="accordion" id="interviews">
-				<% for(let company of companies){ %>
+				<!-- Don't use let with this loop here -->
+				<% for(company of companies){ %>
 				<!-- Accordion Item -->
-				<%- include('_interview-accordion.ejs', {company: company}); %>
+				<%- include('_interview-accordion.ejs'); %>
 				<!-- Accordion Item -->
 				<% } %>
 			</div>

@@ -1,18 +1,24 @@
 <div
 	class="student student-interview-<%= interview._id %>"
-	id="<%= company._id %>"
+	id="<%= interview._id %>"
 >
-	<div class="form-group hide">
-		<select class="form-select form-control" id="name" name="name" required>
+	<% if(!interview.result && !interview.student){ %>
+	<div class="form-group">
+		<select
+			class="form-select form-control"
+			id="student-<%= interview._id %>-select"
+			name="name"
+			required
+		>
 			<% for(let student of students){ %>
 			<option value="<%= student._id %>"><%= student.name %></option>
 			<% } %>
 		</select>
 	</div>
-	<div class="form-group hide">
+	<div class="form-group">
 		<select
 			class="form-select form-control"
-			id="result"
+			id="result-<%= interview._id %>-select"
 			name="result"
 			required
 		>
@@ -20,27 +26,29 @@
 			<option value="fail">Fail</option>
 			<option value="on hold">On Hold</option>
 			<option value="not attended">Not Attended</option>
-			<option value="tbd">To Be Decided</option>
+			<option value="to be decided">To Be Decided</option>
 		</select>
 	</div>
+	<button class="add-student-interview" data-id="<%= interview._id %>">
+		Add Student&ensp;<i class="fa-solid fa-circle-plus"></i>
+	</button>
+	<% }else{ %>
 	<div class="fixed">
 		<p>
 			<strong>Name:&ensp;</strong><span><%= interview.student.name %></span>
 		</p>
 		<p>
-			<strong>Status:&ensp;</strong
-			><span><%= interview.student.result %></span>
+			<strong>Result:&ensp;</strong
+			><span><%= interview.result.result %></span>
 		</p>
 	</div>
-	<button class="add-student-interview hide" data-id="<%= interview._id %>">
-		Add Student&ensp;<i class="fa-solid fa-circle-plus"></i>
-	</button>
 	<button class="edit-student-interview" data-id="<%= interview._id %>">
 		Edit&ensp;<i class="fa-solid fa-pen-to-square"></i>
 	</button>
 	<button class="delete-student-interview" data-id="<%= interview._id %>">
 		Delete&ensp;<i class="fa-solid fa-trash"></i>
 	</button>
+	<% } %>
 </div>
 
 <!-- Final Students List -->

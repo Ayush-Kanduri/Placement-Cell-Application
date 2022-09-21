@@ -98,9 +98,12 @@
 					</thead>
 					<tbody class="table-group-divider">
 						<% for(let interview of student.interviews){ %>
-						<tr>
+						<tr id="<%= interview.company._id %>">
 							<th scope="row"><%= interview.company.name %></th>
-							<td><%= interview.date %></td>
+							<td>
+								<%= new
+								Date(interview.company.date).toLocaleDateString() %>
+							</td>
 							<td><%= interview.result.result %></td>
 						</tr>
 						<% } %>

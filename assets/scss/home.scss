@@ -446,6 +446,10 @@
 											color: var(--logo-color);
 											text-align: center;
 											margin: 0;
+											text-transform: capitalize;
+											span {
+												text-transform: capitalize;
+											}
 										}
 									}
 									.form-group {
@@ -508,6 +512,10 @@
 									word-spacing: 0.2rem;
 									border-top: 3px solid var(--logo-color);
 									border-bottom: 3px solid var(--logo-color);
+								}
+								tr,
+								th {
+									text-transform: capitalize;
 								}
 							}
 						}

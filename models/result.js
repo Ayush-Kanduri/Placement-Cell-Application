@@ -9,7 +9,7 @@ const resultSchema = new mongoose.Schema(
 			trim: true,
 			required: true,
 			lowercase: true,
-			enum: ["pass", "fail", "on hold", "not attended", "tbd"],
+			enum: ["pass", "fail", "on hold", "not attended", "to be decided"],
 		},
 		student: {
 			type: mongoose.Schema.Types.ObjectId,
