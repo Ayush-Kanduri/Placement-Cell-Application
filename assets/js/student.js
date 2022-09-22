@@ -52,6 +52,13 @@ class Students {
 			self.toggleAccordion(accordion);
 			//Delete Student on Click using AJAX
 			self.deleteStudent(deleteBtn);
+			//Make the Add Student Button Visible
+			const btns = document.querySelectorAll(".add-student-BTN");
+			if (btns && btns.length > 0) {
+				btns.forEach((item) => {
+					item.style.visibility = "visible";
+				});
+			}
 		});
 	}
 

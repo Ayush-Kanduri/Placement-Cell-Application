@@ -79,8 +79,8 @@ module.exports.createInterview = async (req, res) => {
 		return res.status(200).json({
 			status: "success",
 			message: "Kindly Add Student & Result to the Interview 🚀",
-			interview: interview.id,
-			company: company.id,
+			interview: interview,
+			company: company,
 			students: students,
 		});
 	} catch (error) {
@@ -115,7 +115,7 @@ module.exports.delete = async (req, res) => {
 			return res.status(200).json({
 				status: "success",
 				message: "Interview Deleted Successfully 🎊 🥳",
-				students: students,
+				students: [],
 				id: req.params.company,
 			});
 		}
@@ -136,7 +136,7 @@ module.exports.delete = async (req, res) => {
 			return res.status(200).json({
 				status: "success",
 				message: "Interview Deleted Successfully 🎊 🥳",
-				students: students,
+				students: [],
 				id: req.params.company,
 			});
 		}
@@ -278,14 +278,25 @@ module.exports.addStudent = async (req, res) => {
 		await interview.save();
 		RESULT.company = company;
 		await RESULT.save();
+		let students = await Student.find({});
+		let COMPANY = await Company.findById(interview.company).populate({
+			path: "results",
+			populate: [
+				{
+					path: "student",
+				},
+			],
+		});
+
 		//Send the response
 		return res.status(200).json({
 			status: "success",
 			message: "Student Added to the Interview List Successfully 🎊 🥳",
 			student: student,
 			interview: interview,
+			students: students,
 			result: RESULT,
-			company: company,
+			company: COMPANY,
 		});
 	} catch (error) {
 		console.log(error);

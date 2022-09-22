@@ -12,10 +12,34 @@ class StudentsList {
 	}
 
 	//Updates the Student from the Persistent Student Interview List and the DOM
-	editStudent(interview, btn) {}
+	editStudent(interviewID, btn) {}
 
 	//Delete Student from the Persistent Student Interview List and the DOM
-	deleteStudent(interview, btn) {}
+	deleteStudent(interviewID, btn) {}
+
+	//Add a New Row into the Student Interviews Table in the Student's Section
+	createTable(student, company, result) {
+		let studSection = document.querySelector(
+			`.student-accordion-item.accordion-item-${student._id}`
+		);
+		studSection.querySelectorAll(".student-data > p > span")[6].textContent =
+			student.status;
+		let table = studSection.querySelector("table");
+		let tbody = table.querySelector("tbody");
+		let tr = document.createElement("tr");
+		tr.setAttribute("id", `${company._id}`);
+		let th = document.createElement("th");
+		th.setAttribute("scope", "row");
+		th.textContent = `${company.name}`;
+		tr.appendChild(th);
+		let td1 = document.createElement("td");
+		td1.textContent = `${new Date(company.date).toLocaleDateString()}`;
+		tr.appendChild(td1);
+		let td2 = document.createElement("td");
+		td2.textContent = `${result.result}`;
+		tr.appendChild(td2);
+		tbody.appendChild(tr);
+	}
 
 	//Add New Student to the Persistent List in the DB
 	addStudent(interviewID, addBtn) {
@@ -45,6 +69,10 @@ class StudentsList {
 			self.notify(data.message, "success");
 			//Add New Student into the Interview in the DOM after the Selection is made
 			let { student, interview, company, result } = data;
+			let template = document.querySelectorAll("template")[2];
+			let clone = template.content.cloneNode(true);
+			let cloneable = clone.querySelector(".student");
+			let refresh = [false, false, false];
 			let container = self.studentsListForm.querySelector(
 				`.student-interview-${interview._id}`
 			);
@@ -55,40 +83,40 @@ class StudentsList {
 			let addBtn = container.querySelector(".add-student-interview");
 			addBtn.classList.add("hide");
 			let fixed = container.querySelector(".fixed");
+			//For Page Refresh
 			if (!fixed) {
-				let template = document.querySelectorAll("template")[2];
-				let clone = template.content.cloneNode(true);
-				fixed = clone.querySelector(".student .fixed");
+				fixed = cloneable.querySelector(".fixed");
+				refresh[0] = true;
 			}
 			fixed.classList.remove("hide");
 			fixed.querySelectorAll("p > span")[0].textContent = student.name;
 			fixed.querySelectorAll("p > span")[1].textContent = result.result;
 			let editBtn = container.querySelector(".edit-student-interview");
+			//For Page Refresh
+			if (!editBtn) {
+				editBtn = cloneable.querySelector(".edit-student-interview");
+				refresh[1] = true;
+			}
 			editBtn.classList.remove("hide");
+			editBtn.setAttribute("data-id", `${interview._id}`);
 			let deleteBtn = container.querySelector(".delete-student-interview");
+			//For Page Refresh
+			if (!deleteBtn) {
+				deleteBtn = cloneable.querySelector(".delete-student-interview");
+				refresh[2] = true;
+			}
 			deleteBtn.classList.remove("hide");
+			deleteBtn.setAttribute("data-id", `${interview._id}`);
+			if (refresh[0]) container.appendChild(fixed);
+			if (refresh[1]) container.appendChild(editBtn);
+			if (refresh[2]) container.appendChild(deleteBtn);
 			//Add a New Row into the Student Interviews Table in the Student's Section
-			let studSection = document.querySelector(
-				`.student-accordion-item.accordion-item-${student._id}`
-			);
-			studSection.querySelectorAll(
-				".student-data > p > span"
-			)[6].textContent = student.status;
-			let table = studSection.querySelector("table");
-			let tbody = table.querySelector("tbody");
-			let tr = document.createElement("tr");
-			tr.setAttribute("id", `${company._id}`);
-			let th = document.createElement("th");
-			th.setAttribute("scope", "row");
-			th.textContent = `${company.name}`;
-			tr.appendChild(th);
-			let td1 = document.createElement("td");
-			td1.textContent = `${new Date(company.date).toLocaleDateString()}`;
-			tr.appendChild(td1);
-			let td2 = document.createElement("td");
-			td2.textContent = `${result.result}`;
-			tr.appendChild(td2);
-			tbody.appendChild(tr);
+			self.createTable(student, company, result);
+			//If the created interviews count === to the no. of students count then remove the + BTN
+			let { students } = data;
+			let len1 = company.interviews.length;
+			let len2 = students.length;
+			if (len1 === len2) self.addStudentListBtn.style.visibility = "hidden";
 			//Delete Student from the Persistent Student Interview List and the DOM
 			self.deleteStudent(interview._id, deleteBtn);
 			//Updates the Student from the Persistent Student Interview List and the DOM
@@ -112,19 +140,20 @@ class StudentsList {
 			const data = await response.json();
 			if (data.status === "error") return self.notify(data.message, "error");
 			//Create a New Student Selection in the Student's List in the DOM
-			let { students, interview } = data;
+			let { students, interview, company } = data;
+			let interviewID = interview._id;
 			let template = document.querySelectorAll("template")[2];
 			let clone = template.content.cloneNode(true);
 			let Interview = clone.querySelector(".student");
-			Interview.id = `${interview}`;
-			Interview.classList.add(`student-interview-${interview}`);
+			Interview.id = `${interviewID}`;
+			Interview.classList.add(`student-interview-${interviewID}`);
 			let formGroup = Interview.querySelectorAll(".form-group");
 			formGroup[0].classList.remove("hide");
 			formGroup[1].classList.remove("hide");
 			let studentName = formGroup[0].querySelector("select");
-			studentName.id = `student-${interview}-select`;
+			studentName.id = `student-${interviewID}-select`;
 			let studentResult = formGroup[1].querySelector("select");
-			studentResult.id = `result-${interview}-select`;
+			studentResult.id = `result-${interviewID}-select`;
 			for (let student of students) {
 				let option = document.createElement("option");
 				option.value = student._id;
@@ -132,11 +161,15 @@ class StudentsList {
 				studentName.appendChild(option);
 			}
 			let addBtn = Interview.querySelector(".add-student-interview");
-			addBtn.setAttribute("data-id", `${interview}`);
+			addBtn.setAttribute("data-id", `${interviewID}`);
 			addBtn.classList.remove("hide");
 			self.studentsListForm.appendChild(Interview);
+			//If the created interviews count === to the no. of students count then remove the + BTN
+			let len1 = company.interviews.length;
+			let len2 = students.length;
+			if (len1 === len2) self.addStudentListBtn.style.visibility = "hidden";
 			//Add New Student to the Persistent List in the DB
-			self.addStudent(interview, addBtn);
+			self.addStudent(interviewID, addBtn);
 		});
 	}
 
@@ -174,6 +207,8 @@ class StudentsList {
 		//TODO: Check for multiple company multiple student with pass & fail + delete
 
 		//TODO: Continue from Refreshed Add Student Interview Button
+		//TODO: Make + Button visible if its invisible on deleting the student interview
+		//TODO: On Creating a student in the student section, make + BTN visible if its invisible
 		let addStudentListBtn = self.companyContainer.querySelectorAll(
 			`#add-student-${self.companyID}`
 		);
@@ -189,8 +224,10 @@ class StudentsList {
 
 		//Add Student Buttons
 		addStudentListBtn.forEach((btn) => {
+			self.addStudentListBtn = btn;
 			self.createStudentInTheListDOM(btn);
 		});
+
 		//Add Student to Interview Buttons
 		addStudentInterviewBtns.forEach((btn) => {
 			let interview = btn.getAttribute("data-id");

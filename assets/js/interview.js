@@ -84,7 +84,9 @@ class Interviews {
 		body
 			.querySelector(".delete-interview-button")
 			.setAttribute("data-id", company.id);
-		body.querySelector(".fa-circle-plus").id = `add-student-${company.id}`;
+		body.querySelector(
+			".fa-circle-plus.add-student-BTN"
+		).id = `add-student-${company.id}`;
 
 		document.getElementById("interviews").appendChild(accordion);
 		return accordion;
