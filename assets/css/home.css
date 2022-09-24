@@ -466,6 +466,10 @@
                     .homepage .dashboard .interviews .accordion .accordion-item .accordion-body .students-list form .student button.delete-student-interview {
                       background-color: #ec8e8e;
                       color: var(--logo-color); }
+                    .homepage .dashboard .students .accordion .accordion-item .accordion-body .students-list form .student button.delete-interview-slot,
+                    .homepage .dashboard .interviews .accordion .accordion-item .accordion-body .students-list form .student button.delete-interview-slot {
+                      background-color: #ec8e8e;
+                      color: var(--logo-color); }
             .homepage .dashboard .students .accordion .accordion-item .accordion-body .student-data,
             .homepage .dashboard .interviews .accordion .accordion-item .accordion-body .student-data {
               width: 100% !important; }

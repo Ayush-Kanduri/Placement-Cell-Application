@@ -53,29 +53,12 @@
 					<% } %>
 				</form>
 			</div>
-			<!-- Comparing 2 Arrays -->
-			<% const len1 = company.interviews.length; const len2 =
-			students.length; if(len1!==len2){%>
-			<!-- Comparing 2 Arrays -->
 			<p>
-				<!-- Add Student -->
 				<i
 					class="fa-solid fa-circle-plus add-student-BTN"
 					id="add-student-<%= company._id %>"
-					style="visibility: visible"
 				></i>
 			</p>
-			<% }else{ %>
-			<!-- Comparing 2 Arrays -->
-			<p>
-				<!-- Add Student -->
-				<i
-					class="fa-solid fa-circle-plus add-student-BTN"
-					id="add-student-<%= company._id %>"
-					style="visibility: hidden"
-				></i>
-			</p>
-			<% } %>
 		</div>
 	</div>
 </div>

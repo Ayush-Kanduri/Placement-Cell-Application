@@ -18,6 +18,8 @@ const Company = require("../models/company");
 const { DBValidation } = require("../config/middleware");
 //Require the Path Finder Middleware
 const { pathFinder } = require("../config/middleware");
+//Require Mongoose Library
+const mongoose = require("mongoose");
 
 //Adds a new Student to the Database
 module.exports.add = async (req, res) => {
@@ -44,7 +46,6 @@ module.exports.add = async (req, res) => {
 			gender,
 			college,
 			batch,
-			status,
 			dsa_score,
 			react_score,
 			web_score,
@@ -56,7 +57,6 @@ module.exports.add = async (req, res) => {
 			age: Number(age),
 			gender,
 			college,
-			status,
 			avatar:
 				gender === "male"
 					? pathFinder("images/male-avatar.png")
@@ -241,7 +241,7 @@ module.exports.add = async (req, res) => {
 		}
 
 		//Create the student response object
-		obj.id = student.id;
+		obj.id = student._id.toString();
 		obj.name = student.name;
 		obj.age = student.age;
 		obj.gender = student.gender;
@@ -274,6 +274,15 @@ module.exports.add = async (req, res) => {
 //Deletes the student from the database
 module.exports.delete = async (req, res) => {
 	try {
+		const CHECK = mongoose.Types.ObjectId.isValid(req.params.id);
+		if (!CHECK) {
+			return res.status(200).json({
+				status: "error",
+				message:
+					"Something Went Wrong with your Browser. Please Refresh the Page 🤷‍♂️",
+			});
+		}
+
 		//Find the student
 		let student = await Student.findById(req.params.id);
 		if (!student) {
@@ -352,26 +361,55 @@ module.exports.delete = async (req, res) => {
 		}
 
 		//Delete the Interviews
-		await Interview.deleteMany({ student: student._id });
-
+		let interviews = await Interview.find({ student: student._id });
+		//Updating those Companies which have the above Interviews List
+		await Company.updateMany(
+			{ interviews: { $in: interviews } },
+			{ $pull: { interviews: { $in: interviews } } }
+		);
 		let results = await Result.find({ student: student._id });
 		//Updating those Companies which have the above Results List
 		await Company.updateMany(
 			{ results: { $in: results } },
 			{ $pull: { results: { $in: results } } }
 		);
+
+		let interviewIds = [];
 		//Delete the Results
 		for (let result of results) {
 			await result.remove();
 		}
+		//Delete the Interviews
+		for (let interview of interviews) {
+			interviewIds.push(interview.id);
+			await interview.remove();
+		}
 
 		//Deleting the Student
+		let studentID = student.id;
 		await student.remove();
+
+		let students = await Student.find({});
+		if (students.length === 0) {
+			students = [];
+			await Interview.deleteMany({});
+			await Result.deleteMany({});
+			await Company.updateMany(
+				{},
+				{ $set: { interviews: [], results: [] } }
+			);
+		}
+		let companies = await Company.find({}).populate("interviews");
+		if (companies.length === 0) companies = [];
 
 		//Send the response
 		return res.status(200).json({
 			status: "success",
 			message: "Student Deleted Successfully 🎊 🥳",
+			students: students,
+			companies: companies,
+			interviewIDs: interviewIds,
+			studentID: studentID,
 		});
 	} catch (error) {
 		console.log(error);

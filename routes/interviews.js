@@ -16,6 +16,12 @@ router.post(
 	passport.checkAuthentication,
 	interviewsController.createInterview
 );
+//Access the Interviews Controller's deleteInterview() Function @ '/interviews/delete-interview/:id' route.
+router.delete(
+	"/delete-interview/:id",
+	passport.checkAuthentication,
+	interviewsController.deleteInterview
+);
 //Access the Interviews Controller's delete() Function @ '/interviews/delete/:company' route.
 router.delete(
 	"/delete/:company",

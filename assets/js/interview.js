@@ -185,11 +185,6 @@ class Interviews {
 			progressBar: true,
 			closeWith: ["click", "button"],
 			timeout: 6000,
-			sounds: {
-				sources: ["/storage/sounds/Ting.mp3"],
-				volume: 0.5,
-				conditions: ["docHidden", "docVisible"],
-			},
 		}).show();
 	}
 }

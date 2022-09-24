@@ -32,7 +32,55 @@
 	<button class="add-student-interview" data-id="<%= interview._id %>">
 		Add Student&ensp;<i class="fa-solid fa-circle-plus"></i>
 	</button>
+	<button class="delete-interview-slot" data-id="<%= interview._id %>">
+		Delete Interview Slot&ensp;<i class="fa-solid fa-trash"></i>
+	</button>
+	<button class="update-student-interview hide" data-id="<%= interview._id %>">
+		Update Student&ensp;<i class="fa-solid fa-arrow-rotate-left"></i>
+	</button>
+	<div class="fixed hide">
+		<p><strong>Name:&ensp;</strong><span></span></p>
+		<p><strong>Result:&ensp;</strong><span></span></p>
+	</div>
+	<button class="edit-student-interview hide" data-id="<%= interview._id %>">
+		Edit&ensp;<i class="fa-solid fa-pen-to-square"></i>
+	</button>
+	<button class="delete-student-interview hide" data-id="<%= interview._id %>">
+		Delete&ensp;<i class="fa-solid fa-trash"></i>
+	</button>
 	<% }else{ %>
+	<div class="form-group hide">
+		<select
+			class="form-select form-control"
+			id="student-<%= interview._id %>-select"
+			name="name"
+			required
+		>
+			<% for(let student of students){ %>
+			<option value="<%= student._id %>"><%= student.name %></option>
+			<% } %>
+		</select>
+	</div>
+	<div class="form-group hide">
+		<select
+			class="form-select form-control"
+			id="result-<%= interview._id %>-select"
+			name="result"
+			required
+		>
+			<option value="pass">Pass</option>
+			<option value="fail">Fail</option>
+			<option value="on hold">On Hold</option>
+			<option value="not attended">Not Attended</option>
+			<option value="to be decided">To Be Decided</option>
+		</select>
+	</div>
+	<button class="add-student-interview hide" data-id="<%= interview._id %>">
+		Add Student&ensp;<i class="fa-solid fa-circle-plus"></i>
+	</button>
+	<button class="update-student-interview hide" data-id="<%= interview._id %>">
+		Update Student&ensp;<i class="fa-solid fa-arrow-rotate-left"></i>
+	</button>
 	<div class="fixed">
 		<p>
 			<strong>Name:&ensp;</strong><span><%= interview.student.name %></span>

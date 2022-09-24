@@ -6,9 +6,10 @@ const Interview = require("../models/interview");
 const Company = require("../models/company");
 //Require the Result Model
 const Result = require("../models/result");
+//Require Mongoose Library
+const mongoose = require("mongoose");
 //Require the Database Validation Middleware
 const { DBValidation } = require("../config/middleware");
-const { result } = require("lodash");
 
 module.exports.add = async (req, res) => {
 	try {
@@ -35,8 +36,64 @@ module.exports.add = async (req, res) => {
 		//Send the response
 		return res.status(200).json({
 			status: "success",
-			message: "Interview Created Successfully 🎊 🥳",
+			message: "Company Visit Scheduled Successfully 🎊 🥳",
 			company: obj,
+		});
+	} catch (error) {
+		console.log(error);
+		const obj = DBValidation(req, res, error);
+		req.flash("error", obj.message);
+
+		//Send the response
+		return res.status(500).json({
+			status: "error",
+			message: obj.message,
+			response: error,
+			error: "Internal Server Error",
+		});
+	}
+};
+
+module.exports.deleteInterview = async (req, res) => {
+	try {
+		const CHECK = mongoose.Types.ObjectId.isValid(req.params.id);
+		if (!CHECK) {
+			return res.status(200).json({
+				status: "error",
+				message:
+					"Something Went Wrong with your Browser. Please Refresh the Page 🤷‍♂️",
+			});
+		}
+
+		let interview = await Interview.findById(req.params.id);
+		if (!interview) {
+			return res.status(200).json({
+				status: "error",
+				message: "Interview Not Found 🤷‍♂️",
+			});
+		}
+
+		let company = await Company.findById(interview.company);
+		if (!company) {
+			return res.status(200).json({
+				status: "error",
+				message: "Company Not Found 🤷‍♂️",
+			});
+		}
+
+		company.interviews.pull(interview._id);
+		await company.save();
+		await interview.remove();
+		// OR
+		// let index = company.interviews.indexOf(interview._id);
+		// company.interviews.splice(index, 1);
+		// await company.save();
+		// await interview.remove();
+
+		//Send the response
+		return res.status(200).json({
+			status: "success",
+			message: "Empty Interview Slot Deleted Successfully 🎊 🥳",
 		});
 	} catch (error) {
 		console.log(error);
@@ -55,6 +112,15 @@ module.exports.add = async (req, res) => {
 
 module.exports.createInterview = async (req, res) => {
 	try {
+		const CHECK = mongoose.Types.ObjectId.isValid(req.body.id);
+		if (!CHECK) {
+			return res.status(200).json({
+				status: "error",
+				message:
+					"Something Went Wrong with your Browser. Please Refresh the Page 🤷‍♂️",
+			});
+		}
+
 		let company = await Company.findById(req.body.id);
 		if (!company) {
 			return res.status(200).json({
@@ -63,11 +129,21 @@ module.exports.createInterview = async (req, res) => {
 			});
 		}
 
+		//To stop creating unnecessary interview slots
 		let students = await Student.find({});
 		if (students.length === 0) {
 			return res.status(200).json({
 				status: "error",
 				message: "No Students Found 🤷‍♂️",
+			});
+		}
+
+		//To stop creating unnecessary interview slots
+		let interviews = await Interview.find({ company: company._id });
+		if (interviews.length >= students.length) {
+			return res.status(200).json({
+				status: "error",
+				message: "Please create more students to add 🤷‍♂️",
 			});
 		}
 
@@ -78,7 +154,7 @@ module.exports.createInterview = async (req, res) => {
 		//Send the response
 		return res.status(200).json({
 			status: "success",
-			message: "Kindly Add Student & Result to the Interview 🚀",
+			message: "Empty Interview Slot Created Successfully 🎊 🥳",
 			interview: interview,
 			company: company,
 			students: students,
@@ -100,6 +176,15 @@ module.exports.createInterview = async (req, res) => {
 
 module.exports.delete = async (req, res) => {
 	try {
+		const CHECK = mongoose.Types.ObjectId.isValid(req.params.company);
+		if (!CHECK) {
+			return res.status(200).json({
+				status: "error",
+				message:
+					"Something Went Wrong with your Browser. Please Refresh the Page 🤷‍♂️",
+			});
+		}
+
 		let company = await Company.findById(req.params.company);
 		if (!company) {
 			return res.status(200).json({
@@ -110,11 +195,10 @@ module.exports.delete = async (req, res) => {
 
 		let interviews = await Interview.find({ company: company._id });
 		if (interviews.length === 0) {
-			let students = await Student.find({});
 			await company.remove();
 			return res.status(200).json({
 				status: "success",
-				message: "Interview Deleted Successfully 🎊 🥳",
+				message: "Company Visit Cancelled Successfully 🎊 🥳",
 				students: [],
 				id: req.params.company,
 			});
@@ -135,7 +219,7 @@ module.exports.delete = async (req, res) => {
 			//Send the response
 			return res.status(200).json({
 				status: "success",
-				message: "Interview Deleted Successfully 🎊 🥳",
+				message: "Company Visit Cancelled Successfully 🎊 🥳",
 				students: [],
 				id: req.params.company,
 			});
@@ -204,7 +288,7 @@ module.exports.delete = async (req, res) => {
 		//Send the response
 		return res.status(200).json({
 			status: "success",
-			message: "Interview Deleted Successfully 🎊 🥳",
+			message: "Company Visit Cancelled Successfully 🎊 🥳",
 			students: students,
 			id: req.params.company,
 		});
@@ -225,6 +309,16 @@ module.exports.delete = async (req, res) => {
 
 module.exports.addStudent = async (req, res) => {
 	try {
+		const CHECK1 = mongoose.Types.ObjectId.isValid(req.body.name);
+		const CHECK2 = mongoose.Types.ObjectId.isValid(req.body.interviewID);
+		if (!CHECK1 || !CHECK2) {
+			return res.status(200).json({
+				status: "error",
+				message:
+					"Something Went Wrong with your Browser. Please Refresh the Page 🤷‍♂️",
+			});
+		}
+
 		let { name, result, interviewID } = req.body;
 		let student = await Student.findById(name);
 		if (!student) {
@@ -313,6 +407,216 @@ module.exports.addStudent = async (req, res) => {
 	}
 };
 
-module.exports.editStudent = async (req, res) => {};
+module.exports.editStudent = async (req, res) => {
+	try {
+		const CHECK = mongoose.Types.ObjectId.isValid(req.body.interviewID);
+		if (!CHECK) {
+			return res.status(200).json({
+				status: "error",
+				message:
+					"Something Went Wrong with your Browser. Please Refresh the Page 🤷‍♂️",
+			});
+		}
 
-module.exports.deleteStudent = async (req, res) => {};
+		let { result, interviewID } = req.body;
+		let interview = await Interview.findById(interviewID);
+		if (!interview) {
+			return res.status(200).json({
+				status: "error",
+				message: "Interview Not Found 🤷‍♂️",
+			});
+		}
+
+		let student = await Student.findById(interview.student).populate(
+			"results"
+		);
+		if (!student) {
+			return res.status(200).json({
+				status: "error",
+				message: "Student Not Found 🤷‍♂️",
+			});
+		}
+
+		let RESULT = await Result.findOne({
+			student: student._id,
+			company: interview.company,
+		});
+
+		if (!RESULT) {
+			return res.status(200).json({
+				status: "error",
+				message: "Student Not Found in the Interview List 🤷‍♂️",
+			});
+		}
+
+		RESULT.result = result;
+		await RESULT.save();
+
+		if (result === "pass") {
+			student.status = "placed";
+			await student.save();
+		}
+
+		if (result !== "pass") {
+			let RES = await Result.find({ student: student._id });
+			let flag = 0;
+			for (let R of RES) {
+				if (R.result === "pass") {
+					student.status = "placed";
+					await student.save();
+					flag = 1;
+					break;
+				}
+			}
+			if (flag === 0) {
+				student.status = "not placed";
+				await student.save();
+			}
+		}
+
+		let students = await Student.find({});
+		let COMPANY = await Company.findById(interview.company).populate({
+			path: "results",
+			populate: [
+				{
+					path: "student",
+				},
+			],
+		});
+
+		//Send the response
+		return res.status(200).json({
+			status: "success",
+			message: "Student Updated Successfully 🎊 🥳",
+			student: student,
+			interview: interview,
+			students: students,
+			result: RESULT,
+			company: COMPANY,
+		});
+	} catch (error) {
+		console.log(error);
+		const obj = DBValidation(req, res, error);
+		req.flash("error", obj.message);
+
+		//Send the response
+		return res.status(500).json({
+			status: "error",
+			message: obj.message,
+			response: error,
+			error: "Internal Server Error",
+		});
+	}
+};
+
+module.exports.deleteStudent = async (req, res) => {
+	try {
+		const CHECK = mongoose.Types.ObjectId.isValid(req.params.interview);
+		if (!CHECK) {
+			return res.status(200).json({
+				status: "error",
+				message:
+					"Something Went Wrong with your Browser. Please Refresh the Page 🤷‍♂️",
+			});
+		}
+
+		let { interview } = req.params;
+		let interviewID = interview;
+		interview = await Interview.findById(interviewID);
+		if (!interview) {
+			return res.status(200).json({
+				status: "error",
+				message: "Interview Not Found 🤷‍♂️",
+			});
+		}
+
+		let result = await Result.findById(interview.result);
+		if (!result) {
+			return res.status(200).json({
+				status: "error",
+				message: "Result Not Found 🤷‍♂️",
+			});
+		}
+
+		let student = await Student.findById(interview.student).populate(
+			"results"
+		);
+		if (!student) {
+			return res.status(200).json({
+				status: "error",
+				message: "Student Not Found 🤷‍♂️",
+			});
+		}
+
+		let company = await Company.findById(interview.company);
+		if (!company) {
+			return res.status(200).json({
+				status: "error",
+				message: "Company Not Found 🤷‍♂️",
+			});
+		}
+
+		student.results.pull(result._id);
+		await student.save();
+		student.interviews.pull(interview._id);
+		await student.save();
+		company.results.pull(result._id);
+		await company.save();
+		company.interviews.pull(interview._id);
+		await company.save();
+		await interview.remove();
+		await result.remove();
+
+		let RESULTS = await Result.find({ student: student._id });
+		if (RESULTS.length === 0) {
+			student.status = "not placed";
+			await student.save();
+		} else {
+			let flag = 0;
+			for (let R of RESULTS) {
+				if (R.result === "pass") {
+					student.status = "placed";
+					await student.save();
+					flag = 1;
+					break;
+				}
+			}
+			if (flag === 0) {
+				student.status = "not placed";
+				await student.save();
+			}
+		}
+
+		let COMPANY = await Company.findById(interview.company).populate({
+			path: "results",
+			populate: [
+				{
+					path: "student",
+				},
+			],
+		});
+
+		student = await Student.findById(student._id).populate("results");
+		let students = await Student.find({});
+		//Send the response
+		return res.status(200).json({
+			status: "success",
+			message: "Student Deleted from the Interview List Successfully 🎊 🥳",
+			student: student,
+			company: COMPANY,
+			students: students,
+		});
+	} catch (error) {
+		console.log(error);
+		const obj = DBValidation(req, res, error);
+		req.flash("error", obj.message);
+
+		//Send the response
+		return res.status(500).json({
+			status: "error",
+			message: obj.message,
+			response: error,
+			error: "Internal Server Error",
+		});
+	}
+};

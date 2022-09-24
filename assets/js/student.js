@@ -21,7 +21,6 @@ class Students {
 				Data.name === "" ||
 				Data.age === "" ||
 				Data.gender === "" ||
-				Data.status === "" ||
 				Data.college === "" ||
 				Data.batch === "" ||
 				Data.dsa === "" ||
@@ -48,18 +47,33 @@ class Students {
 			//Create Student in DOM using AJAX
 			let accordion = self.createStudentInDOM(data.student);
 			let deleteBtn = accordion.querySelector(".delete-student-button");
+			//Updates the Selection Option of Interview Form
+			self.addToSelection(data.student);
 			//Toggle Accordion on click using AJAX
 			self.toggleAccordion(accordion);
 			//Delete Student on Click using AJAX
 			self.deleteStudent(deleteBtn);
-			//Make the Add Student Button Visible
-			const btns = document.querySelectorAll(".add-student-BTN");
-			if (btns && btns.length > 0) {
-				btns.forEach((item) => {
-					item.style.visibility = "visible";
-				});
-			}
 		});
+	}
+
+	//Updates the Selection Option of Interview Form
+	addToSelection(student) {
+		let items = document.querySelectorAll(".interview-accordion-item");
+		if (items.length !== 0) {
+			items.forEach((item) => {
+				let selects = item.querySelectorAll(".form-group select");
+				if (selects.length !== 0) {
+					selects.forEach((select) => {
+						if (select && select.name === "name") {
+							let option = document.createElement("option");
+							option.value = student.id;
+							option.textContent = student.name;
+							select.appendChild(option);
+						}
+					});
+				}
+			});
+		}
 	}
 
 	//Creates a new Student in DOM
@@ -101,6 +115,48 @@ class Students {
 		return accordion;
 	}
 
+	//Delete Interviews of Student from the Interviews Section
+	deleteInterviews({ students, companies, interviewIDs, studentID }) {
+		let self = this;
+		if (companies.length === 0) return;
+		companies.forEach((company) => {
+			//For each company item
+			let COMPANY = document.querySelector(
+				`.interview-accordion-item.accordion-item-${company._id}`
+			);
+			if (COMPANY) {
+				//If there are no students, delete the company interviews
+				if (students.length === 0) {
+					let STUDENT = COMPANY.querySelectorAll(".student");
+					if (STUDENT && STUDENT.length > 0) {
+						STUDENT.forEach((item) => item.remove());
+					}
+				}
+				//If there are students, delete the interviews of the deleted student
+				else {
+					interviewIDs.forEach((id) => {
+						let STUDENT = COMPANY.querySelector(
+							`.student-interview-${id}`
+						);
+						if (STUDENT) STUDENT.remove();
+					});
+					//Updates the Selection Option of Interview Form
+					let selects = COMPANY.querySelectorAll(".form-group select");
+					if (selects && selects.length > 0) {
+						selects.forEach((select) => {
+							let opts = select.querySelectorAll("option");
+							if (opts && opts.length > 0) {
+								opts.forEach((opt) => {
+									if (opt && opt.value === studentID) opt.remove();
+								});
+							}
+						});
+					}
+				}
+			}
+		});
+	}
+
 	//Delete the Student
 	deleteStudent(btn) {
 		let self = this;
@@ -118,6 +174,8 @@ class Students {
 			if (data.status === "error") return self.notify(data.message, "error");
 			//Success Message
 			self.notify(data.message, "success");
+			//Delete Interviews of Student from the Interviews Section
+			self.deleteInterviews(data);
 			//Delete Student from DOM
 			e.target.closest(".student-accordion-item").remove();
 		});
@@ -152,11 +210,6 @@ class Students {
 			progressBar: true,
 			closeWith: ["click", "button"],
 			timeout: 6000,
-			sounds: {
-				sources: ["/storage/sounds/Ting.mp3"],
-				volume: 0.5,
-				conditions: ["docHidden", "docVisible"],
-			},
 		}).show();
 	}
 

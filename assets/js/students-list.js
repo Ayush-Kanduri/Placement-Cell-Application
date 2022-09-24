@@ -11,11 +11,142 @@ class StudentsList {
 		self.convertToAJAX();
 	}
 
+	//Updates the Row in the Student Interviews Table in the Student's Section
+	updateTable(student, company, result) {
+		let studSection = document.querySelector(
+			`.student-accordion-item.accordion-item-${student._id}`
+		);
+		studSection.querySelectorAll(".student-data > p > span")[6].textContent =
+			student.status;
+		let table = studSection.querySelector("table");
+		let tbody = table.querySelector("tbody");
+		let rows = tbody.querySelectorAll(`tr`);
+		for (let row of rows) {
+			if (row.id === company._id) {
+				let cells = row.querySelectorAll("td");
+				cells[1].textContent = result.result;
+				break;
+			}
+		}
+	}
+
+	//Removes the Row in the Student Interviews Table in the Student's Section
+	removeTable(student, company) {
+		let studSection = document.querySelector(
+			`.student-accordion-item.accordion-item-${student._id}`
+		);
+		studSection.querySelectorAll(".student-data > p > span")[6].textContent =
+			student.status;
+		let table = studSection.querySelector("table");
+		let tbody = table.querySelector("tbody");
+		let rows = tbody.querySelectorAll(`tr`);
+		for (let row of rows) {
+			if (row.id === company._id) {
+				row.remove();
+				break;
+			}
+		}
+	}
+
 	//Updates the Student from the Persistent Student Interview List and the DOM
-	editStudent(interviewID, btn) {}
+	editStudent(interviewID, btn) {
+		let self = this;
+		btn.addEventListener("click", async (e) => {
+			e.preventDefault();
+			e.stopPropagation();
+			let sel1 = self.studentsListForm.querySelector(
+				`#student-${interviewID}-select`
+			);
+			let sel2 = self.studentsListForm.querySelector(
+				`#result-${interviewID}-select`
+			);
+			let formGrp1 = sel1.parentElement;
+			let formGrp2 = sel2.parentElement;
+			if (window.getComputedStyle(formGrp1).display === "none") {
+				formGrp1.classList.remove("hide");
+			}
+			if (window.getComputedStyle(formGrp2).display === "none") {
+				formGrp2.classList.remove("hide");
+			}
+			let container = formGrp1.parentElement;
+			let fixed = container.querySelector(".fixed");
+			sel1.querySelectorAll("option").forEach((option) => {
+				if (
+					option.textContent ===
+					fixed.querySelectorAll("p > span")[0].textContent
+				) {
+					option.setAttribute("selected", "selected");
+				}
+			});
+			sel1.disabled = true;
+			let updateBtn = container.querySelector(".update-student-interview");
+			let editBtn = container.querySelector(".edit-student-interview");
+			let deleteBtn = container.querySelector(".delete-student-interview");
+			updateBtn.classList.remove("hide");
+			fixed.classList.add("hide");
+			editBtn.classList.add("hide");
+			deleteBtn.classList.add("hide");
+			updateBtn.setAttribute("data-id", interviewID);
+
+			updateBtn.addEventListener("click", async (e) => {
+				e.preventDefault();
+				e.stopPropagation();
+				const formData = new FormData();
+				formData.append("interviewID", interviewID);
+				formData.append("result", sel2.value);
+				const Data = Object.fromEntries(formData.entries());
+				const URL = `/interviews/students/edit/${interviewID}`;
+				let response = await fetch(URL, {
+					method: "PUT",
+					headers: { "Content-Type": "application/json" },
+					body: JSON.stringify(Data),
+				});
+				let data = await response.json();
+				if (data.status === "error") {
+					self.notify(data.message, "error");
+					return;
+				}
+				self.notify(data.message, "success");
+				let { student, company, result } = data;
+				updateBtn.classList.add("hide");
+				fixed.classList.remove("hide");
+				editBtn.classList.remove("hide");
+				deleteBtn.classList.remove("hide");
+				fixed.querySelectorAll("p > span")[0].textContent = student.name;
+				fixed.querySelectorAll("p > span")[1].textContent = result.result;
+				formGrp1.classList.add("hide");
+				formGrp2.classList.add("hide");
+				//Updates the Row in the Student Interviews Table in the Student's Section
+				self.updateTable(student, company, result);
+			});
+		});
+	}
 
 	//Delete Student from the Persistent Student Interview List and the DOM
-	deleteStudent(interviewID, btn) {}
+	deleteStudent(interviewID, btn) {
+		let self = this;
+		btn.addEventListener("click", async (e) => {
+			e.preventDefault();
+			e.stopPropagation();
+			const URL = `/interviews/students/delete/${interviewID}`;
+			let response = await fetch(URL, {
+				method: "DELETE",
+				headers: { "Content-Type": "application/json" },
+			});
+			let data = await response.json();
+			if (data.status === "error") {
+				self.notify(data.message, "error");
+				return;
+			}
+			self.notify(data.message, "success");
+			self.companyContainer
+				.querySelector(`.student-interview-${interviewID}`)
+				.remove();
+			let { student, company } = data;
+			//Removes the Row in the Student Interviews Table in the Student's Section
+			self.removeTable(student, company);
+		});
+	}
 
 	//Add a New Row into the Student Interviews Table in the Student's Section
 	createTable(student, company, result) {
@@ -39,6 +170,26 @@ class StudentsList {
 		td2.textContent = `${result.result}`;
 		tr.appendChild(td2);
 		tbody.appendChild(tr);
+	}
+
+	//Delete the unassigned interview slot
+	deleteInterviewSlot(interviewID, btn) {
+		let self = this;
+		btn.addEventListener("click", async (e) => {
+			e.preventDefault();
+			e.stopPropagation();
+			const URL = `/interviews/delete-interview/${interviewID}`;
+			let response = await fetch(URL, { method: "DELETE" });
+			let data = await response.json();
+			if (data.status === "error") {
+				self.notify(data.message, "error");
+				return;
+			}
+			self.notify(data.message, "success");
+			self.companyContainer
+				.querySelector(`.student-interview-${interviewID}`)
+				.remove();
+		});
 	}
 
 	//Add New Student to the Persistent List in the DB
@@ -82,6 +233,10 @@ class StudentsList {
 			Result.classList.add("hide");
 			let addBtn = container.querySelector(".add-student-interview");
 			addBtn.classList.add("hide");
+			let delBtn = container.querySelector(".delete-interview-slot");
+			delBtn.classList.add("hide");
+			let updateBtn = container.querySelector(".update-student-interview");
+			updateBtn.setAttribute("data-id", `${interviewID}`);
 			let fixed = container.querySelector(".fixed");
 			//For Page Refresh
 			if (!fixed) {
@@ -112,11 +267,6 @@ class StudentsList {
 			if (refresh[2]) container.appendChild(deleteBtn);
 			//Add a New Row into the Student Interviews Table in the Student's Section
 			self.createTable(student, company, result);
-			//If the created interviews count === to the no. of students count then remove the + BTN
-			let { students } = data;
-			let len1 = company.interviews.length;
-			let len2 = students.length;
-			if (len1 === len2) self.addStudentListBtn.style.visibility = "hidden";
 			//Delete Student from the Persistent Student Interview List and the DOM
 			self.deleteStudent(interview._id, deleteBtn);
 			//Updates the Student from the Persistent Student Interview List and the DOM
@@ -160,16 +310,19 @@ class StudentsList {
 				option.textContent = student.name;
 				studentName.appendChild(option);
 			}
+			let delBtn = Interview.querySelector(".delete-interview-slot");
+			delBtn.classList.remove("hide");
+			delBtn.setAttribute("data-id", `${interviewID}`);
 			let addBtn = Interview.querySelector(".add-student-interview");
-			addBtn.setAttribute("data-id", `${interviewID}`);
 			addBtn.classList.remove("hide");
+			addBtn.setAttribute("data-id", `${interviewID}`);
+			let updateBtn = Interview.querySelector(".update-student-interview");
+			updateBtn.setAttribute("data-id", `${interviewID}`);
 			self.studentsListForm.appendChild(Interview);
-			//If the created interviews count === to the no. of students count then remove the + BTN
-			let len1 = company.interviews.length;
-			let len2 = students.length;
-			if (len1 === len2) self.addStudentListBtn.style.visibility = "hidden";
 			//Add New Student to the Persistent List in the DB
 			self.addStudent(interviewID, addBtn);
+			//Delete Interview Slot
+			self.deleteInterviewSlot(interviewID, delBtn);
 		});
 	}
 
@@ -183,37 +336,20 @@ class StudentsList {
 			progressBar: true,
 			closeWith: ["click", "button"],
 			timeout: 6000,
-			sounds: {
-				sources: ["/storage/sounds/Ting.mp3"],
-				volume: 0.5,
-				conditions: ["docHidden", "docVisible"],
-			},
 		}).show();
 	}
 
 	//Converts all existing Students List in the Interview to AJAX on Page Load
 	convertToAJAX() {
 		let self = this;
-		//TODO: Create Table using AJAX
-		//TODO: Edit/Delete Students List using AJAX
-		//TODO: On Student edit, if table exists, update the table, else add a new row
-		//TODO: On Student delete, delete student from the student's list in interviews
-		//TODO: On Interview delete, delete the row from the table
-		//TODO: On Company delete, delete the row from the table
-		//TODO: If all students are added then remove the + ICON in students list
-		//TODO: Check for single student with pass & fail + delete
-		//TODO: Check for multiple students with pass & fail + delete
-		//TODO: Check for multiple company single student with pass & fail + delete
-		//TODO: Check for multiple company multiple student with pass & fail + delete
-
-		//TODO: Continue from Refreshed Add Student Interview Button
-		//TODO: Make + Button visible if its invisible on deleting the student interview
-		//TODO: On Creating a student in the student section, make + BTN visible if its invisible
 		let addStudentListBtn = self.companyContainer.querySelectorAll(
 			`#add-student-${self.companyID}`
 		);
-		let addStudentInterviewBtns = self.studentsListForm.querySelectorAll(
+		let addStudentInterviewBtns = self.studentsListForm?.querySelectorAll(
 			".add-student-interview"
+		);
+		let deleteInterviewSlotBtns = self.studentsListForm?.querySelectorAll(
+			".delete-interview-slot"
 		);
 		let deleteStudentInterviewBtns = self.studentsListForm?.querySelectorAll(
 			".delete-student-interview"
@@ -227,11 +363,15 @@ class StudentsList {
 			self.addStudentListBtn = btn;
 			self.createStudentInTheListDOM(btn);
 		});
-
 		//Add Student to Interview Buttons
 		addStudentInterviewBtns.forEach((btn) => {
 			let interview = btn.getAttribute("data-id");
 			self.addStudent(interview, btn);
+		});
+		//Delete Interview Slot Buttons
+		deleteInterviewSlotBtns.forEach((btn) => {
+			let interview = btn.getAttribute("data-id");
+			self.deleteInterviewSlot(interview, btn);
 		});
 		//Delete Student from Interview Buttons
 		deleteStudentInterviewBtns.forEach((btn) => {

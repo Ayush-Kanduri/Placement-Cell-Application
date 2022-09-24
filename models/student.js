@@ -30,9 +30,9 @@ const studentSchema = new mongoose.Schema(
 		},
 		status: {
 			type: String,
+			default: "not placed",
 			trim: true,
 			lowercase: true,
-			default: "not placed",
 			enum: ["placed", "not placed"],
 		},
 		batch: {
