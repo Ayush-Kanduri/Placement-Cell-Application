@@ -39,8 +39,11 @@
 				const dot = email.indexOf(".");
 				email = email.trim();
 
+				//If name is empty
 				if (email === "") return notify("error", "Email is Required ❌");
+				//If password is empty
 				if (pass === "") return notify("error", "Password is Required ❌");
+				//If password is less than 6 characters
 				if (pass.length < 6) {
 					let message = "Password must be at least 6 Characters Long ❌";
 					notify("error", message);

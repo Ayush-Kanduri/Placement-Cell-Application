@@ -2,7 +2,7 @@
 	try {
 		const card = document.getElementsByClassName("card")[0];
 		const jobs = card.getAttribute("data-jobs");
-
+		//Create Job Cards Dynamically
 		for (let job of JSON.parse(jobs)) {
 			let span1 = document.createElement("span");
 			let span2 = document.createElement("span");

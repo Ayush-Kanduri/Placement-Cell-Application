@@ -20,6 +20,8 @@ const fs = require("fs");
 const path = require("path");
 //Require the BCryptJS Module
 const bcrypt = require("bcryptjs");
+//Require Mongoose Library
+const mongoose = require("mongoose");
 
 //Displays the Home Page or the Login Page
 module.exports.homepage = async (req, res) => {
@@ -189,6 +191,15 @@ module.exports.destroySession = (req, res) => {
 //Displays the Profile Page
 module.exports.profile = async (req, res) => {
 	try {
+		const CHECK = mongoose.Types.ObjectId.isValid(req.params.id);
+		if (!CHECK) {
+			return res.status(200).json({
+				status: "error",
+				message:
+					"Something Went Wrong with your Browser. Please Refresh the Page 🤷‍♂️",
+			});
+		}
+
 		//Find the Employee to show the Profile
 		const employee = await Employee.findById(req.params.id);
 		return res.render("profile", {
@@ -206,6 +217,15 @@ module.exports.profile = async (req, res) => {
 //Updates the Profile Page
 module.exports.update = async (req, res) => {
 	try {
+		const CHECK = mongoose.Types.ObjectId.isValid(req.params.id);
+		if (!CHECK) {
+			return res.status(200).json({
+				status: "error",
+				message:
+					"Something Went Wrong with your Browser. Please Refresh the Page 🤷‍♂️",
+			});
+		}
+
 		//If the Logged In User is the same as the Employee's Profile then Update the Profile
 		if (req.params.id == req.user.id) {
 			//Find the User by the ID

@@ -1,13 +1,19 @@
+//Students List Class
 class StudentsList {
+	//Constructor
 	constructor(companyID) {
+		//Company ID
 		this.companyID = companyID;
+		//Company Container
 		this.companyContainer = document.querySelector(
 			`.interview-accordion-item#accordion-item-${this.companyID}`
 		);
+		//Student Interview List Form inside the Company Container
 		this.studentsListForm = this.companyContainer.querySelector(
 			`#company-${this.companyID}-students-form`
 		);
 		let self = this;
+		//Convert to AJAX
 		self.convertToAJAX();
 	}
 
@@ -51,6 +57,7 @@ class StudentsList {
 	//Updates the Student from the Persistent Student Interview List and the DOM
 	editStudent(interviewID, btn) {
 		let self = this;
+		//Edit Button
 		btn.addEventListener("click", async (e) => {
 			e.preventDefault();
 			e.stopPropagation();
@@ -87,7 +94,7 @@ class StudentsList {
 			editBtn.classList.add("hide");
 			deleteBtn.classList.add("hide");
 			updateBtn.setAttribute("data-id", interviewID);
-
+			//Update Button
 			updateBtn.addEventListener("click", async (e) => {
 				e.preventDefault();
 				e.stopPropagation();
@@ -96,16 +103,20 @@ class StudentsList {
 				formData.append("result", sel2.value);
 				const Data = Object.fromEntries(formData.entries());
 				const URL = `/interviews/students/edit/${interviewID}`;
+				//Send AJAX Request
 				let response = await fetch(URL, {
 					method: "PUT",
 					headers: { "Content-Type": "application/json" },
 					body: JSON.stringify(Data),
 				});
+				//Receive Response
 				let data = await response.json();
+				//Notify Error
 				if (data.status === "error") {
 					self.notify(data.message, "error");
 					return;
 				}
+				//Notify Success
 				self.notify(data.message, "success");
 				let { student, company, result } = data;
 				updateBtn.classList.add("hide");
@@ -129,6 +140,7 @@ class StudentsList {
 			e.preventDefault();
 			e.stopPropagation();
 			const URL = `/interviews/students/delete/${interviewID}`;
+			//Send AJAX Request
 			let response = await fetch(URL, {
 				method: "DELETE",
 				headers: { "Content-Type": "application/json" },

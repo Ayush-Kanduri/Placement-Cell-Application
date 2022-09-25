@@ -40,24 +40,31 @@
 				const at = email.indexOf("@");
 				const dot = email.indexOf(".");
 
+				//If name is empty
 				if (name === "") return notify("error", "Name is Required ❌");
+				//If email is empty
 				if (email === "") return notify("error", "Email is Required ❌");
+				//If password is empty
 				if (pass === "") return notify("error", "Password is Required ❌");
+				//If confirm password is empty
 				if (CPass === "") {
 					let message = "Password does not match ❌";
 					notify("error", message);
 					return;
 				}
+				//If name is less than 3 characters
 				if (name.length < 3) {
 					let message = "Name must be at least 6 Characters Long ❌";
 					notify("error", message);
 					return;
 				}
+				//If password is less than 6 characters
 				if (pass.length < 6) {
 					let message = "Password must be at least 6 Characters Long ❌";
 					notify("error", message);
 					return;
 				}
+				//If passwords do not match
 				if (CPass !== pass) {
 					let message = "Password does not match ❌";
 					notify("error", message);

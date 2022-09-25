@@ -17,6 +17,7 @@ class Students {
 			const formData = new FormData(form);
 			const Data = Object.fromEntries(formData.entries());
 
+			//If Form Fields are Empty
 			if (
 				Data.name === "" ||
 				Data.age === "" ||
@@ -120,12 +121,12 @@ class Students {
 		let self = this;
 		if (companies.length === 0) return;
 		companies.forEach((company) => {
-			//For each company item
+			//For Each Company
 			let COMPANY = document.querySelector(
 				`.interview-accordion-item.accordion-item-${company._id}`
 			);
 			if (COMPANY) {
-				//If there are no students, delete the company interviews
+				//If there are no students, delete all the company interview slots
 				if (students.length === 0) {
 					let STUDENT = COMPANY.querySelectorAll(".student");
 					if (STUDENT && STUDENT.length > 0) {
@@ -140,7 +141,7 @@ class Students {
 						);
 						if (STUDENT) STUDENT.remove();
 					});
-					//Updates the Selection Option of Interview Form
+					//Updates the Selection Options of the Interview Section
 					let selects = COMPANY.querySelectorAll(".form-group select");
 					if (selects && selects.length > 0) {
 						selects.forEach((select) => {

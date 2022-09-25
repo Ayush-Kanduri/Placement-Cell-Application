@@ -25,10 +25,7 @@ module.exports.createFolders = async (req, res, next) => {
 		directory = path.join(__dirname, "..", "/uploads/employees/avatars");
 		if (!fs.existsSync(directory)) fs.mkdirSync(directory);
 
-		directory = path.join(__dirname, "..", "/uploads/students");
-		if (!fs.existsSync(directory)) fs.mkdirSync(directory);
-
-		directory = path.join(__dirname, "..", "/uploads/students/avatars");
+		directory = path.join(__dirname, "..", "/uploads/reports");
 		if (!fs.existsSync(directory)) fs.mkdirSync(directory);
 
 		directory = path.join(__dirname, "..", "/workers");

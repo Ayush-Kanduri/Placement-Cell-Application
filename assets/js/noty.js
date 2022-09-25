@@ -1,6 +1,6 @@
 {
 	try {
-		// Displays the Notifications on the Screen
+		//Displays the Notifications coming from the Back-End on to the Screen
 		const Notification = () => {
 			const noty = document.getElementById("Noty");
 			if (noty === null || noty === undefined) return;
