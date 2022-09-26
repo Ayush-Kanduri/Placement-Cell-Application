@@ -11,6 +11,7 @@ const mongoose = require("mongoose");
 //Require the Database Validation Middleware
 const { DBValidation } = require("../config/middleware");
 
+//Creates a New Company Visit
 module.exports.add = async (req, res) => {
 	try {
 		let { company, date } = req.body;
@@ -18,6 +19,7 @@ module.exports.add = async (req, res) => {
 			name: company,
 			date: date,
 		});
+		//If the company is already added
 		if (COMPANY) {
 			return res.status(200).json({
 				status: "error",
@@ -25,6 +27,7 @@ module.exports.add = async (req, res) => {
 			});
 		}
 
+		//Create a new Company
 		COMPANY = await Company.create({ name: company, date: date });
 
 		let obj = {
@@ -54,6 +57,7 @@ module.exports.add = async (req, res) => {
 	}
 };
 
+//Delete Empty Interview Slot
 module.exports.deleteInterview = async (req, res) => {
 	try {
 		const CHECK = mongoose.Types.ObjectId.isValid(req.params.id);
@@ -66,6 +70,7 @@ module.exports.deleteInterview = async (req, res) => {
 		}
 
 		let interview = await Interview.findById(req.params.id);
+		//If the interview is not found
 		if (!interview) {
 			return res.status(200).json({
 				status: "error",
@@ -74,6 +79,7 @@ module.exports.deleteInterview = async (req, res) => {
 		}
 
 		let company = await Company.findById(interview.company);
+		//If the company is not found
 		if (!company) {
 			return res.status(200).json({
 				status: "error",
@@ -81,6 +87,7 @@ module.exports.deleteInterview = async (req, res) => {
 			});
 		}
 
+		//Update the company & delete the interview slot
 		company.interviews.pull(interview._id);
 		await company.save();
 		await interview.remove();
@@ -110,6 +117,7 @@ module.exports.deleteInterview = async (req, res) => {
 	}
 };
 
+//Create a new interview slot
 module.exports.createInterview = async (req, res) => {
 	try {
 		const CHECK = mongoose.Types.ObjectId.isValid(req.body.id);
@@ -121,6 +129,7 @@ module.exports.createInterview = async (req, res) => {
 			});
 		}
 
+		//Find the company
 		let company = await Company.findById(req.body.id);
 		if (!company) {
 			return res.status(200).json({
@@ -147,6 +156,7 @@ module.exports.createInterview = async (req, res) => {
 			});
 		}
 
+		//Create a new interview slot
 		let interview = await Interview.create({ company: company._id });
 		company.interviews.push(interview._id);
 		await company.save();
@@ -174,6 +184,7 @@ module.exports.createInterview = async (req, res) => {
 	}
 };
 
+//Delete the interview slot
 module.exports.delete = async (req, res) => {
 	try {
 		const CHECK = mongoose.Types.ObjectId.isValid(req.params.company);
@@ -185,6 +196,7 @@ module.exports.delete = async (req, res) => {
 			});
 		}
 
+		//Find the company
 		let company = await Company.findById(req.params.company);
 		if (!company) {
 			return res.status(200).json({
@@ -193,7 +205,9 @@ module.exports.delete = async (req, res) => {
 			});
 		}
 
+		//Find the interview slots
 		let interviews = await Interview.find({ company: company._id });
+		//If the interview slots are not found
 		if (interviews.length === 0) {
 			await company.remove();
 			return res.status(200).json({
@@ -204,7 +218,9 @@ module.exports.delete = async (req, res) => {
 			});
 		}
 
+		//Find the result of the interview slots
 		let results = await Result.find({ company: company._id });
+		//If the results are not found
 		if (results.length === 0) {
 			await Student.updateMany(
 				{ interviews: { $in: interviews } },
@@ -225,9 +241,11 @@ module.exports.delete = async (req, res) => {
 			});
 		}
 
+		//Find the students
 		let students = await Student.find({ results: { $in: results } }).populate(
 			"results"
 		);
+		//If there are no students results then mark the students not placed
 		students.forEach(async (student) => {
 			if (student.results.length <= 1) {
 				student.status = "not placed";
@@ -235,31 +253,39 @@ module.exports.delete = async (req, res) => {
 			}
 		});
 
+		//Delete the interview slots
 		await Student.updateMany(
 			{ interviews: { $in: interviews } },
 			{ $pull: { interviews: { $in: interviews } } }
 		);
 
+		//Delete the interview slots
 		await Company.updateMany(
 			{ interviews: { $in: interviews } },
 			{ $pull: { interviews: { $in: interviews } } }
 		);
 
+		//Delete the results
 		await Student.updateMany(
 			{ results: { $in: results } },
 			{ $pull: { results: { $in: results } } }
 		);
 
+		//Delete the results
 		await Company.updateMany(
 			{ results: { $in: results } },
 			{ $pull: { results: { $in: results } } }
 		);
 
+		//Delete the interview slots
 		await Interview.deleteMany({ company: company._id });
+		//Delete the results
 		await Result.deleteMany({ company: company._id });
 
+		//Delete the company
 		await company.remove();
 
+		//Find the students not in that company
 		let stud = await Student.find({
 			$and: [
 				{ "interviews.company": { $ne: req.params.company } },
@@ -269,6 +295,7 @@ module.exports.delete = async (req, res) => {
 
 		for (let student of stud) {
 			let flag = 0;
+			//If student's result is pass then mark him placed
 			for (let result of student.results) {
 				if (result.result === "pass") {
 					student.status = "placed";
@@ -277,6 +304,7 @@ module.exports.delete = async (req, res) => {
 					break;
 				}
 			}
+			//If student's result is not pass then mark him not placed
 			if (flag === 0) {
 				student.status = "not placed";
 				await student.save();
@@ -307,6 +335,7 @@ module.exports.delete = async (req, res) => {
 	}
 };
 
+//Add student to the interview slot
 module.exports.addStudent = async (req, res) => {
 	try {
 		const CHECK1 = mongoose.Types.ObjectId.isValid(req.body.name);
@@ -321,6 +350,7 @@ module.exports.addStudent = async (req, res) => {
 
 		let { name, result, interviewID } = req.body;
 		let student = await Student.findById(name);
+		//If the student is not found
 		if (!student) {
 			return res.status(200).json({
 				status: "error",
@@ -328,6 +358,7 @@ module.exports.addStudent = async (req, res) => {
 			});
 		}
 
+		//Find the interview slot
 		let interview = await Interview.findById(interviewID);
 		if (!interview) {
 			return res.status(200).json({
@@ -336,6 +367,7 @@ module.exports.addStudent = async (req, res) => {
 			});
 		}
 
+		//Find the result of the interview slot
 		let RESULT = await Result.findOne({
 			student: student._id,
 			company: interview.company,
@@ -346,11 +378,14 @@ module.exports.addStudent = async (req, res) => {
 				message: "Student Already Added to the Interview 🤷‍♂️",
 			});
 		}
+		//If the result is not found then create a new result
 		if (!RESULT) {
+			//If the result is pass then mark the student placed
 			if (result === "pass") {
 				student.status = "placed";
 				await student.save();
 			}
+			//Create a new result
 			RESULT = await Result.create({
 				result: result,
 				student: student._id,
@@ -407,6 +442,7 @@ module.exports.addStudent = async (req, res) => {
 	}
 };
 
+//Edit the result of the student in the interview slot
 module.exports.editStudent = async (req, res) => {
 	try {
 		const CHECK = mongoose.Types.ObjectId.isValid(req.body.interviewID);
@@ -419,6 +455,7 @@ module.exports.editStudent = async (req, res) => {
 		}
 
 		let { result, interviewID } = req.body;
+		//Find the interview slot
 		let interview = await Interview.findById(interviewID);
 		if (!interview) {
 			return res.status(200).json({
@@ -427,6 +464,7 @@ module.exports.editStudent = async (req, res) => {
 			});
 		}
 
+		//Find the student
 		let student = await Student.findById(interview.student).populate(
 			"results"
 		);
@@ -437,6 +475,7 @@ module.exports.editStudent = async (req, res) => {
 			});
 		}
 
+		//Find the result of the interview slot
 		let RESULT = await Result.findOne({
 			student: student._id,
 			company: interview.company,
@@ -452,15 +491,18 @@ module.exports.editStudent = async (req, res) => {
 		RESULT.result = result;
 		await RESULT.save();
 
+		//If the result is pass then mark the student placed
 		if (result === "pass") {
 			student.status = "placed";
 			await student.save();
 		}
 
+		//If the result is not pass
 		if (result !== "pass") {
 			let RES = await Result.find({ student: student._id });
 			let flag = 0;
 			for (let R of RES) {
+				//If the result is pass then mark the student placed
 				if (R.result === "pass") {
 					student.status = "placed";
 					await student.save();
@@ -468,6 +510,7 @@ module.exports.editStudent = async (req, res) => {
 					break;
 				}
 			}
+			//If the result is not pass then mark the student not placed
 			if (flag === 0) {
 				student.status = "not placed";
 				await student.save();
@@ -509,6 +552,7 @@ module.exports.editStudent = async (req, res) => {
 	}
 };
 
+//Delete the student from the interview slot
 module.exports.deleteStudent = async (req, res) => {
 	try {
 		const CHECK = mongoose.Types.ObjectId.isValid(req.params.interview);
@@ -522,6 +566,7 @@ module.exports.deleteStudent = async (req, res) => {
 
 		let { interview } = req.params;
 		let interviewID = interview;
+		//Find the interview slot
 		interview = await Interview.findById(interviewID);
 		if (!interview) {
 			return res.status(200).json({
@@ -530,6 +575,7 @@ module.exports.deleteStudent = async (req, res) => {
 			});
 		}
 
+		//Find the result of the interview slot
 		let result = await Result.findById(interview.result);
 		if (!result) {
 			return res.status(200).json({
@@ -538,6 +584,7 @@ module.exports.deleteStudent = async (req, res) => {
 			});
 		}
 
+		//Find the student
 		let student = await Student.findById(interview.student).populate(
 			"results"
 		);
@@ -548,6 +595,7 @@ module.exports.deleteStudent = async (req, res) => {
 			});
 		}
 
+		//Find the company
 		let company = await Company.findById(interview.company);
 		if (!company) {
 			return res.status(200).json({
@@ -568,12 +616,14 @@ module.exports.deleteStudent = async (req, res) => {
 		await result.remove();
 
 		let RESULTS = await Result.find({ student: student._id });
+		//If there are no results then mark the student not placed
 		if (RESULTS.length === 0) {
 			student.status = "not placed";
 			await student.save();
 		} else {
 			let flag = 0;
 			for (let R of RESULTS) {
+				//If the result is pass then mark the student placed
 				if (R.result === "pass") {
 					student.status = "placed";
 					await student.save();
@@ -581,6 +631,7 @@ module.exports.deleteStudent = async (req, res) => {
 					break;
 				}
 			}
+			//If the result is not pass then mark the student not placed
 			if (flag === 0) {
 				student.status = "not placed";
 				await student.save();

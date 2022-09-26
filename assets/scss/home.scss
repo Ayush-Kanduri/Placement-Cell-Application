@@ -178,6 +178,7 @@
 			text-align: center;
 		}
 	}
+	//---------Dashboard---------
 	.dashboard {
 		width: 100%;
 		height: 100%;
@@ -196,6 +197,7 @@
 		.interviews {
 			padding-left: 7px;
 		}
+		//---------Student & Interviews Section---------
 		.students,
 		.interviews {
 			@media screen and (max-width: 700px) {
@@ -208,6 +210,7 @@
 			justify-content: flex-start;
 			align-items: center;
 			margin-bottom: 3rem;
+			//---------Forms---------
 			form {
 				width: 100%;
 				background-color: rgba(255, 245, 219, 0.85);
@@ -247,6 +250,7 @@
 						font-weight: 600;
 						color: var(--logo-color);
 					}
+					//---------Inputs---------
 					input,
 					select {
 						font-weight: 500;
@@ -275,6 +279,7 @@
 						}
 					}
 				}
+				//---------Buttons---------
 				button {
 					width: 100%;
 					min-height: 40px;
@@ -308,6 +313,7 @@
 				padding: 7px;
 				word-spacing: 0.2rem;
 			}
+			//---------Accordion---------
 			.accordion {
 				margin-top: 2rem;
 				width: 100% !important;
@@ -334,6 +340,7 @@
 							}
 						}
 					}
+					//---------Accordion Body---------
 					.accordion-body {
 						width: 100% !important;
 						img {
@@ -349,6 +356,7 @@
 							-o-object-position: center;
 							object-position: center;
 						}
+						//---------Interview Data---------
 						.interview-data {
 							width: 100% !important;
 							position: relative;
@@ -366,6 +374,7 @@
 								}
 							}
 							border-bottom: 1px solid var(--logo-color);
+							//---------Delete Btn---------
 							.fa-trash {
 								@media screen and (max-width: 330px) {
 									font-size: 1.1rem;
@@ -382,6 +391,7 @@
 								}
 							}
 						}
+						//---------Student's List---------
 						.students-list {
 							display: flex;
 							flex-direction: column;
@@ -410,6 +420,7 @@
 									}
 								}
 							}
+							//---------Interview Slots---------
 							form {
 								width: 100%;
 								height: 100%;
@@ -458,6 +469,7 @@
 											width: 100%;
 										}
 									}
+									//---------Interview CRUD Buttons---------
 									button {
 										width: 100%;
 										font-size: 1rem;
@@ -484,6 +496,7 @@
 								}
 							}
 						}
+						//---------Student Data---------
 						.student-data {
 							width: 100% !important;
 							p {
@@ -501,9 +514,11 @@
 								}
 							}
 						}
+						//---------Student Interviews---------
 						.student-interviews {
 							width: 100% !important;
 							margin-bottom: 1rem;
+							//---------Student Table---------
 							table {
 								width: 100% !important;
 								caption {
@@ -552,6 +567,7 @@
 	}
 }
 
+//---------Accordion Classes---------
 .accordion-button:focus {
 	border: none;
 	outline: none;

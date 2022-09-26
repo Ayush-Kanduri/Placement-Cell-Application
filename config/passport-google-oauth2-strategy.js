@@ -13,6 +13,7 @@ const env = require("./environment");
 //Require the Path Finder Middleware
 const { pathFinder } = require("./middleware");
 
+//Use Passport to Use the Google OAuth-2 Strategy
 passport.use(
 	new googleStrategy(
 		{
@@ -26,9 +27,11 @@ passport.use(
 					email: profile.emails[0].value,
 				});
 				if (employee) return done(null, employee);
+				//Password Hashing
 				const password = crypto.randomBytes(20).toString("hex");
 				const salt = await bcrypt.genSalt(10);
 				const hashedPassword = await bcrypt.hash(password, salt);
+				//Create a New Employee
 				employee = await Employee.create({
 					name: profile.displayName,
 					email: profile.emails[0].value,

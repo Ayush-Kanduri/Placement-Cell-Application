@@ -16,6 +16,7 @@
 		align-items: center;
 		flex-wrap: wrap;
 		gap: 1rem;
+		//---------Job Cards---------
 		.card {
 			border-radius: 10px;
 			background-color: rgba(255, 233, 174, 0.9);
@@ -31,6 +32,7 @@
 			.card-header {
 				text-align: center;
 			}
+			//---------Card Body---------
 			.card-body {
 				width: 100%;
 				.card-title {

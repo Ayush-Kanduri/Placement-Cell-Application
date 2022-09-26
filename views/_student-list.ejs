@@ -1,9 +1,12 @@
+<!-- Student Interview Data -->
 <div
 	class="student student-interview-<%= interview._id %>"
 	id="<%= interview._id %>"
 >
+	<!-- If there's no result & interview -->
 	<% if(!interview.result && !interview.student){ %>
 	<div class="form-group">
+		<!-- Student Name -->
 		<select
 			class="form-select form-control"
 			id="student-<%= interview._id %>-select"
@@ -16,6 +19,7 @@
 		</select>
 	</div>
 	<div class="form-group">
+		<!-- Student Result -->
 		<select
 			class="form-select form-control"
 			id="result-<%= interview._id %>-select"
@@ -29,25 +33,32 @@
 			<option value="to be decided">To Be Decided</option>
 		</select>
 	</div>
+	<!-- Add Student to the Interview List -->
 	<button class="add-student-interview" data-id="<%= interview._id %>">
 		Add Student&ensp;<i class="fa-solid fa-circle-plus"></i>
 	</button>
+	<!-- Delete the Interview Slot -->
 	<button class="delete-interview-slot" data-id="<%= interview._id %>">
 		Delete Interview Slot&ensp;<i class="fa-solid fa-trash"></i>
 	</button>
+	<!-- Update Student Data in the Interview List -->
 	<button class="update-student-interview hide" data-id="<%= interview._id %>">
 		Update Student&ensp;<i class="fa-solid fa-arrow-rotate-left"></i>
 	</button>
+	<!-- Student Interview Data -->
 	<div class="fixed hide">
 		<p><strong>Name:&ensp;</strong><span></span></p>
 		<p><strong>Result:&ensp;</strong><span></span></p>
 	</div>
+	<!-- Edit Student Data in the Interview Slot -->
 	<button class="edit-student-interview hide" data-id="<%= interview._id %>">
 		Edit&ensp;<i class="fa-solid fa-pen-to-square"></i>
 	</button>
+	<!-- Delete Student from the Interview List -->
 	<button class="delete-student-interview hide" data-id="<%= interview._id %>">
 		Delete&ensp;<i class="fa-solid fa-trash"></i>
 	</button>
+	<!-- If the Student's Interview has been scheduled -->
 	<% }else{ %>
 	<div class="form-group hide">
 		<select

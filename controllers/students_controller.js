@@ -389,9 +389,11 @@ module.exports.delete = async (req, res) => {
 		let studentID = student.id;
 		await student.remove();
 
+		//If there are no students in the database
 		let students = await Student.find({});
 		if (students.length === 0) {
 			students = [];
+			//Delete the results and interviews collections
 			await Interview.deleteMany({});
 			await Result.deleteMany({});
 			await Company.updateMany(

@@ -146,11 +146,14 @@ class StudentsList {
 				headers: { "Content-Type": "application/json" },
 			});
 			let data = await response.json();
+			//Notify Error
 			if (data.status === "error") {
 				self.notify(data.message, "error");
 				return;
 			}
+			//Notify Success
 			self.notify(data.message, "success");
+			//Remove Student Interview from the DOM
 			self.companyContainer
 				.querySelector(`.student-interview-${interviewID}`)
 				.remove();
@@ -191,13 +194,17 @@ class StudentsList {
 			e.preventDefault();
 			e.stopPropagation();
 			const URL = `/interviews/delete-interview/${interviewID}`;
+			//Send AJAX Request
 			let response = await fetch(URL, { method: "DELETE" });
 			let data = await response.json();
+			//Notify Error
 			if (data.status === "error") {
 				self.notify(data.message, "error");
 				return;
 			}
+			//Notify Success
 			self.notify(data.message, "success");
+			//Remove Student Interview from the DOM
 			self.companyContainer
 				.querySelector(`.student-interview-${interviewID}`)
 				.remove();
@@ -222,13 +229,16 @@ class StudentsList {
 			formData.append("name", sel1.value);
 			formData.append("result", sel2.value);
 			const Data = Object.fromEntries(formData.entries());
+			//Send AJAX Request
 			let response = await fetch("/interviews/students/add", {
 				method: "POST",
 				headers: { "Content-Type": "application/json" },
 				body: JSON.stringify(Data),
 			});
 			let data = await response.json();
+			//Notify Error
 			if (data.status === "error") return self.notify(data.message, "error");
+			//Notify Success
 			self.notify(data.message, "success");
 			//Add New Student into the Interview in the DOM after the Selection is made
 			let { student, interview, company, result } = data;
@@ -274,6 +284,7 @@ class StudentsList {
 			}
 			deleteBtn.classList.remove("hide");
 			deleteBtn.setAttribute("data-id", `${interview._id}`);
+			//For Page Refresh
 			if (refresh[0]) container.appendChild(fixed);
 			if (refresh[1]) container.appendChild(editBtn);
 			if (refresh[2]) container.appendChild(deleteBtn);
@@ -294,12 +305,14 @@ class StudentsList {
 			e.preventDefault();
 			e.stopPropagation();
 			const id = btn.id.split("-")[2];
+			//Send AJAX Request
 			const response = await fetch(`/interviews/create-interview`, {
 				method: "POST",
 				headers: { "Content-Type": "application/json" },
 				body: JSON.stringify({ id: id }),
 			});
 			const data = await response.json();
+			//Notify Error
 			if (data.status === "error") return self.notify(data.message, "error");
 			//Create a New Student Selection in the Student's List in the DOM
 			let { students, interview, company } = data;
@@ -316,6 +329,7 @@ class StudentsList {
 			studentName.id = `student-${interviewID}-select`;
 			let studentResult = formGroup[1].querySelector("select");
 			studentResult.id = `result-${interviewID}-select`;
+			//Create Select Options
 			for (let student of students) {
 				let option = document.createElement("option");
 				option.value = student._id;
@@ -330,6 +344,7 @@ class StudentsList {
 			addBtn.setAttribute("data-id", `${interviewID}`);
 			let updateBtn = Interview.querySelector(".update-student-interview");
 			updateBtn.setAttribute("data-id", `${interviewID}`);
+
 			self.studentsListForm.appendChild(Interview);
 			//Add New Student to the Persistent List in the DB
 			self.addStudent(interviewID, addBtn);

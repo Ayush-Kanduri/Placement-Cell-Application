@@ -25,6 +25,7 @@ const mongoose = require("mongoose");
 
 //Displays the Home Page or the Login Page
 module.exports.homepage = async (req, res) => {
+	//If the User is Logged In
 	if (req.isAuthenticated()) {
 		try {
 			let query1 = [
@@ -57,6 +58,7 @@ module.exports.homepage = async (req, res) => {
 					path: "company",
 				},
 			];
+			//Find all the Students
 			let students = await Student.find({})
 				.populate("batch")
 				.populate({
@@ -71,6 +73,7 @@ module.exports.homepage = async (req, res) => {
 					path: "results",
 					populate: query3,
 				});
+			//Find all the Companies
 			let companies = await Company.find({})
 				.populate({
 					path: "results",
@@ -95,9 +98,11 @@ module.exports.homepage = async (req, res) => {
 	try {
 		let employee = await Employee.find({});
 		if (employee.length === 0) {
+			//Read the Directory
 			const files = await fs.promises.readdir(
 				path.join(__dirname, "..", Employee.filePath)
 			);
+			//Delete all the Files
 			for (let file of files) {
 				fs.unlinkSync(path.join(__dirname, "..", Employee.filePath, file));
 			}
@@ -240,6 +245,7 @@ module.exports.update = async (req, res) => {
 				//Set Name & Email
 				employee.name = req.body.name;
 				employee.email = req.body.email;
+				//Hash the Password
 				if (req.body.password !== employee.password) {
 					const salt = await bcrypt.genSalt(10);
 					const hashedPassword = await bcrypt.hash(

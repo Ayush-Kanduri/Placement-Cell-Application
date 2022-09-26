@@ -37,14 +37,19 @@
 		const dot = email.indexOf(".");
 
 		submit.addEventListener("click", (e) => {
+			//If name is empty
 			if (name === "") return notify("error", "Name is Required ❌");
+			//If email is empty
 			if (email === "") return notify("error", "Email is Required ❌");
+			//If password is empty
 			if (password === "") return notify("error", "Password is Required ❌");
+			//If name is less than 3 characters
 			if (name.length < 3) {
 				let message = "Name must be at least 6 Characters Long ❌";
 				notify("error", message);
 				return;
 			}
+			//If password is less than 6 characters
 			if (password.length < 6) {
 				let message = "Password must be at least 6 Characters Long ❌";
 				notify("error", message);

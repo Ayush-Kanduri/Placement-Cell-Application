@@ -22,6 +22,7 @@ passport.use(
 					req.flash("error", "Invalid Username/Password ❌");
 					return done(null, false);
 				}
+				//Check the Hashed Password in the DB with the Password entered
 				const isMatch = await bcrypt.compare(password, employee.password);
 				if (!isMatch) {
 					req.flash("error", "Invalid Username/Password ❌");
