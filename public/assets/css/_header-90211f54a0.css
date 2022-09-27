@@ -1,0 +1,82 @@
+header {
+  background-color: var(--background-color);
+  width: 100%;
+  height: 100px;
+  display: flex;
+  align-items: center;
+  padding: 10px 20px;
+  position: absolute;
+  top: 0;
+  left: 0;
+  box-shadow: 0 5px 10px 2px rgba(0, 0, 0, 0.3);
+  opacity: 0.7;
+  z-index: 1;
+  overflow: hidden; }
+  header.signed ul.normal {
+    display: flex; }
+  header.signed ul.responsive {
+    display: none; }
+  @media screen and (max-width: 960px) {
+    header.signed ul.normal {
+      display: none; }
+    header.signed ul.responsive {
+      display: flex;
+      gap: 20px; } }
+  @media screen and (max-width: 730px) {
+    header.signed ul.normal {
+      display: none; }
+    header.signed ul.responsive {
+      display: none; } }
+  header .logo {
+    display: flex;
+    justify-content: flex-start;
+    align-items: center;
+    min-width: 15%;
+    height: 100%; }
+    header .logo img {
+      min-width: 170px;
+      height: 100%;
+      object-fit: cover;
+      object-position: center; }
+  @media screen and (max-width: 600px) {
+    header h1 {
+      font-size: 1.5rem !important;
+      text-align: center; } }
+  header nav {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    width: 85%;
+    height: 100%;
+    position: relative; }
+    header nav ul {
+      justify-content: flex-end;
+      align-items: center;
+      width: 100%;
+      height: 100%;
+      padding-left: 0%;
+      flex-wrap: wrap;
+      gap: 40px; }
+      header nav ul li {
+        list-style: none; }
+        header nav ul li a {
+          text-decoration: none;
+          font-size: 1rem;
+          color: #464646;
+          font-weight: 500;
+          transition: all 0.15s ease; }
+          header nav ul li a:hover {
+            color: var(--logo-color); }
+          header nav ul li a.active {
+            color: var(--logo-color);
+            border-bottom: 2px solid var(--logo-color); }
+        header nav ul li.nav-btns a {
+          color: var(--logo-color);
+          border: 1px solid var(--logo-color);
+          padding: 5px 10px;
+          border-radius: 5px;
+          font-weight: 500;
+          transition: all 0.2s ease; }
+          header nav ul li.nav-btns a:hover {
+            color: var(--accent-color);
+            background-color: #5c5c5c; }

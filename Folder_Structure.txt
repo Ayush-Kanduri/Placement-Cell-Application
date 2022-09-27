@@ -15,7 +15,7 @@ public
 routes  -  api  -  v1
                 -  v2
 storage
-uploads -  students  -  avatars
+uploads -  reports
         -  employees -  avatars
 views
 workers

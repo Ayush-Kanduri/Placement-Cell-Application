@@ -1,0 +1,566 @@
+.login_container {
+  width: 100%;
+  height: 100%;
+  display: flex;
+  justify-content: center;
+  align-items: center; }
+  .login_container #login {
+    border: 2px solid var(--logo-color);
+    padding: 10px;
+    margin-top: 10rem;
+    margin-bottom: 3.5rem;
+    width: 50%;
+    min-width: 270px !important;
+    min-height: 420px;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    box-shadow: 1px 5px 5px 2px rgba(0, 0, 0, 0.5);
+    background: rgba(255, 233, 174, 0.8);
+    backdrop-filter: blur(5px);
+    -webkit-backdrop-filter: blur(5px);
+    border-radius: 10px;
+    border: 1px solid rgba(255, 255, 255, 0.5); }
+    @media screen and (max-width: 850px) {
+      .login_container #login {
+        margin-top: 10rem;
+        margin-bottom: 3.5rem; } }
+    @media screen and (max-height: 555px) {
+      .login_container #login {
+        margin-top: 150px;
+        margin-bottom: 50px; } }
+    .login_container #login form {
+      width: 100%;
+      height: 100%;
+      min-height: 400px;
+      padding: 10px; }
+      .login_container #login form h2 {
+        font-size: 2rem;
+        font-weight: 600;
+        color: var(--logo-color);
+        margin: 10px 0;
+        opacity: 0.7;
+        text-align: center; }
+        @media screen and (max-width: 850px) {
+          .login_container #login form h2 {
+            margin-bottom: 1.5rem; } }
+      .login_container #login form .form-group {
+        margin-bottom: 1rem; }
+        .login_container #login form .form-group label {
+          display: block;
+          margin-bottom: 0.5rem;
+          font-size: 1rem;
+          font-weight: 600;
+          color: var(--logo-color); }
+        .login_container #login form .form-group input {
+          box-shadow: none;
+          outline: none;
+          border: none;
+          border-radius: 0%;
+          border-bottom: 1px solid var(--logo-color);
+          background: transparent;
+          color: var(--logo-color);
+          font-weight: 400;
+          letter-spacing: 0.02rem; }
+          .login_container #login form .form-group input::placeholder {
+            color: var(--logo-color);
+            opacity: 0.7; }
+          .login_container #login form .form-group input:focus {
+            box-shadow: none;
+            outline: none;
+            border-bottom: 1px solid var(--logo-color); }
+      .login_container #login form .login-btn {
+        margin: auto;
+        margin-top: 1rem;
+        width: 100%;
+        padding: 0.5rem 1rem;
+        font-size: 1rem;
+        font-weight: 600;
+        color: var(--accent-color);
+        background-color: var(--logo-color);
+        border: 1px solid var(--accent-color);
+        border-radius: 10px;
+        cursor: pointer;
+        box-shadow: none;
+        outline: none;
+        border: none; }
+        .login_container #login form .login-btn:focus {
+          box-shadow: none;
+          outline: none;
+          border: none; }
+      .login_container #login form .social-login {
+        width: 100%;
+        display: flex;
+        flex-direction: row;
+        justify-content: space-between;
+        align-items: center;
+        margin-top: 30px;
+        flex-wrap: wrap; }
+        @media screen and (max-width: 850px) {
+          .login_container #login form .social-login {
+            justify-content: center;
+            gap: 2rem; } }
+        .login_container #login form .social-login .btn {
+          width: 40%;
+          min-width: 50px;
+          padding: 0.5rem 1rem;
+          font-size: 1rem;
+          font-weight: 600;
+          color: var(--accent-color);
+          background-color: var(--logo-color);
+          border-radius: 10px;
+          cursor: pointer;
+          box-shadow: none;
+          outline: none;
+          border: none; }
+          .login_container #login form .social-login .btn:focus {
+            box-shadow: none;
+            outline: none;
+            border: none; }
+          .login_container #login form .social-login .btn img {
+            width: 20px;
+            height: 20px;
+            border: 50%; }
+        .login_container #login form .social-login .google-btn {
+          min-width: 220px; }
+        @media screen and (max-width: 850px) {
+          .login_container #login form .social-login .signup-btn {
+            min-width: 220px; } }
+
+.homepage {
+  width: 100%;
+  height: 100%;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+  padding: 10px;
+  margin: auto; }
+  .homepage .banner {
+    margin-top: 7rem;
+    margin-bottom: 2rem;
+    background-color: rgba(255, 167, 52, 0.8);
+    border-radius: 10px;
+    padding: 7px;
+    word-spacing: 0.2rem; }
+    .homepage .banner h2 {
+      font-size: 2rem;
+      font-weight: 700;
+      color: var(--logo-color);
+      margin: 5px 0;
+      opacity: 0.8;
+      text-align: center; }
+  .homepage .dashboard {
+    width: 100%;
+    height: 100%;
+    border-radius: 10px;
+    padding: 7px;
+    display: flex;
+    justify-content: center;
+    align-items: flex-start; }
+    @media screen and (max-width: 700px) {
+      .homepage .dashboard {
+        flex-direction: column;
+        align-items: center; } }
+    .homepage .dashboard .students {
+      padding-right: 7px; }
+    .homepage .dashboard .interviews {
+      padding-left: 7px; }
+    .homepage .dashboard .students,
+    .homepage .dashboard .interviews {
+      width: 50%;
+      height: 100%;
+      display: flex;
+      flex-direction: column;
+      justify-content: flex-start;
+      align-items: center;
+      margin-bottom: 3rem; }
+      @media screen and (max-width: 700px) {
+        .homepage .dashboard .students,
+        .homepage .dashboard .interviews {
+          width: 100%; } }
+      .homepage .dashboard .students form,
+      .homepage .dashboard .interviews form {
+        width: 100%;
+        background-color: rgba(255, 245, 219, 0.85);
+        border-radius: 10px;
+        padding: 10px;
+        display: flex;
+        flex-direction: column;
+        justify-content: center;
+        align-items: flex-start; }
+        .homepage .dashboard .students form.student-form, .homepage .dashboard .students form.interview-form,
+        .homepage .dashboard .interviews form.student-form,
+        .homepage .dashboard .interviews form.interview-form {
+          margin-top: 1rem; }
+        .homepage .dashboard .students form h4,
+        .homepage .dashboard .interviews form h4 {
+          font-size: 1.5rem;
+          font-weight: 700;
+          color: var(--logo-color);
+          margin: 5px 0;
+          opacity: 0.8;
+          text-align: center;
+          margin: auto;
+          margin-bottom: 1rem; }
+        .homepage .dashboard .students form .form-group,
+        .homepage .dashboard .interviews form .form-group {
+          width: 100%;
+          display: flex;
+          justify-content: space-between;
+          align-items: center;
+          margin-bottom: 1rem;
+          padding: 0 10px; }
+          @media screen and (max-width: 410px) {
+            .homepage .dashboard .students form .form-group,
+            .homepage .dashboard .interviews form .form-group {
+              flex-direction: column;
+              justify-content: center; } }
+          .homepage .dashboard .students form .form-group label,
+          .homepage .dashboard .interviews form .form-group label {
+            font-size: 1rem;
+            font-weight: 600;
+            color: var(--logo-color); }
+          .homepage .dashboard .students form .form-group input,
+          .homepage .dashboard .students form .form-group select,
+          .homepage .dashboard .interviews form .form-group input,
+          .homepage .dashboard .interviews form .form-group select {
+            font-weight: 500;
+            width: 65%;
+            padding: 0.5rem 1rem;
+            font-size: 1rem;
+            color: var(--logo-color);
+            background-color: var(--accent-color);
+            border-radius: 10px;
+            box-shadow: none;
+            outline: none;
+            border: none; }
+            .homepage .dashboard .students form .form-group input:focus,
+            .homepage .dashboard .students form .form-group select:focus,
+            .homepage .dashboard .interviews form .form-group input:focus,
+            .homepage .dashboard .interviews form .form-group select:focus {
+              box-shadow: none;
+              outline: none;
+              border: none; }
+            .homepage .dashboard .students form .form-group input::placeholder,
+            .homepage .dashboard .students form .form-group select::placeholder,
+            .homepage .dashboard .interviews form .form-group input::placeholder,
+            .homepage .dashboard .interviews form .form-group select::placeholder {
+              font-size: 1rem;
+              font-weight: 500;
+              color: var(--logo-color); }
+              @media screen and (max-width: 410px) {
+                .homepage .dashboard .students form .form-group input::placeholder,
+                .homepage .dashboard .students form .form-group select::placeholder,
+                .homepage .dashboard .interviews form .form-group input::placeholder,
+                .homepage .dashboard .interviews form .form-group select::placeholder {
+                  text-align: center;
+                  margin: auto; } }
+        .homepage .dashboard .students form button,
+        .homepage .dashboard .interviews form button {
+          width: 100%;
+          min-height: 40px;
+          padding: 0.5rem 1rem;
+          font-size: 1rem;
+          font-weight: 700;
+          color: var(--accent-color);
+          background-color: var(--logo-color);
+          border-radius: 10px;
+          cursor: pointer;
+          box-shadow: none;
+          outline: none;
+          border: none; }
+          .homepage .dashboard .students form button:focus,
+          .homepage .dashboard .interviews form button:focus {
+            box-shadow: none;
+            outline: none;
+            border: none; }
+      .homepage .dashboard .students h3,
+      .homepage .dashboard .interviews h3 {
+        font-size: 2rem;
+        font-weight: 700;
+        color: var(--logo-color);
+        margin: auto;
+        margin-top: 1rem;
+        opacity: 0.8;
+        text-align: center;
+        background-color: rgba(255, 167, 52, 0.8);
+        border-radius: 10px;
+        padding: 7px;
+        word-spacing: 0.2rem; }
+      .homepage .dashboard .students .accordion,
+      .homepage .dashboard .interviews .accordion {
+        margin-top: 2rem;
+        width: 100% !important; }
+        .homepage .dashboard .students .accordion .accordion-item,
+        .homepage .dashboard .interviews .accordion .accordion-item {
+          width: 100% !important;
+          margin-bottom: 1rem; }
+          .homepage .dashboard .students .accordion .accordion-item h2,
+          .homepage .dashboard .interviews .accordion .accordion-item h2 {
+            margin: 0 auto;
+            width: 100%; }
+            .homepage .dashboard .students .accordion .accordion-item h2 button,
+            .homepage .dashboard .interviews .accordion .accordion-item h2 button {
+              transition: all 0.15s ease-in-out !important;
+              font-size: 1.3rem;
+              font-weight: 700;
+              font-family: var(--font-family);
+              color: var(--logo-color);
+              word-break: break-all; }
+              .homepage .dashboard .students .accordion .accordion-item h2 button:focus,
+              .homepage .dashboard .interviews .accordion .accordion-item h2 button:focus {
+                box-shadow: none;
+                outline: none;
+                border: none; }
+              .homepage .dashboard .students .accordion .accordion-item h2 button::after,
+              .homepage .dashboard .interviews .accordion .accordion-item h2 button::after {
+                content: none; }
+          .homepage .dashboard .students .accordion .accordion-item .accordion-body,
+          .homepage .dashboard .interviews .accordion .accordion-item .accordion-body {
+            width: 100% !important; }
+            .homepage .dashboard .students .accordion .accordion-item .accordion-body img,
+            .homepage .dashboard .interviews .accordion .accordion-item .accordion-body img {
+              min-width: 100px;
+              min-height: 100px;
+              max-width: 150px;
+              max-height: 150px;
+              margin: auto;
+              display: block;
+              margin-bottom: 2rem;
+              -o-object-fit: cover;
+              object-fit: cover;
+              -o-object-position: center;
+              object-position: center; }
+            .homepage .dashboard .students .accordion .accordion-item .accordion-body .interview-data,
+            .homepage .dashboard .interviews .accordion .accordion-item .accordion-body .interview-data {
+              width: 100% !important;
+              position: relative;
+              border-bottom: 1px solid var(--logo-color); }
+              .homepage .dashboard .students .accordion .accordion-item .accordion-body .interview-data p,
+              .homepage .dashboard .interviews .accordion .accordion-item .accordion-body .interview-data p {
+                padding: 0 1rem;
+                color: var(--logo-color);
+                margin: 0.5rem auto;
+                font-size: 1.2rem;
+                font-weight: 500;
+                display: flex;
+                justify-content: center;
+                align-items: center; }
+                @media screen and (max-width: 330px) {
+                  .homepage .dashboard .students .accordion .accordion-item .accordion-body .interview-data p,
+                  .homepage .dashboard .interviews .accordion .accordion-item .accordion-body .interview-data p {
+                    justify-content: flex-start; } }
+              .homepage .dashboard .students .accordion .accordion-item .accordion-body .interview-data .fa-trash,
+              .homepage .dashboard .interviews .accordion .accordion-item .accordion-body .interview-data .fa-trash {
+                position: absolute;
+                top: 5%;
+                right: 1%;
+                font-size: 1.25rem;
+                cursor: pointer;
+                transition: all 0.15s ease-in-out; }
+                @media screen and (max-width: 330px) {
+                  .homepage .dashboard .students .accordion .accordion-item .accordion-body .interview-data .fa-trash,
+                  .homepage .dashboard .interviews .accordion .accordion-item .accordion-body .interview-data .fa-trash {
+                    font-size: 1.1rem;
+                    top: 15%; } }
+                .homepage .dashboard .students .accordion .accordion-item .accordion-body .interview-data .fa-trash:hover,
+                .homepage .dashboard .interviews .accordion .accordion-item .accordion-body .interview-data .fa-trash:hover {
+                  color: #21b416; }
+            .homepage .dashboard .students .accordion .accordion-item .accordion-body .students-list,
+            .homepage .dashboard .interviews .accordion .accordion-item .accordion-body .students-list {
+              display: flex;
+              flex-direction: column;
+              justify-content: center;
+              align-items: center;
+              width: 100%;
+              margin: 1rem 0 0.5rem 0; }
+              .homepage .dashboard .students .accordion .accordion-item .accordion-body .students-list h5,
+              .homepage .dashboard .interviews .accordion .accordion-item .accordion-body .students-list h5 {
+                font-size: 1.4rem;
+                font-weight: 700;
+                color: var(--logo-color);
+                margin: 0.5rem auto;
+                text-align: center; }
+              .homepage .dashboard .students .accordion .accordion-item .accordion-body .students-list + p,
+              .homepage .dashboard .interviews .accordion .accordion-item .accordion-body .students-list + p {
+                font-size: 2rem;
+                font-weight: 600;
+                color: var(--logo-color);
+                margin: 0.5rem auto;
+                text-align: center; }
+                .homepage .dashboard .students .accordion .accordion-item .accordion-body .students-list + p i,
+                .homepage .dashboard .interviews .accordion .accordion-item .accordion-body .students-list + p i {
+                  transition: all 0.15s ease-in-out;
+                  cursor: pointer; }
+                  .homepage .dashboard .students .accordion .accordion-item .accordion-body .students-list + p i:hover,
+                  .homepage .dashboard .interviews .accordion .accordion-item .accordion-body .students-list + p i:hover {
+                    color: #21b416; }
+              .homepage .dashboard .students .accordion .accordion-item .accordion-body .students-list form,
+              .homepage .dashboard .interviews .accordion .accordion-item .accordion-body .students-list form {
+                width: 100%;
+                height: 100%;
+                display: flex;
+                flex-direction: column;
+                justify-content: flex-start;
+                align-items: flex-start;
+                background: transparent; }
+                .homepage .dashboard .students .accordion .accordion-item .accordion-body .students-list form .student,
+                .homepage .dashboard .interviews .accordion .accordion-item .accordion-body .students-list form .student {
+                  width: 100%;
+                  display: flex;
+                  flex-direction: column;
+                  justify-content: center;
+                  align-items: center;
+                  margin-bottom: 1.5rem; }
+                  .homepage .dashboard .students .accordion .accordion-item .accordion-body .students-list form .student:first-child,
+                  .homepage .dashboard .interviews .accordion .accordion-item .accordion-body .students-list form .student:first-child {
+                    margin-top: 1.2rem; }
+                  .homepage .dashboard .students .accordion .accordion-item .accordion-body .students-list form .student .fixed,
+                  .homepage .dashboard .interviews .accordion .accordion-item .accordion-body .students-list form .student .fixed {
+                    width: 100%;
+                    display: flex;
+                    justify-content: space-between;
+                    align-items: center;
+                    flex-wrap: wrap;
+                    gap: 1rem; }
+                    @media screen and (max-width: 400px) {
+                      .homepage .dashboard .students .accordion .accordion-item .accordion-body .students-list form .student .fixed,
+                      .homepage .dashboard .interviews .accordion .accordion-item .accordion-body .students-list form .student .fixed {
+                        justify-content: center; } }
+                    .homepage .dashboard .students .accordion .accordion-item .accordion-body .students-list form .student .fixed p,
+                    .homepage .dashboard .interviews .accordion .accordion-item .accordion-body .students-list form .student .fixed p {
+                      font-size: 1.2rem;
+                      color: var(--logo-color);
+                      text-align: center;
+                      margin: 0;
+                      text-transform: capitalize; }
+                      .homepage .dashboard .students .accordion .accordion-item .accordion-body .students-list form .student .fixed p:not(strong),
+                      .homepage .dashboard .interviews .accordion .accordion-item .accordion-body .students-list form .student .fixed p:not(strong) {
+                        font-weight: 500; }
+                      .homepage .dashboard .students .accordion .accordion-item .accordion-body .students-list form .student .fixed p span,
+                      .homepage .dashboard .interviews .accordion .accordion-item .accordion-body .students-list form .student .fixed p span {
+                        text-transform: capitalize; }
+                  .homepage .dashboard .students .accordion .accordion-item .accordion-body .students-list form .student .form-group,
+                  .homepage .dashboard .interviews .accordion .accordion-item .accordion-body .students-list form .student .form-group {
+                    width: 100%; }
+                    .homepage .dashboard .students .accordion .accordion-item .accordion-body .students-list form .student .form-group select,
+                    .homepage .dashboard .interviews .accordion .accordion-item .accordion-body .students-list form .student .form-group select {
+                      width: 100%; }
+                  .homepage .dashboard .students .accordion .accordion-item .accordion-body .students-list form .student button,
+                  .homepage .dashboard .interviews .accordion .accordion-item .accordion-body .students-list form .student button {
+                    width: 100%;
+                    font-size: 1rem;
+                    font-weight: 700;
+                    color: var(--accent-color);
+                    background-color: var(--logo-color);
+                    transition: all 0.15s ease-in-out;
+                    margin-bottom: 1rem;
+                    min-height: 40px; }
+                    .homepage .dashboard .students .accordion .accordion-item .accordion-body .students-list form .student button.edit-student-interview,
+                    .homepage .dashboard .interviews .accordion .accordion-item .accordion-body .students-list form .student button.edit-student-interview {
+                      background-color: #8eec8e;
+                      color: var(--logo-color);
+                      margin-top: 1rem; }
+                    .homepage .dashboard .students .accordion .accordion-item .accordion-body .students-list form .student button.delete-student-interview,
+                    .homepage .dashboard .interviews .accordion .accordion-item .accordion-body .students-list form .student button.delete-student-interview {
+                      background-color: #ec8e8e;
+                      color: var(--logo-color); }
+                    .homepage .dashboard .students .accordion .accordion-item .accordion-body .students-list form .student button.delete-interview-slot,
+                    .homepage .dashboard .interviews .accordion .accordion-item .accordion-body .students-list form .student button.delete-interview-slot {
+                      background-color: #ec8e8e;
+                      color: var(--logo-color); }
+            .homepage .dashboard .students .accordion .accordion-item .accordion-body .student-data,
+            .homepage .dashboard .interviews .accordion .accordion-item .accordion-body .student-data {
+              width: 100% !important; }
+              .homepage .dashboard .students .accordion .accordion-item .accordion-body .student-data p,
+              .homepage .dashboard .interviews .accordion .accordion-item .accordion-body .student-data p {
+                padding: 0 1rem;
+                color: var(--logo-color);
+                margin: 0.5rem auto;
+                font-size: 1.1rem;
+                font-weight: 500;
+                display: flex;
+                justify-content: space-between;
+                align-items: center;
+                text-transform: capitalize; }
+                @media screen and (max-width: 370px) {
+                  .homepage .dashboard .students .accordion .accordion-item .accordion-body .student-data p,
+                  .homepage .dashboard .interviews .accordion .accordion-item .accordion-body .student-data p {
+                    font-size: 0.9rem; } }
+            .homepage .dashboard .students .accordion .accordion-item .accordion-body .student-interviews,
+            .homepage .dashboard .interviews .accordion .accordion-item .accordion-body .student-interviews {
+              width: 100% !important;
+              margin-bottom: 1rem; }
+              .homepage .dashboard .students .accordion .accordion-item .accordion-body .student-interviews table,
+              .homepage .dashboard .interviews .accordion .accordion-item .accordion-body .student-interviews table {
+                width: 100% !important; }
+                .homepage .dashboard .students .accordion .accordion-item .accordion-body .student-interviews table caption,
+                .homepage .dashboard .interviews .accordion .accordion-item .accordion-body .student-interviews table caption {
+                  font-size: 1.5rem;
+                  font-weight: 700;
+                  color: var(--logo-color);
+                  margin: 1rem auto;
+                  opacity: 0.8;
+                  text-align: center;
+                  word-spacing: 0.2rem;
+                  border-top: 3px solid var(--logo-color);
+                  border-bottom: 3px solid var(--logo-color); }
+                .homepage .dashboard .students .accordion .accordion-item .accordion-body .student-interviews table tr,
+                .homepage .dashboard .students .accordion .accordion-item .accordion-body .student-interviews table th,
+                .homepage .dashboard .interviews .accordion .accordion-item .accordion-body .student-interviews table tr,
+                .homepage .dashboard .interviews .accordion .accordion-item .accordion-body .student-interviews table th {
+                  text-transform: capitalize; }
+            .homepage .dashboard .students .accordion .accordion-item .accordion-body button,
+            .homepage .dashboard .interviews .accordion .accordion-item .accordion-body button {
+              width: 100%;
+              min-height: 40px;
+              padding: 0.5rem 1rem;
+              font-size: 1rem;
+              font-weight: 600;
+              color: var(--logo-color);
+              font-weight: 700;
+              background-color: #ec8e8e;
+              border-radius: 10px;
+              cursor: pointer;
+              box-shadow: none;
+              outline: none;
+              border: none;
+              margin-bottom: 1.5rem;
+              transition: all 0.15s ease-in-out !important; }
+              .homepage .dashboard .students .accordion .accordion-item .accordion-body button:focus,
+              .homepage .dashboard .interviews .accordion .accordion-item .accordion-body button:focus {
+                box-shadow: none;
+                outline: none;
+                border: none; }
+
+.accordion-button:focus {
+  border: none;
+  outline: none;
+  box-shadow: none; }
+
+.accordion-item {
+  border: none;
+  box-shadow: none;
+  outline: none;
+  background-color: transparent; }
+
+.accordion-collapse {
+  background-color: rgba(255, 245, 219, 0.85); }
+
+.accordion-header,
+.accordion-button {
+  background-color: var(--background-color);
+  border-radius: 10px !important;
+  transition: all 0.15s ease-in-out !important; }
+  .accordion-header .round,
+  .accordion-button .round {
+    transition: all 0.15s ease-in-out !important;
+    border-bottom-left-radius: 0px !important;
+    border-bottom-right-radius: 0px !important; }
+
+.accordion-button:not(.collapsed) {
+  transition: all 0.15s ease-in-out;
+  color: var(--logo-color);
+  background-color: var(--background-color);
+  box-shadow: none; }

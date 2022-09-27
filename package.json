@@ -6,7 +6,7 @@
 	"scripts": {
 		"test": "echo \"Error: no test specified\" && exit 1",
 		"start": "node index.js",
-		"prod_start": "nodemon index.js",
+		"prod_start": "node index.js",
 		"dev_start": "nodemon index.js"
 	},
 	"repository": {
@@ -44,7 +44,7 @@
 		"cors": "^2.8.5",
 		"crypto": "^1.0.1",
 		"csv-stringify": "^6.2.0",
-		"del": "^7.0.0",
+		"del": "^6.0.0",
 		"dotenv": "^16.0.2",
 		"ejs": "^3.1.8",
 		"express": "^4.18.1",
@@ -52,7 +52,7 @@
 		"express-session": "^1.17.3",
 		"express-validator": "^6.14.2",
 		"gulp-cssnano": "^2.1.3",
-		"gulp-imagemin": "^8.0.0",
+		"gulp-imagemin": "^6.0.0",
 		"gulp-rev": "^9.0.0",
 		"gulp-sass": "^5.1.0",
 		"gulp-uglify-es": "^3.0.0",
