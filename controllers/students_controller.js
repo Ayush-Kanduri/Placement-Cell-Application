@@ -78,9 +78,20 @@ module.exports.add = async (req, res) => {
 		if (!!(DSA && WEB && REACT)) {
 			let COURSES = [DSA, WEB, REACT];
 			for (let COURSE of COURSES) {
+				let SCORE = 0;
+				if (COURSE.name === "data structures & algorithms") {
+					SCORE = Number(dsa_score);
+					obj.dsa = SCORE;
+				} else if (COURSE.name === "web development") {
+					SCORE = Number(web_score);
+					obj.webd = SCORE;
+				} else if (COURSE.name === "react") {
+					SCORE = Number(react_score);
+					obj.react = SCORE;
+				}
 				//Create student's score for the course
 				let score = await Score.create({
-					score: Number(dsa_score),
+					score: SCORE,
 					student: student._id,
 					course: COURSE._id,
 				});
