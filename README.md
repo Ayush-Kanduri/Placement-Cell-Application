@@ -125,7 +125,6 @@ For any issues related to the project, raise an ISSUE for the respective Reposit
 <img src="https://user-images.githubusercontent.com/76626529/192450649-a4c855d3-2417-4678-84d9-0517e6562e7b.png">
 <img src="https://user-images.githubusercontent.com/76626529/192450656-1570b890-83f2-4d84-aa77-c9fc62f73b02.png">
 <img src="https://user-images.githubusercontent.com/76626529/192450632-8825baea-ea52-4c5b-a591-92de012a725f.png">
-<img src="https://user-images.githubusercontent.com/76626529/192450653-020ccea9-9f91-42af-9974-37ee7d3b231b.png">
 <img src="https://user-images.githubusercontent.com/76626529/192450644-fd3c4751-54aa-4c3c-b3b9-e959fca3c6e5.png">
 </p>
 <br/>

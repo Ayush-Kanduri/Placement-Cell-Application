@@ -101,7 +101,6 @@ module.exports.add = async (req, res) => {
 				//Add the score to the student
 				student.scores.push(score);
 				await student.save();
-				obj.dsa = score.score;
 				//Find the enrolment for the batch and course, if it doesn't exist, then create it
 				let enrolment = await Enrolment.findOne({
 					batch: BATCH._id,
