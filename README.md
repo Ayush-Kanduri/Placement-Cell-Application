@@ -25,8 +25,8 @@ This website is completely Responsive across all the Devices.
 -  Users can update their profiles.
 
    <br/>
-   <p align="justify">
-   <img height="140" width="140" src="https://user-images.githubusercontent.com/76626529/192450122-842c2578-c742-4922-988b-4b141195cfed.png">
+   <p align="center">
+   <img src="https://user-images.githubusercontent.com/76626529/192450122-842c2578-c742-4922-988b-4b141195cfed.png">
    </p>
 
    <br/>
