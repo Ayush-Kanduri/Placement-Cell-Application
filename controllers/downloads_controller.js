@@ -172,9 +172,9 @@ module.exports.downloadReport = async function (req, res) {
 		}
 
 		//Parse the Data & convert it to CSV format
-		// const parser = new Parser();
-		// const csv = parser.parse(Data);
-		const csv = stringify(Data, { header: true });
+		const parser = new Parser();
+		const csv = parser.parse(Data);
+		// const csv = stringify(Data, { header: true });
 
 		try {
 			//Create a file with the CSV data
