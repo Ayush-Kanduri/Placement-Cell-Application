@@ -115,7 +115,7 @@ For any issues related to the project, raise an ISSUE for the respective Reposit
 
 > ## Checkout the Website [Web Application](https://placement-cell-application.onrender.com)
 >
-> ## Checkout the Application Demo Video [YouTube]()
+> ## Checkout the Application Demo Video [YouTube](https://www.youtube.com/watch?v=JI-lPvpq-WI)
 
 <br/>
 
